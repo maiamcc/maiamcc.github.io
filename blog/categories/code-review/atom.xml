@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Code Review | My Octopress Blog]]></title>
+  <link href="http://maiamcc.github.io/blog/categories/code-review/atom.xml" rel="self"/>
+  <link href="http://maiamcc.github.io/"/>
+  <updated>2014-10-06T17:16:29-04:00</updated>
+  <id>http://maiamcc.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Target: Acquired]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/07/31/target-acquired/"/>
+    <updated>2014-07-31T18:42:31-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/07/31/target-acquired</id>
+    <content type="html"><![CDATA[<p>At the end of Week 2, I&rsquo;m still overwhelmed, but a bit less, and with a bit more conviction that I can in fact write code. I finished my first project in Python yesterday, and spent this morning implementing some code review I got. Here are some things I learned, mainly for my own reference but perhaps other beginning Python folks will find it useful as well:</p>
+
+<ul>
+<li>4x spaces instead of tabs (Sublime will do this for you really easily! Sublime is magic!)</li>
+<li>instead of a million &ldquo;or&rsquo;s&rdquo; in some truth statement, ask if it&rsquo;s in a list instead. So for instance, instead of <code>if a == 1 or a == True or a == true</code>, use <code>if a in [1, "True", "true"]</code>.</li>
+<li>next time I write a program that makes the user pick among options from the command line (dear God, hopefully never again), instead of a giant string of if/elif&rsquo;s, consider a dictionary that maps user responses to the functions they excecute.</li>
+<li>if I did this again, I&rsquo;d have made better use of classes, both as a) a way to group related methods and b) a way to keep track of the objects I was modifying. (Had a hell of a time trying to change some global variable, only to find that I&rsquo;d somehow modified it as a local variable instead. Calling a method ON that object would eliminate that problem.)</li>
+<li>modular code is useful. Next time.</li>
+<li>you can do way more in <code>return</code> statements than I ever thought you could (like funky if statements and for loops).</li>
+</ul>
+
+
+<p>I&rsquo;ve figured out my next project! I&rsquo;ll be doing fun stuff with the English language (always a hoot) and <a href="http://setosa.io/blog/2014/07/26/markov-chains/">Markov Chains</a>. More specifically, I&rsquo;m gonna write a program that will generate moderately-intelligible English text, based on patterns it leanrs from a sample text that I feed it. I&rsquo;ll start simple (just learning patterns of the words themselves), and if that works, I&rsquo;ll build a more complicated version (that recognizes syntactical patterns as well). Maybe if I have great success, I&rsquo;ll be able to do something whacky like a haiku generator!</p>
+]]></content>
+  </entry>
+  
+</feed>

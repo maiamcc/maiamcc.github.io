@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hacker School | My Octopress Blog]]></title>
+  <link href="http://maiamcc.github.io/blog/categories/hacker-school/atom.xml" rel="self"/>
+  <link href="http://maiamcc.github.io/"/>
+  <updated>2014-10-06T17:16:29-04:00</updated>
+  <id>http://maiamcc.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Lessons in Default Function Arguments]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/29/lessons-in-default-function-arguments/"/>
+    <updated>2014-09-29T18:16:56-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/29/lessons-in-default-function-arguments</id>
+    <content type="html"><![CDATA[<p>Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia&rsquo;s contradance database and the letter Y.)</p>
+
+<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reivewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.</p>
+
+<p>Let&rsquo;s define a helper function:</p>
+
+<pre><code>&gt;&gt;&gt; def make_a_list():
+    ... print "Making a list..."
+    ... return [1,2,3]
+</code></pre>
+
+<p>and then some random function that takes a (called) function as a default value:</p>
+
+<pre><code>&gt;&gt;&gt; def list_length(mylist = make_a_list()):
+...     return len(mylist)
+Making a list...
+</code></pre>
+
+<p>The thing that&rsquo;s odd about the code that we just ran is that it printed &ldquo;Making a list&hellip;&rdquo;, which implies that the <code>make_a_list</code> function got <em>called</em>, even though all we did was assign it as a default variable. Interesting. Now what happens if we run <code>list_length</code>?</p>
+
+<pre><code>&gt;&gt;&gt; list_length([1,2,3,4,5])
+5
+&gt;&gt;&gt; list_length()
+3
+</code></pre>
+
+<p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&ndash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
+
+<pre><code>&gt;&gt;&gt; from random import randint
+&gt;&gt;&gt; def plus_one(num=randint(1,1000)):
+...     return num+1
+&gt;&gt;&gt; plus_one(5)
+6
+&gt;&gt;&gt; # that worked as we expected it to
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; # hmm, something tells me that
+&gt;&gt;&gt; # we aren't getting a new random
+&gt;&gt;&gt; # number every time we run this function.
+</code></pre>
+
+<p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&ndash;really, all it takes to break things is a mutable object.</p>
+
+<pre><code>&gt;&gt;&gt; def append_one(mylist = []):
+...     mylist.append(1)
+...     return mylist
+&gt;&gt;&gt; append_one()
+[1]
+&gt;&gt;&gt; append_one()
+[1, 1]
+&gt;&gt;&gt; append_one()
+[1, 1, 1]
+&gt;&gt;&gt; append_one()
+[1, 1, 1, 1]
+&gt;&gt;&gt; append_one()
+[1, 1, 1, 1, 1]
+</code></pre>
+
+<p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&ndash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
+
+<pre><code>&gt;&gt;&gt; stuff = [1,3,5,7]
+&gt;&gt;&gt; def append_one(mylist = stuff):
+...     mylist.append(1)
+...     return mylist
+&gt;&gt;&gt; append_one()
+[1, 3, 5, 7, 1]
+&gt;&gt;&gt; append_one()
+[1, 3, 5, 7, 1, 1]
+&gt;&gt;&gt; append_one()
+[1, 3, 5, 7, 1, 1, 1]
+</code></pre>
+
+<p>Perhaps it&rsquo;s a bit more intuitive this way, but the exact same thing is happening in the previous example; the function is modifying a distinct object in memory, whether it was named before it got passed as a default argument or not.</p>
+
+<p>Whacky fun! And a valuable lesson learned: <em>don&rsquo;t use mutable objects or functions as default values in your functions</em> unless you want a whole lot of hilarious code hijinks. (Which, hey, maybe you do, no judgements here!)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Javascript/JQuery 101]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101/"/>
+    <updated>2014-09-24T16:28:38-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101</id>
+    <content type="html"><![CDATA[<p>Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
+
+<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. If it&rsquo;s avoidable, don&rsquo;t mix JS and JQuery&ndash;be consistent within one document. Usually, JQuery is more precise and prettier. Consider using dollar signs at the beginning of your variable names to indicate that they point to JQuery objects, so you don&rsquo;t get confused. Most if not all JS functions have (generally shorter, prettier) JQuery equivalents. Here are some that I replaced in my code today:</p>
+
+<table><tr><td>
+    <strong>JS</strong>
+</td><td>
+    <strong>JQuery</strong>
+</td></tr>
+<tr><td>
+<code>
+    getElementByID("foo")
+</code>
+</td><td>
+<code>
+    $('#foo')
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    getElementsByClassName("bar")
+</code>
+</td><td>
+<code>
+    $('.bar')
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    this
+</code>
+</td><td>
+<code>
+    $(this)
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    .setAttribute("foo","bar")
+</code>
+</td><td>
+<code>
+    .attr("foo", "bar")
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    .getAttribute("foo")
+</code>
+</td><td>
+<code>
+    .attr("foo")
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    .value
+</code>
+</td><td>
+<code>
+    .val()
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    .parentNode
+</code>
+</td><td>
+<code>
+    .parent()
+</code>
+</td></tr>
+</table>
+
+
+<p><p>
+JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which gets all elements matching class &ldquo;bar&rdquo; and html tag &ldquo;mytag&rdquo;, respectively) return arrays of DOM elements. If you want to get something from this array, it can be tempting to pluck it from its index, a la <code>$(".bar")[2]</code>. <em>Be warned</em>: this returns a DOM element, and therefore you can&rsquo;t do shiny JQuery stuff to it. Instead, get that same element as a JQuery object with <code>$(".bar").eq(2)</code> (where the <code>eq</code> function takes as an argument the index of the thing you want to get out of the array). I can&rsquo;t tell you how much pain this would have saved me if I had known this at the beginning of my project.</p>
+
+<p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
+
+<p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsable child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[So Much for That Project]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project/"/>
+    <updated>2014-09-17T12:22:01-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project</id>
+    <content type="html"><![CDATA[<p>Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, triyng out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on <a href="https://code.google.com/p/mingus/">mingus</a>, a midi/music theory Python library. Unfortunately, it seems like no one&rsquo;s addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specficially, if we gave it this file as input:</p>
+
+<p><img src="/images/mingusbug_input.png" alt="Input file" /></p>
+
+<p>It returned this mess here:</p>
+
+<p><img src="/images/mingusbug_output.png" alt="Output file" /></p>
+
+<p>For the record, what seems to be going on here, as far as we can tell, is that while the notes have been preserved, the rhythms have all shifted over by one. The first note has been magically converted into a quarter note, and each note after that has the duration that ought to have belonged to the note before it. (To explain it another way: assume that we have a list of original notes and we&rsquo;re making a list of new notes, where each new note OUGHT to be identical to its corersponding original note. Instead, we get <code>newnote[0].duration == quarter</code>, <code>newnote[1].duration == orignote[0].duration</code>, <code>newnote[2].duration == orignote[1].duration</code>, etc.)</p>
+
+<p>So, <a href="https://code.google.com/p/mingus/issues/detail?id=125">we&rsquo;ve submitted a bug report</a> but we&rsquo;re not optimistic since, like I mentioned, the last answered bug is from 2011. But one day, when my heart has healed, I&rsquo;ll go off looking for ways to fix this or for other Python midi libraries that are suitable for this project, and then I&rsquo;ll take another swing at the choral generator! (Any suggestions? Send them my way! I&rsquo;m looking for a lib that can read, inspect, write, and output midi.)</p>
+
+<p>Until then, as I near the end of HS, it&rsquo;s actually surprisingly freeing to have one less thing to worry about getting done. Obviously I&rsquo;m not going to finish all of this stuff before HS ends, but here&rsquo;s what&rsquo;s on my docket at the moment:</p>
+
+<ul>
+<li>contradance database (search logic, and eventually expanding and populating database)</li>
+<li>sudoku solver (so close&hellip;!)</li>
+<li>more work on the fabulous <a href="http://hypatia.ca/">Leigh Honeywell</a>&rsquo;s <a href="https://github.com/hypatia/virtuoso">Virtuoso Project</a>, which will soon be a web app that doles out writing exercises to fight imposter syndrome, and is also a fabulous excuse for me to learn Bootstrap and play with design.</li>
+<li>goob.py, a fake git</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Asking for TOO MUCH Help?]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/16/asking-for-too-much-help/"/>
+    <updated>2014-09-16T12:47:54-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/16/asking-for-too-much-help</id>
+    <content type="html"><![CDATA[<p>(Apparently some people at Hacker School think I&rsquo;m an Iron Blogger, despite me being nothing of the sort. There&rsquo;s no money riding on whether or not I make consistent blog posts&ndash;but I figure I should do what I can to sustain this favorable impression of me!)</p>
+
+<p>Since my HS halfway check-in, I&rsquo;ve resolved to ask more questions and not let myself get stuck banging my head against problems that could be solved in a hot second by any of the three people sitting next to me. I think that I&rsquo;ve done a pretty good job with this resolution; I ask for help way more frequently, and as a result, I think I get more done. However, I feel the need to remind myself that there is such a thing as <em>asking for too much help</em>.</p>
+
+<p>Take this example: I was sitting down with Tristan, a fellow HSer, attempting to set up virtualenv and get all of my permissions and installs un-borked. I was totally in over my head, having never used virtualenv before, and he was helping me sort it out. There was some funky stuff that needed fixing having to do with my $PATH being invalid because one of the folder names contained a space. We dealt with that issue, and now most of the stuff worked, but I still couldn&rsquo;t manage to run bpython from inside my virtualenv. I showed Tristan the error message my computer was spewing, and asked him, &ldquo;What&rsquo;s going on?&rdquo;</p>
+
+<p>His response: &ldquo;What do you think is going on?&rdquo;</p>
+
+<p>Me: &ldquo;Well, it won&rsquo;t run bpython!&rdquo;</p>
+
+<p>Him: &ldquo;Come on, you can do better than that.&rdquo;</p>
+
+<p>When he said this, I was somewhat shocked to realize that I hadn&rsquo;t even fully read the text of the error message&ndash;I assumed that it would be gibberish to me, as such messages often are, and that I would need to find someone with greater terminal-fu to help me decipher it.</p>
+
+<p>I can&rsquo;t remember now what exactly the problem was, but it was something having to do with the fact that my shiny new un-borked $PATH wasn&rsquo;t finding bpython because I had sudo installed it somewhere outside the virtualenv&hellip; (That sounds kind of illogical now that I write it, but I promise it was a real problem.) Regardless, by carefully reading the error message and talking it through with Tristan, I was able to figure out what had to be done pretty much on my own. It was super exciting, of course, because for most of Hacker School the terminal has remained an almost entirely opaque black box of sorcery (and possibly gnomes), but more than that, it made me sit up and realize that it <em>is</em> within my power to solve a lot of the problems that I come across.</p>
+
+<p>Now I have two things to balance. Obviously, I want to keep asking questions, learning new things, keeping myself from getting stuck in ruts. But there&rsquo;s also something to be said for that fifteen-minute window to work on a problem before I turn to Zulip or the person next to me. I tend to assume that anything I don&rsquo;t know is a result of my limited programming background, and is something that I can learn <em>massively</em> faster from a person than from hunting around on StackOverflow. And yes, this is often the case, but when it&rsquo;s not&ndash;or even when it is&ndash;the trouble-shooting and debugging and StackOverflow-ing and playing around in the REPL are all supremely valuable skills. I can solve my own problems more often than I expect, and should remember that!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Taming the Octopress/All About Git]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress/"/>
+    <updated>2014-09-02T17:59:40-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress</id>
+    <content type="html"><![CDATA[<p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits[1] and just commit anyway.</p>
+
+<p>So, my website is alive, I have lost hours of my life to the jaws of the Octopress, and I may be switching to Jekyll or Pelican soon. But in the meantime, all of this made me intensely curious about git! I hit up <a href="http://maryrosecook.com/">Mary</a> for a mini-seminar, and I will now write it all out on my blog to make sure I understood it. Feel free to read along, learn from my simplistic explanation, correct my gross misunderstandings, etc.! So now, on to our feature presentation:</p>
+
+<h2>All About Git!</h2>
+
+<h3>The Bestest SCM with the Worstest UI</h3>
+
+<h4>All of your Git-age lives in the .git folder</h4>
+
+<p>When you run <code>git init</code>, all it does is create a <code>.git</code> folder. That&rsquo;s it! Your machine knows what folders are and aren&rsquo;t by the presence or absence of a <code>.git</code> directory. <code>.git</code> is a hidden folder, so to see it, type <code>ls -a</code>. Whenever you add or commit things to your git repo, they&rsquo;ll get stored in here.</p>
+
+<p>I&rsquo;m now in the directory of my new project, <code>gittest</code>. It contains two files, <code>a</code> and <code>b</code>, and isn&rsquo;t yet a git repo. When I look at what&rsquo;s inside it, it looks like this:
+    maia$ ls -a
+    .   ..  a   b</p>
+
+<p>Let&rsquo;s make it a git repo:
+    maia$ git init
+    Initialized empty Git repository in [stuff]/gittest/.git/
+    maia$ ls -a
+    .   ..  .git    a   b</p>
+
+<p>We can see the <code>.git</code> folder! Success! Here&rsquo;s the stuff inside it:
+    maia$ ls -a
+    .       HEAD        description info        refs
+    ..      config      hooks       objects</p>
+
+<h4>Anatomy of a commit: blobs, trees, commits</h4>
+
+<p>The git magic happens largely in the <code>/objects</code> folder. Right now it&rsquo;s got two folders in it that we don&rsquo;t care about, <code>info</code> and <code>pack</code>, which have to do with misc. git magic. But this is where stuff goes when we add/commit it. So let&rsquo;s do that.</p>
+
+<pre><code>maia$ git add -A
+maia$ ls .git/objects/
+31  e9  info    pack
+</code></pre>
+
+<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):
+    maia$ glook e91ace6ef46e2244fc3588bdead8f66b35b20d12
+    stuff inside file a
+These big long hashes point to files, known in git-land as <code>blobs</code>. Right now these are staged. After we commit them, <code>.git/objects</code> looks like this:
+    maia$ ls .git/objects/
+    31  81  a7  e9  info    pack
+We have two new directories in here since our commit, both in the same <code>xx/yyyyyy</code> format where <code>xxyyyyyy</code> is a big long hash thing we can use to access the thing inside. Here&rsquo;s the stuff inside the two new things:
+    maia$ glook 81ad97f6d112d96081fffc3d3b729828917eff5e
+    tree a720b6d097b88601c3647be863269539ccc7f64d
+    author maianess <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#58;&#109;&#97;&#x69;&#97;&#46;&#x6d;&#x63;&#x63;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x6d;&#97;&#x69;&#x61;&#x2e;&#109;&#99;&#99;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#109;</a> 1409698376 -0400
+    committer maianess <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#109;&#97;&#105;&#97;&#x2e;&#109;&#99;&#x63;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;">&#109;&#x61;&#x69;&#97;&#x2e;&#x6d;&#99;&#99;&#64;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a> 1409698376 -0400</p>
+
+<pre><code>first commit
+maia$ glook a720b6d097b88601c3647be863269539ccc7f64d
+100644 blob e91ace6ef46e2244fc3588bdead8f66b35b20d12    a
+100644 blob 31e9dce72edaeb87f2b007b09230bfd5008da63e    b
+</code></pre>
+
+<p>The first thing is a <code>commit</code> object. It lists a <code>tree</code> object, author, committer, and commit message (which here is &ldquo;first commit&rdquo;). The second thing is a <code>tree</code> object: it contains references to all files or folders (which would also be tree objects) in the given commit. This tree points to our files a and b (identified by their magic git hashes).</p>
+
+<p>OH, but also, from the second commit onward, commit objects look a little different. They have one additional line that provides the hash of the parent, or the commit directly before that one. I added a file <code>c</code> in directory <code>foo</code>. Here&rsquo;s what my second commit looks like:
+    maia$ glook 33380bb5dfd152bf72dad49c3e388bccee1a4dfb
+    tree 0d656c0ff73ea5315ec498acf144df9958e48819
+    parent 81ad97f6d112d96081fffc3d3b729828917eff5e
+    author maianess <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#58;&#109;&#x61;&#105;&#97;&#x2e;&#109;&#99;&#x63;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#109;&#97;&#x69;&#x61;&#x2e;&#109;&#x63;&#99;&#64;&#x67;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#x6d;</a> 1409709920 -0400
+    committer maianess <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x6d;&#97;&#105;&#97;&#x2e;&#109;&#99;&#x63;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#109;&#x61;&#105;&#x61;&#46;&#x6d;&#x63;&#x63;&#64;&#x67;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#109;</a> 1409709920 -0400</p>
+
+<pre><code>second: added directory 'foo'
+</code></pre>
+
+<p>To sumarize, the three kinds of objects you&rsquo;ll find in <code>.git/objects</code> look like this.</p>
+
+<h5>Blob, aka file:</h5>
+
+<p><em>[encoded contents of the file]</em></p>
+
+<h5>Commit:</h5>
+
+<p><em>tree: [hash of tree pointing to the files of this commit]<br>
+author: [name]<br>
+[commit message]</em></p>
+
+<h5>Tree:</h5>
+
+<p><em>[hash of a blog (file)]<br>
+[hash of a blog (file)]<br>
+[hash of a blog (file)]<br>
+&hellip;as many times as you want<br>
+[hash of a tree (folder)]<br>
+[hash of a tree (folder)]<br>
+&hellip;as many times as you want</em></p>
+
+<h4>How a few commits might look</h4>
+
+<p>Git objects contain the hashes of other git objects, which is how the files keep track of each other. Given a commit, you can find the tree representing the root, and from there all of the files and/or folders (represented by trees) that it contains. From that same commit, you can also find it&rsquo;s parent commit, and then <em>its</em> parent, each with their attendant file-states, and so can trace your history back. Let&rsquo;s look at fun diagrams!</p>
+
+<p>Here&rsquo;s my initial commit, when the file tree looks like this, and my git looks like this:
+    .
+    ├── a
+    ├── b</p>
+
+<p><img src="/images/git1.png" alt="Git diagram" /></p>
+
+<p>Now let&rsquo;s say I add a directory <code>foo</code>, and a file in foo <code>c</code>, and make changes to <code>a</code> and <code>b</code>. The file tree now looks like this, and my git looks like this:</p>
+
+<pre><code>.
+├── a
+├── b
+└── foo
+    └── c
+</code></pre>
+
+<p><img src="/images/git2.png" alt="Git guts" /></p>
+
+<p>You see that the main tree, <code>tree2</code>, is pointing directly to <code>a</code> and <code>b</code> but not to <code>c</code>&ndash;rather, it points to <code>tree2.1</code>, which points to <code>c</code>. It looks this way because git uses trees to represent directories; it references files living in subdirectories via trees (representing those directories) referencing those files.</p>
+
+<p>Note that git is still storing (in super-compact encoded form) all previous versions of the files, and given this network of things-that-contain-hashes-of-other-things, we know exactly where to look for any version of any file we want to find. And git only makes the necessary changes. Look what happens if we change <code>a</code> and <code>c</code> but leave <code>b</code> the same:</p>
+
+<p><img src="/images/git3.png" alt="Git guts" /></p>
+
+<p>There&rsquo;s no need to make another representation of <code>b</code>, since <code>b</code> hasn&rsquo;t been changed this commit. Instead, where the tree has to point to <code>b</code>, it points to the hash of the <em>existing</em> version of <code>b</code>.</p>
+
+<p>So, now I understand a biiiiit more about the whacky world of git and just what these cryptic commands are doing! I even understand pointers and branching and detached head state and all that a bit better, but that is perhaps another post for another day. Cheers!</p>
+
+<p>[1] To quote from the Git docs: &ldquo;When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a &lsquo;fast forward&rsquo;.&rdquo; Or, look at this <a href="https://sandofsky.com/images/fast_forward.pdf">explanation in pretty pictures</a>. By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.</p>
+
+<p>[2] <code>glook</code> is a shortcut I made; the full command to get file contents from one of these hashes is <code>git cat-file -p</code>.</p>
+]]></content>
+  </entry>
+  
+</feed>
