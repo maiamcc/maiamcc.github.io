@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Hacker School | My Octopress Blog]]></title>
+  <title><![CDATA[Category: hacker school | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/hacker-school/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-10-06T17:22:35-04:00</updated>
+  <updated>2014-10-07T18:30:15-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Maia McCormick]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -256,133 +256,31 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Taming the Octopress/All About Git]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress/"/>
-    <updated>2014-09-02T17:59:40-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress</id>
-    <content type="html"><![CDATA[<p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits[1] and just commit anyway.</p>
+    <title type="html"><![CDATA[Observations from Phonebook Code Review]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/12/observations-from-phonebook-code-review/"/>
+    <updated>2014-09-12T15:38:52-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/12/observations-from-phonebook-code-review</id>
+    <content type="html"><![CDATA[<p>Here are some gleanings from Amy&rsquo;s code review of <a href="https://github.com/maiamcc/phonebook">my phonebook applet</a>, and some self-study. Mostly for my own records and so I actually absorb all of this by writing out, but if anyone has comments, additions, disagreements with anything I&rsquo;ve written here, fire away!</p>
 
-<p>So, my website is alive, I have lost hours of my life to the jaws of the Octopress, and I may be switching to Jekyll or Pelican soon. But in the meantime, all of this made me intensely curious about git! I hit up <a href="http://maryrosecook.com/">Mary</a> for a mini-seminar, and I will now write it all out on my blog to make sure I understood it. Feel free to read along, learn from my simplistic explanation, correct my gross misunderstandings, etc.! So now, on to our feature presentation:</p>
+<ul>
+<li>misc. layout stuff, like putting import statements in alphabetical order</li>
+<li>avoid global vars when possible. I already knew this, but it&rsquo;s good to remember. For example, if you&rsquo;ve assuming your program will be run on the command line, you can put global vars in the <code>main()</code> function.</li>
+<li>functions that only incedentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)</li>
+<li><p>relatedly, try/except is your friend. I suspect that if you need a function that checks something&rsquo;s validity before running another function on it, if the check is simple, that checking func is probably unnessary and you can handle that behavior with a try/except in the function that actually does stuff. Pydocs puts it wonderfully:</p>
 
-<h2>All About Git!</h2>
+<p>  <em><a href="https://docs.python.org/2/glossary.html#term-eafp">EAFP</a></em>
+      Easier to ask for forgiveness than permission. This common Python coding style assumes the existence of valid keys or attributes and catches exceptions if the assumption proves false. This clean and fast style is characterized by the presence of many <code>try</code> and <code>except</code> statements. The technique contrasts with the <a href="https://docs.python.org/2/glossary.html#term-lbyl">LBYL</a> style common to many other languages such as C.</p></li>
+<li><p>but even though try/except is great, be wary! It can make debugging a mess&ndash;had something in here that caught TypeErrors, which exploded on Amy when she made a change that caught a type error, but my program printed &ldquo;more arguments needed&rdquo; instead of anything helpful like, y&#8217;know, a stacktrace.</p></li>
+<li>if you&rsquo;re defining a dict., it looks prettiest to put spaces on both sides of the colon</li>
+<li>string concat. is a) ugly and b) not very efficient. Use string interpolation (or in a pinch, <code>join</code>) instead.</li>
+<li>you can search for substrings with <code>"substring" in "string"</code>! Who knew? I wrote a whole human-written-input parser using <code>if string.find(substring) &gt; -1</code>. My life has just changed.</li>
+<li>in <code>for</code> loops, explicit var names are the way to go. I&rsquo;m usually decent about this when looping through lists, strings, whatever, but for some reason I tend to look through dictionaries with a very undescript <code>for key in mydict</code>.</li>
+<li><code>.txt</code> extensions are totally unnecessary. Text files don&rsquo;t even need extensions.</li>
+<li>streamlined, logical, one-thing-per-commit git histories are awesome!</li>
+<li><code>str.startswith</code> and <code>str.endswith</code> are a thing! (Are both things?) Exciting! Now I want to go through all of the code I&rsquo;ve been writing recently and use these to replace any hard-coded integers in string manipulation, because that stuff&rsquo;s gross, man.</li>
+<li>tests. Tests are good. Write them.</li>
+</ul>
 
-<h3>The Bestest SCM with the Worstest UI</h3>
-
-<h4>All of your Git-age lives in the .git folder</h4>
-
-<p>When you run <code>git init</code>, all it does is create a <code>.git</code> folder. That&rsquo;s it! Your machine knows what folders are and aren&rsquo;t by the presence or absence of a <code>.git</code> directory. <code>.git</code> is a hidden folder, so to see it, type <code>ls -a</code>. Whenever you add or commit things to your git repo, they&rsquo;ll get stored in here.</p>
-
-<p>I&rsquo;m now in the directory of my new project, <code>gittest</code>. It contains two files, <code>a</code> and <code>b</code>, and isn&rsquo;t yet a git repo. When I look at what&rsquo;s inside it, it looks like this:
-    maia$ ls -a
-    .   ..  a   b</p>
-
-<p>Let&rsquo;s make it a git repo:
-    maia$ git init
-    Initialized empty Git repository in [stuff]/gittest/.git/
-    maia$ ls -a
-    .   ..  .git    a   b</p>
-
-<p>We can see the <code>.git</code> folder! Success! Here&rsquo;s the stuff inside it:
-    maia$ ls -a
-    .       HEAD        description info        refs
-    ..      config      hooks       objects</p>
-
-<h4>Anatomy of a commit: blobs, trees, commits</h4>
-
-<p>The git magic happens largely in the <code>/objects</code> folder. Right now it&rsquo;s got two folders in it that we don&rsquo;t care about, <code>info</code> and <code>pack</code>, which have to do with misc. git magic. But this is where stuff goes when we add/commit it. So let&rsquo;s do that.</p>
-
-<pre><code>maia$ git add -A
-maia$ ls .git/objects/
-31  e9  info    pack
-</code></pre>
-
-<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):
-    maia$ glook e91ace6ef46e2244fc3588bdead8f66b35b20d12
-    stuff inside file a
-These big long hashes point to files, known in git-land as <code>blobs</code>. Right now these are staged. After we commit them, <code>.git/objects</code> looks like this:
-    maia$ ls .git/objects/
-    31  81  a7  e9  info    pack
-We have two new directories in here since our commit, both in the same <code>xx/yyyyyy</code> format where <code>xxyyyyyy</code> is a big long hash thing we can use to access the thing inside. Here&rsquo;s the stuff inside the two new things:
-    maia$ glook 81ad97f6d112d96081fffc3d3b729828917eff5e
-    tree a720b6d097b88601c3647be863269539ccc7f64d
-    author maianess <a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#x6d;&#x61;&#x69;&#x61;&#46;&#109;&#99;&#x63;&#64;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x6d;&#x61;&#105;&#x61;&#46;&#x6d;&#x63;&#99;&#64;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;</a> 1409698376 -0400
-    committer maianess <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x6d;&#97;&#105;&#97;&#46;&#x6d;&#x63;&#x63;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#109;&#x61;&#x69;&#x61;&#x2e;&#x6d;&#x63;&#99;&#64;&#x67;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#111;&#109;</a> 1409698376 -0400</p>
-
-<pre><code>first commit
-maia$ glook a720b6d097b88601c3647be863269539ccc7f64d
-100644 blob e91ace6ef46e2244fc3588bdead8f66b35b20d12    a
-100644 blob 31e9dce72edaeb87f2b007b09230bfd5008da63e    b
-</code></pre>
-
-<p>The first thing is a <code>commit</code> object. It lists a <code>tree</code> object, author, committer, and commit message (which here is &ldquo;first commit&rdquo;). The second thing is a <code>tree</code> object: it contains references to all files or folders (which would also be tree objects) in the given commit. This tree points to our files a and b (identified by their magic git hashes).</p>
-
-<p>OH, but also, from the second commit onward, commit objects look a little different. They have one additional line that provides the hash of the parent, or the commit directly before that one. I added a file <code>c</code> in directory <code>foo</code>. Here&rsquo;s what my second commit looks like:
-    maia$ glook 33380bb5dfd152bf72dad49c3e388bccee1a4dfb
-    tree 0d656c0ff73ea5315ec498acf144df9958e48819
-    parent 81ad97f6d112d96081fffc3d3b729828917eff5e
-    author maianess <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#109;&#97;&#105;&#x61;&#46;&#x6d;&#x63;&#99;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#x6d;&#97;&#105;&#97;&#x2e;&#109;&#x63;&#x63;&#x40;&#x67;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;</a> 1409709920 -0400
-    committer maianess <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x6d;&#97;&#x69;&#97;&#x2e;&#x6d;&#99;&#x63;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#109;&#x61;&#x69;&#97;&#46;&#109;&#99;&#99;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;</a> 1409709920 -0400</p>
-
-<pre><code>second: added directory 'foo'
-</code></pre>
-
-<p>To sumarize, the three kinds of objects you&rsquo;ll find in <code>.git/objects</code> look like this.</p>
-
-<h5>Blob, aka file:</h5>
-
-<p><em>[encoded contents of the file]</em></p>
-
-<h5>Commit:</h5>
-
-<p><em>tree: [hash of tree pointing to the files of this commit]<br>
-author: [name]<br>
-[commit message]</em></p>
-
-<h5>Tree:</h5>
-
-<p><em>[hash of a blog (file)]<br>
-[hash of a blog (file)]<br>
-[hash of a blog (file)]<br>
-&hellip;as many times as you want<br>
-[hash of a tree (folder)]<br>
-[hash of a tree (folder)]<br>
-&hellip;as many times as you want</em></p>
-
-<h4>How a few commits might look</h4>
-
-<p>Git objects contain the hashes of other git objects, which is how the files keep track of each other. Given a commit, you can find the tree representing the root, and from there all of the files and/or folders (represented by trees) that it contains. From that same commit, you can also find it&rsquo;s parent commit, and then <em>its</em> parent, each with their attendant file-states, and so can trace your history back. Let&rsquo;s look at fun diagrams!</p>
-
-<p>Here&rsquo;s my initial commit, when the file tree looks like this, and my git looks like this:
-    .
-    ├── a
-    ├── b</p>
-
-<p><img src="/images/git1.png" alt="Git diagram" /></p>
-
-<p>Now let&rsquo;s say I add a directory <code>foo</code>, and a file in foo <code>c</code>, and make changes to <code>a</code> and <code>b</code>. The file tree now looks like this, and my git looks like this:</p>
-
-<pre><code>.
-├── a
-├── b
-└── foo
-    └── c
-</code></pre>
-
-<p><img src="/images/git2.png" alt="Git guts" /></p>
-
-<p>You see that the main tree, <code>tree2</code>, is pointing directly to <code>a</code> and <code>b</code> but not to <code>c</code>&ndash;rather, it points to <code>tree2.1</code>, which points to <code>c</code>. It looks this way because git uses trees to represent directories; it references files living in subdirectories via trees (representing those directories) referencing those files.</p>
-
-<p>Note that git is still storing (in super-compact encoded form) all previous versions of the files, and given this network of things-that-contain-hashes-of-other-things, we know exactly where to look for any version of any file we want to find. And git only makes the necessary changes. Look what happens if we change <code>a</code> and <code>c</code> but leave <code>b</code> the same:</p>
-
-<p><img src="/images/git3.png" alt="Git guts" /></p>
-
-<p>There&rsquo;s no need to make another representation of <code>b</code>, since <code>b</code> hasn&rsquo;t been changed this commit. Instead, where the tree has to point to <code>b</code>, it points to the hash of the <em>existing</em> version of <code>b</code>.</p>
-
-<p>So, now I understand a biiiiit more about the whacky world of git and just what these cryptic commands are doing! I even understand pointers and branching and detached head state and all that a bit better, but that is perhaps another post for another day. Cheers!</p>
-
-<p>[1] To quote from the Git docs: &ldquo;When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a &lsquo;fast forward&rsquo;.&rdquo; Or, look at this <a href="https://sandofsky.com/images/fast_forward.pdf">explanation in pretty pictures</a>. By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.</p>
-
-<p>[2] <code>glook</code> is a shortcut I made; the full command to get file contents from one of these hashes is <code>git cat-file -p</code>.</p>
 ]]></content>
   </entry>
   

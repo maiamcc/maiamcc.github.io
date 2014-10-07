@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Books | My Octopress Blog]]></title>
+  <title><![CDATA[Category: books | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/books/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-10-06T17:22:35-04:00</updated>
+  <updated>2014-10-07T18:30:15-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Maia McCormick]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
-    <title type="html"><![CDATA[Fluffy (and Often Queer/YA/Both) Book Recs]]></title>
+    <title type="html"><![CDATA[Fluffy (and often Queer/YA/Both) Book Recs]]></title>
     <link href="http://maiamcc.github.io/blog/2014/08/16/fluffy-and-often-queer-slash-ya-slash-both-book-recs/"/>
     <updated>2014-08-16T22:55:44-04:00</updated>
     <id>http://maiamcc.github.io/blog/2014/08/16/fluffy-and-often-queer-slash-ya-slash-both-book-recs</id>

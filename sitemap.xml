@@ -45,7 +45,7 @@
   <url>
     <loc>http://maiamcc.github.io/blog/2014/09/12/observations-from-phonebook-code-review/</loc>
     
-    <lastmod>2014-09-12T00:00:00-04:00</lastmod>
+    <lastmod>2014-09-12T15:38:52-04:00</lastmod>
     
     <priority>0.8</priority>
   </url>
@@ -148,19 +148,53 @@
   
   
   <url>
-    <loc>http://maiamcc.github.io/blog/archives/</loc>
-    <lastmod>2014-10-06T17:22:35-04:00</lastmod>
+    <loc>http://maiamcc.github.io/blog/</loc>
+    <lastmod>2014-10-07T18:30:15-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://maiamcc.github.io/archives/</loc>
+    <lastmod>2014-10-07T18:30:15-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://maiamcc.github.io/</loc>
-    <lastmod>2014-10-06T17:22:35-04:00</lastmod>
+    <lastmod>2014-10-07T18:30:15-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
+  <url>
+    <loc>http://maiamcc.github.io/blog/archives/</loc>
+    <lastmod>2014-10-07T18:30:15-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
   
+  <url>
+    <loc>http://maiamcc.github.io/about/</loc>
+    <lastmod>2014-10-07T18:30:15-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://maiamcc.github.io/projects/</loc>
+    <lastmod>2014-10-07T18:30:15-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  
+  
+  <url>
+    <loc>http://maiamcc.github.io/projects/gravity/play.html</loc>
+    <lastmod>2014-10-07T17:50:54Z</lastmod>
+    <priority>0.6</priority>
+  </url>
   
 </urlset>

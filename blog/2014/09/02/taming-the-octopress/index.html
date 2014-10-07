@@ -5,8 +5,8 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Taming the Octopress/All About Git - My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Taming the Octopress/All About Git - Maia McCormick</title>
+  <meta name="author" content="Maia McCormick">
 
   
   <meta name="description" content="I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in &hellip;">
@@ -21,50 +21,55 @@
   <link rel="canonical" href="http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Maia McCormick" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
 </head>
 
 <body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Maia McCormick</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+  <div class="subtitle">
+    <h2>Programmer, writer, nerd</h2>
+  </div>
   
-</hgroup>
+  </hgroup>
+  
+</div>
 
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">home</a></li></div>
+  <div class="spacer"></div>
+
+ <div class="selected"> 
+  <li><a href="/blog">blog</a></li></div>
+  <div class="spacer"></div>
+
+     <div> 
+  <li><a href="/projects">projects</a></li></div>
+  <div class="spacer"></div>
+
+         <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+
+</div>
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="https://www.google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:maiamcc.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
   <div id="main">
     <div id="content">
-      <div>
+      <div id="thepost">
 <article class="hentry" role="article">
   
   <header>
@@ -78,7 +83,14 @@
 
 
 
-<time class='entry-date' datetime='2014-09-02T17:59:40-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>5:59 pm</span></time>
+
+
+
+
+  
+
+
+<time datetime="2014-09-02T17:59:40-04:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -97,20 +109,26 @@
 
 <p>When you run <code>git init</code>, all it does is create a <code>.git</code> folder. That&rsquo;s it! Your machine knows what folders are and aren&rsquo;t by the presence or absence of a <code>.git</code> directory. <code>.git</code> is a hidden folder, so to see it, type <code>ls -a</code>. Whenever you add or commit things to your git repo, they&rsquo;ll get stored in here.</p>
 
-<p>I&rsquo;m now in the directory of my new project, <code>gittest</code>. It contains two files, <code>a</code> and <code>b</code>, and isn&rsquo;t yet a git repo. When I look at what&rsquo;s inside it, it looks like this:
-    maia$ ls -a
-    .   ..  a   b</p>
+<p>I&rsquo;m now in the directory of my new project, <code>gittest</code>. It contains two files, <code>a</code> and <code>b</code>, and isn&rsquo;t yet a git repo. When I look at what&rsquo;s inside it, it looks like this:</p>
 
-<p>Let&rsquo;s make it a git repo:
-    maia$ git init
-    Initialized empty Git repository in [stuff]/gittest/.git/
-    maia$ ls -a
-    .   ..  .git    a   b</p>
+<pre><code>maia$ ls -a
+.   ..  a   b
+</code></pre>
 
-<p>We can see the <code>.git</code> folder! Success! Here&rsquo;s the stuff inside it:
-    maia$ ls -a
-    .       HEAD        description info        refs
-    ..      config      hooks       objects</p>
+<p>Let&rsquo;s make it a git repo:</p>
+
+<pre><code>maia$ git init
+Initialized empty Git repository in [stuff]/gittest/.git/
+maia$ ls -a
+.   ..  .git    a   b
+</code></pre>
+
+<p>We can see the <code>.git</code> folder! Success! Here&rsquo;s the stuff inside it:</p>
+
+<pre><code>maia$ ls -a
+.       HEAD        description info        refs
+..      config      hooks       objects
+</code></pre>
 
 <h4>Anatomy of a commit: blobs, trees, commits</h4>
 
@@ -121,19 +139,26 @@ maia$ ls .git/objects/
 31  e9  info    pack
 </code></pre>
 
-<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):
-    maia$ glook e91ace6ef46e2244fc3588bdead8f66b35b20d12
-    stuff inside file a
-These big long hashes point to files, known in git-land as <code>blobs</code>. Right now these are staged. After we commit them, <code>.git/objects</code> looks like this:
-    maia$ ls .git/objects/
-    31  81  a7  e9  info    pack
-We have two new directories in here since our commit, both in the same <code>xx/yyyyyy</code> format where <code>xxyyyyyy</code> is a big long hash thing we can use to access the thing inside. Here&rsquo;s the stuff inside the two new things:
-    maia$ glook 81ad97f6d112d96081fffc3d3b729828917eff5e
-    tree a720b6d097b88601c3647be863269539ccc7f64d
-    author maianess <a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x6d;&#x61;&#105;&#x61;&#x2e;&#x6d;&#99;&#x63;&#x40;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#109;&#x61;&#105;&#x61;&#x2e;&#x6d;&#x63;&#99;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;</a> 1409698376 -0400
-    committer maianess <a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#58;&#x6d;&#x61;&#x69;&#x61;&#x2e;&#x6d;&#x63;&#99;&#x40;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">&#109;&#97;&#105;&#x61;&#46;&#x6d;&#99;&#99;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#x6d;</a> 1409698376 -0400</p>
+<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):</p>
 
-<pre><code>first commit
+<pre><code>maia$ glook e91ace6ef46e2244fc3588bdead8f66b35b20d12
+stuff inside file a
+</code></pre>
+
+<p>These big long hashes point to files, known in git-land as <code>blobs</code>. Right now these are staged. After we commit them, <code>.git/objects</code> looks like this:</p>
+
+<pre><code>maia$ ls .git/objects/
+31  81  a7  e9  info    pack
+</code></pre>
+
+<p>We have two new directories in here since our commit, both in the same <code>xx/yyyyyy</code> format where <code>xxyyyyyy</code> is a big long hash thing we can use to access the thing inside. Here&rsquo;s the stuff inside the two new things:</p>
+
+<pre><code>maia$ glook 81ad97f6d112d96081fffc3d3b729828917eff5e
+tree a720b6d097b88601c3647be863269539ccc7f64d
+author maianess &lt;maia.mcc@gmail.com&gt; 1409698376 -0400
+committer maianess &lt;maia.mcc@gmail.com&gt; 1409698376 -0400
+
+first commit
 maia$ glook a720b6d097b88601c3647be863269539ccc7f64d
 100644 blob e91ace6ef46e2244fc3588bdead8f66b35b20d12    a
 100644 blob 31e9dce72edaeb87f2b007b09230bfd5008da63e    b
@@ -141,14 +166,15 @@ maia$ glook a720b6d097b88601c3647be863269539ccc7f64d
 
 <p>The first thing is a <code>commit</code> object. It lists a <code>tree</code> object, author, committer, and commit message (which here is &ldquo;first commit&rdquo;). The second thing is a <code>tree</code> object: it contains references to all files or folders (which would also be tree objects) in the given commit. This tree points to our files a and b (identified by their magic git hashes).</p>
 
-<p>OH, but also, from the second commit onward, commit objects look a little different. They have one additional line that provides the hash of the parent, or the commit directly before that one. I added a file <code>c</code> in directory <code>foo</code>. Here&rsquo;s what my second commit looks like:
-    maia$ glook 33380bb5dfd152bf72dad49c3e388bccee1a4dfb
-    tree 0d656c0ff73ea5315ec498acf144df9958e48819
-    parent 81ad97f6d112d96081fffc3d3b729828917eff5e
-    author maianess <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#109;&#97;&#105;&#x61;&#46;&#109;&#x63;&#x63;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#109;&#97;&#105;&#x61;&#x2e;&#x6d;&#x63;&#99;&#64;&#x67;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#x6d;</a> 1409709920 -0400
-    committer maianess <a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#109;&#97;&#x69;&#97;&#x2e;&#x6d;&#99;&#x63;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#109;">&#109;&#x61;&#x69;&#97;&#x2e;&#109;&#99;&#x63;&#64;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;</a> 1409709920 -0400</p>
+<p>OH, but also, from the second commit onward, commit objects look a little different. They have one additional line that provides the hash of the parent, or the commit directly before that one. I added a file <code>c</code> in directory <code>foo</code>. Here&rsquo;s what my second commit looks like:</p>
 
-<pre><code>second: added directory 'foo'
+<pre><code>maia$ glook 33380bb5dfd152bf72dad49c3e388bccee1a4dfb
+tree 0d656c0ff73ea5315ec498acf144df9958e48819
+parent 81ad97f6d112d96081fffc3d3b729828917eff5e
+author maianess &lt;maia.mcc@gmail.com&gt; 1409709920 -0400
+committer maianess &lt;maia.mcc@gmail.com&gt; 1409709920 -0400
+
+second: added directory 'foo'
 </code></pre>
 
 <p>To sumarize, the three kinds of objects you&rsquo;ll find in <code>.git/objects</code> look like this.</p>
@@ -177,10 +203,12 @@ author: [name]<br>
 
 <p>Git objects contain the hashes of other git objects, which is how the files keep track of each other. Given a commit, you can find the tree representing the root, and from there all of the files and/or folders (represented by trees) that it contains. From that same commit, you can also find it&rsquo;s parent commit, and then <em>its</em> parent, each with their attendant file-states, and so can trace your history back. Let&rsquo;s look at fun diagrams!</p>
 
-<p>Here&rsquo;s my initial commit, when the file tree looks like this, and my git looks like this:
-    .
-    ├── a
-    ├── b</p>
+<p>Here&rsquo;s my initial commit, when the file tree looks like this, and my git looks like this:</p>
+
+<pre><code>.
+├── a
+├── b
+</code></pre>
 
 <p><img src="/images/git1.png" alt="Git diagram" /></p>
 
@@ -216,14 +244,21 @@ author: [name]<br>
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Maia McCormick</span></span>
 
       
 
 
 
 
-<time class='entry-date' datetime='2014-09-02T17:59:40-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>5:59 pm</span></time>
+
+
+
+
+  
+
+
+<time datetime="2014-09-02T17:59:40-04:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
@@ -237,8 +272,6 @@ author: [name]<br>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress/" data-via="" data-counturl="http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress/" >Tweet</a>
-  
   
   
 </div>
@@ -249,18 +282,24 @@ author: [name]<br>
         <a class="basic-alignment left" href="/blog/2014/08/28/nested-functions/" title="Previous Post: Nested Functions">&laquo; Nested Functions</a>
       
       
-        <a class="basic-alignment right" href="/blog/2014/09/12/observations-from-phonebook-code-review/" title="Next Post: Observations From Phonebook Code Review">Observations From Phonebook Code Review &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2014/09/12/observations-from-phonebook-code-review/" title="Next Post: Observations from Phonebook Code Review">Observations from Phonebook Code Review &raquo;</a>
       
     </p>
   </footer>
 </article>
 
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
 </div>
 
 <aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
+  <img src = "/images/headshot.jpg">
+<section>
+  <h1>Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
@@ -287,38 +326,73 @@ author: [name]<br>
 </section>
 
 
-
-
-
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
   
+  <a href="https://github.com/maiamcc">@maiamcc</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'maiamcc',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
 </aside>
 
 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Your Name -
+  Copyright &copy; 2014 - Maia McCormick -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
+<p>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
 </footer>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'maia-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress/';
+        var disqus_url = 'http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
 
 
 
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 
