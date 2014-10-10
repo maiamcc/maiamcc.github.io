@@ -45,10 +45,10 @@ body > header {
       float:left;
       display: inline;
       margin-top: 5%;
-      
+
       div.spacer {
         height: 7px;
-        border-left: 2px solid $nav-bgcolor;      
+        border-left: 2px solid $nav-bgcolor;
       }
       div.selected {
         background-color: $nav-bgcolor;
