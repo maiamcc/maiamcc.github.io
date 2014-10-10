@@ -1,9 +1,13 @@
+// sizes for embedded videos
+$vid-width: 500px !default;
+$vid-height: 350px !default;
+
 article {
   padding-top: 1em;
   a { @extend .force-wrap; }
   header {
     position: relative;
-    padding-top: 2em;
+    padding-top: 0em;
     padding-bottom: 1em;
     margin-bottom: 1em;
     background: $img-border bottom left repeat-x;
@@ -47,15 +51,16 @@ article {
     @extend .basic-alignment;
     @include shadow-box;
   }
-  video, .flash-video { margin: 0 auto 1.5em; }
+  video, .flash-video { margin: 0 0 1.5em; }
   video { display: block; width: 100%; }
   .flash-video {
+    width: $vid-width;
+    height: $vid-height;
     > div {
       position: relative;
       display: block;
       padding-bottom: 56.25%;
       padding-top: 1px;
-      height: 0;
       overflow: hidden;
       iframe, object, embed {
         position: absolute;

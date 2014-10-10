@@ -4,13 +4,21 @@ title: "Maia McCormick: Contradance Caller"
 date: 2014-05-07 14:32
 comments: false
 sharing: true
-footer: true
+footer: false
 sidebar: false
 ---
 
 I am a contradance caller and dance writer based in New York City. I call both contra evenings and family dances, full programs and guest spots. Additionally, I have experience as a dance organizer, having run the monthly Williams College dance for three years (and having organized the NYC Contra Flash Mob for the past two summers! Here's a video of the [First Annual NYC Contra Flash Mob, in Grand Central](https://www.youtube.com/watch?v=gEY5rTqO62Y)). In addition to calling and dancing wherever I can, I also write dances, and have been dabbling in writing contra tunes.
 
 Look at some [dances I've written](/contra/dances.html) or [tunes I've written](/contra/tunes.html), or read on for more about my experience as a dance caller.
+
+### Media Samples
+
+<iframe width="100%" height="100%" src="//www.youtube.com/embed/1GkuytviO0g" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="100%" height="100%" src="//www.youtube.com/embed/nZ7VvdXD9rA" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="100%" height="100%" src="//www.youtube.com/embed/D2622W_nrk8" frameborder="0" allowfullscreen></iframe>
 
 ### My Calling History
 
@@ -33,9 +41,6 @@ Look at some [dances I've written](/contra/dances.html) or [tunes I've written](
 * [YDW](www.youthdanceweekend.org)
 * Berkeley, CA
 * Northern Berkshire Contradance
-
-### Media Samples
-Coming soon!
 
 
 
