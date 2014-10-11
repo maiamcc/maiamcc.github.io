@@ -118,75 +118,107 @@
 
 <h4>All of your Git-age lives in the .git folder</h4>
 
-<p>When you run <code>git init</code>, all it does is create a <code>.git</code> folder. That&rsquo;s it! Your machine knows what folders are and aren&rsquo;t by the presence or absence of a <code>.git</code> directory. <code>.git</code> is a hidden folder, so to see it, type <code>ls -a</code>. Whenever you add or commit things to your git repo, they&rsquo;ll get stored in here.</p>
+<p>When you run <code>git init</code>, all it does is create a <code>.git</code> folder. That&rsquo;s it! Your machine knows what folders are and aren&rsquo;t by the presence or absence of a <code>.git</code> directory. <code>.git</code> is a hidden folder, so to see it, type <code>ls -a</code>. Whenever you add or commit things to your git repo, they&rsquo;ll get stored in here.<!-- more --></p>
 
 <p>I&rsquo;m now in the directory of my new project, <code>gittest</code>. It contains two files, <code>a</code> and <code>b</code>, and isn&rsquo;t yet a git repo. When I look at what&rsquo;s inside it, it looks like this:</p>
 
-<pre><code>maia$ ls -a
-.   ..  a   b
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>maia$ ls -a
+</span><span class='line'>.   ..  a   b</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Let&rsquo;s make it a git repo:</p>
 
-<pre><code>maia$ git init
-Initialized empty Git repository in [stuff]/gittest/.git/
-maia$ ls -a
-.   ..  .git    a   b
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>maia$ git init
+</span><span class='line'>Initialized empty Git repository in [stuff]/gittest/.git/
+</span><span class='line'>maia$ ls -a
+</span><span class='line'>.   ..  .git    a   b</span></code></pre></td></tr></table></div></figure>
+
 
 <p>We can see the <code>.git</code> folder! Success! Here&rsquo;s the stuff inside it:</p>
 
-<pre><code>maia$ ls -a
-.       HEAD        description info        refs
-..      config      hooks       objects
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>maia$ ls -a
+</span><span class='line'>.       HEAD        description info        refs
+</span><span class='line'>..      config      hooks       objects</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>Anatomy of a commit: blobs, trees, commits</h4>
 
 <p>The git magic happens largely in the <code>/objects</code> folder. Right now it&rsquo;s got two folders in it that we don&rsquo;t care about, <code>info</code> and <code>pack</code>, which have to do with misc. git magic. But this is where stuff goes when we add/commit it. So let&rsquo;s do that.</p>
 
-<pre><code>maia$ git add -A
-maia$ ls .git/objects/
-31  e9  info    pack
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>maia$ git add -A
+</span><span class='line'>maia$ ls .git/objects/
+</span><span class='line'>31  e9  info    pack</span></code></pre></td></tr></table></div></figure>
+
 
 <p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):</p>
 
-<pre><code>maia$ glook e91ace6ef46e2244fc3588bdead8f66b35b20d12
-stuff inside file a
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>maia$ glook e91ace6ef46e2244fc3588bdead8f66b35b20d12
+</span><span class='line'>stuff inside file a</span></code></pre></td></tr></table></div></figure>
+
 
 <p>These big long hashes point to files, known in git-land as <code>blobs</code>. Right now these are staged. After we commit them, <code>.git/objects</code> looks like this:</p>
 
-<pre><code>maia$ ls .git/objects/
-31  81  a7  e9  info    pack
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>maia$ ls .git/objects/
+</span><span class='line'>31  81  a7  e9  info    pack</span></code></pre></td></tr></table></div></figure>
+
 
 <p>We have two new directories in here since our commit, both in the same <code>xx/yyyyyy</code> format where <code>xxyyyyyy</code> is a big long hash thing we can use to access the thing inside. Here&rsquo;s the stuff inside the two new things:</p>
 
-<pre><code>maia$ glook 81ad97f6d112d96081fffc3d3b729828917eff5e
-tree a720b6d097b88601c3647be863269539ccc7f64d
-author maianess &lt;maia.mcc@gmail.com&gt; 1409698376 -0400
-committer maianess &lt;maia.mcc@gmail.com&gt; 1409698376 -0400
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>maia$ glook 81ad97f6d112d96081fffc3d3b729828917eff5e
+</span><span class='line'>tree a720b6d097b88601c3647be863269539ccc7f64d
+</span><span class='line'>author maianess &lt;maia.mcc@gmail.com&gt; 1409698376 -0400
+</span><span class='line'>committer maianess &lt;maia.mcc@gmail.com&gt; 1409698376 -0400
+</span><span class='line'>
+</span><span class='line'>first commit
+</span><span class='line'>maia$ glook a720b6d097b88601c3647be863269539ccc7f64d
+</span><span class='line'>100644 blob e91ace6ef46e2244fc3588bdead8f66b35b20d12    a
+</span><span class='line'>100644 blob 31e9dce72edaeb87f2b007b09230bfd5008da63e    b</span></code></pre></td></tr></table></div></figure>
 
-first commit
-maia$ glook a720b6d097b88601c3647be863269539ccc7f64d
-100644 blob e91ace6ef46e2244fc3588bdead8f66b35b20d12    a
-100644 blob 31e9dce72edaeb87f2b007b09230bfd5008da63e    b
-</code></pre>
 
 <p>The first thing is a <code>commit</code> object. It lists a <code>tree</code> object, author, committer, and commit message (which here is &ldquo;first commit&rdquo;). The second thing is a <code>tree</code> object: it contains references to all files or folders (which would also be tree objects) in the given commit. This tree points to our files a and b (identified by their magic git hashes).</p>
 
 <p>OH, but also, from the second commit onward, commit objects look a little different. They have one additional line that provides the hash of the parent, or the commit directly before that one. I added a file <code>c</code> in directory <code>foo</code>. Here&rsquo;s what my second commit looks like:</p>
 
-<pre><code>maia$ glook 33380bb5dfd152bf72dad49c3e388bccee1a4dfb
-tree 0d656c0ff73ea5315ec498acf144df9958e48819
-parent 81ad97f6d112d96081fffc3d3b729828917eff5e
-author maianess &lt;maia.mcc@gmail.com&gt; 1409709920 -0400
-committer maianess &lt;maia.mcc@gmail.com&gt; 1409709920 -0400
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>maia$ glook 33380bb5dfd152bf72dad49c3e388bccee1a4dfb
+</span><span class='line'>tree 0d656c0ff73ea5315ec498acf144df9958e48819
+</span><span class='line'>parent 81ad97f6d112d96081fffc3d3b729828917eff5e
+</span><span class='line'>author maianess &lt;maia.mcc@gmail.com&gt; 1409709920 -0400
+</span><span class='line'>committer maianess &lt;maia.mcc@gmail.com&gt; 1409709920 -0400
+</span><span class='line'>
+</span><span class='line'>second: added directory 'foo'</span></code></pre></td></tr></table></div></figure>
 
-second: added directory 'foo'
-</code></pre>
 
 <p>To sumarize, the three kinds of objects you&rsquo;ll find in <code>.git/objects</code> look like this.</p>
 
@@ -216,21 +248,29 @@ author: [name]<br>
 
 <p>Here&rsquo;s my initial commit, when the file tree looks like this, and my git looks like this:</p>
 
-<pre><code>.
-├── a
-├── b
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.
+</span><span class='line'>├── a
+</span><span class='line'>├── b</span></code></pre></td></tr></table></div></figure>
+
 
 <p><img src="/images/git1.png" alt="Git diagram" /></p>
 
 <p>Now let&rsquo;s say I add a directory <code>foo</code>, and a file in foo <code>c</code>, and make changes to <code>a</code> and <code>b</code>. The file tree now looks like this, and my git looks like this:</p>
 
-<pre><code>.
-├── a
-├── b
-└── foo
-    └── c
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.
+</span><span class='line'>├── a
+</span><span class='line'>├── b
+</span><span class='line'>└── foo
+</span><span class='line'>    └── c</span></code></pre></td></tr></table></div></figure>
+
 
 <p><img src="/images/git2.png" alt="Git guts" /></p>
 

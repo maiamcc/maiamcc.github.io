@@ -112,59 +112,104 @@
 
 <p>The other day, as I was making this craaaazy dance parser (that&rsquo;s getting more and more convoluted by the minute), Alan suggested a really baller way of organizing it: using a bunch of little mini-parser functions that all look for something specific in your text, and smooshing related parsers together into one macro-parser that runs all of them in turn until one returns something. In Alan&rsquo;s lovely mock-up code that I&rsquo;m shamelessly copying over here, that might look like this:</p>
 
-<pre><code>def contains_an_a(input):
-    return input.find("a") &gt; -1
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">contains_an_a</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">contains_a_b</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">one_of</span><span class="p">(</span><span class="n">parsers</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parsers</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">result</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">parser</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">contains_an_a_or_a_b</span> <span class="o">=</span> <span class="n">one_of</span><span class="p">([</span><span class="n">contains_an_a</span><span class="p">,</span> <span class="n">contains_a_b</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
 
-def contains_a_b(input):
-    return input.find("b") &gt; -1
 
-def one_of(parsers):
-    def parser(input):
-        for p in parsers:
-            result = p(input)
-            if result:
-                return result
-    return parser
-
-contains_an_a_or_a_b = one_of([contains_an_a, contains_a_b])
-</code></pre>
-
-<p>The handy thing about having all of these bite-size functions is that none of them gets too crazy bulky, and also, since they&rsquo;re functions (and not dicts like I was using earlier), I can use regexes in them! I&rsquo;m also jamming on the idea of passing functions to other functions, so I made an even bigger function called <code>use_parser</code> that takes a parser, a default value, and an &lsquo;ask&rsquo;, which it uses to ask the user (via raw_input) what the value should be. This way, I can take a single parser and customize it in a variety of ways. Say for example I have a distance parser: for do-si-dos and gypsies it should default to False (because those moves don&rsquo;t necessarily need to take a distance) and for allemandes it should ask the user, &ldquo;what&rsquo;s the value of &lsquo;dist&rsquo; here?&rdquo;</p>
+<p>The handy thing about having all of these bite-size functions is that none of them gets too crazy bulky, and also, since they&rsquo;re functions (and not dicts like I was using earlier), I can use regexes in them! I&rsquo;m also jamming on the idea of passing functions to other functions, so I made an even bigger function called <code>use_parser</code> that takes a parser, a default value, and an &lsquo;ask&rsquo;, which it uses to ask the user (via raw_input) what the value should be. This way, I can take a single parser and customize it in a variety of ways. Say for example I have a distance parser: for do-si-dos and gypsies it should default to False (because those moves don&rsquo;t necessarily need to take a distance) and for allemandes it should ask the user, &ldquo;what&rsquo;s the value of &lsquo;dist&rsquo; here?&rdquo;<!-- more --></p>
 
 <p>But there&rsquo;s something odd going on here that initially threw me for a loop. (&hellip;No lie, it kind of still does.) And that&rsquo;s defining a function INSIDE of another function!</p>
 
 <p>I got tripped up the first time when I tried to check if the parser returned anything, with code that looked like this:</p>
 
-<pre><code>def one_of(parsers):
-    def parser(input):
-        for p in parsers:
-            result = p(input)
-            if result:
-                return result
-    if parser:
-        return parser
-    else:
-        print "Your parser didn't return anything!"
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">one_of</span><span class="p">(</span><span class="n">parsers</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parsers</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">result</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">parser</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">parser</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&quot;Your parser didn&#39;t return anything!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>But even when the parser returned None, my print statement didn&rsquo;t get tripped. What&rsquo;s happening here is that <code>return parser</code> isn&rsquo;t returning a value, <em>it&rsquo;s returning a function</em>, and that function, by virtue of existing, will always evaluate to <code>True</code>. That&rsquo;s the reason <code>contains_an_a_or_a_b = one_of([contains_an_a, contains_a_b])</code> makes a new function rather that returning a value: because <code>one_of</code> returns a function <em>without calling it</em>. That&rsquo;s why this works:</p>
 
-<pre><code>def math(x):
-    def add(y):
-        return x+y
-    return add
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">math</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'><span class="o">...</span>     <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+</span><span class='line'><span class="o">...</span>         <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="n">add</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">add_to_5</span> <span class="o">=</span> <span class="n">math</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">add_to_5</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">function</span> <span class="n">add</span> <span class="n">at</span> <span class="mh">0x104502f50</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="c"># Look: Python recognizes this thing that I just defined as a function</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">add_to_5</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</span><span class='line'><span class="mi">105</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="c"># and it takes arguments just like a normal function.</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="c"># since math(x) returns a function, we can do</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="c"># weird-lookin&#39; stuff like this:</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">math</span><span class="p">(</span><span class="mi">30</span><span class="p">)(</span><span class="mi">40</span><span class="p">)</span>
+</span><span class='line'><span class="mi">70</span>
+</span></code></pre></td></tr></table></div></figure>
 
-&gt;&gt;&gt; add_to_5 = math(5)
-&gt;&gt;&gt; add_to_5
-&lt;function add at 0x104502f50&gt;
-&gt;&gt;&gt; # Look: Python recognizes this thing that I just defined as a function
-&gt;&gt;&gt; add_to_5(100)
-105
-# and it takes arguments just like a normal function.
-# since math(x) returns a function, we can do weird-lookin' stuff like this:
-&gt;&gt;&gt; math(30)(40)
-70
-</code></pre>
 
 <p>In Python, functions are first-class objects, which means they can be passed as arguments and manipulated just like other data types. Which lets you do neat things like define functions inside other functions, and return functions from functions which you can then call later with the arguments that you choose, etc. etc. Cool stuff!</p>
 </div>

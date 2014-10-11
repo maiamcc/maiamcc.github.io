@@ -113,13 +113,12 @@
 
   <div class="entry-content"><p>Doing one thing at a time is very difficult.</p>
 
-<p>Here I am, first Monday without returning to Hacker School, sitting down to say &ldquo;Okay world, I spent the last three months <em>writing code</em> and it was awesome but I should know something about theory, algorithms, etc.; time to do some studying.&rdquo; I intended to sit down with <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Interactive Python</a> and blaze through a section or two before turning away to work on my other projects, job applications, etc. INSTEAD, I was filled with a sudden anxiety&ndash;what if Interactive Python isn&rsquo;t the right course for me? What if it&rsquo;s an okay course but there are better ones out there? What if by doing Interactive Python I&rsquo;m missing <em>the perfect algos course for me and this perfect course and I will be like ships passing in the night, never knowing what we might have had together, and all because I chose to work on Interactive Python</em>. I looked at a Corsera course, I looked at the SICP study group that some HSers are setting up, I debated whether I wanted to get involved with said study group remotely even though it&rsquo;s based on daily in-person meetings, all worrying that I would miss my soul-mate algos course if I made the wrong move.</p>
-
-<p>Then I realized that I was being silly.</p>
-
-<p>I&rsquo;m off to spend an hour on Interactive Python, and if it isn&rsquo;t working for me, I&rsquo;ll reevaluate. At worst, I&rsquo;ll work through it in a few weeks, learn some stuff, and try another course!</p>
-</div>
+<p>Here I am, first Monday without returning to Hacker School, sitting down to say &ldquo;Okay world, I spent the last three months <em>writing code</em> and it was awesome but I should know something about theory, algorithms, etc.; time to do some studying.&rdquo; I intended to sit down with <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Interactive Python</a> and blaze through a section or two before turning away to work on my other projects, job applications, etc.</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/10/06/choice-paralysis/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -155,91 +154,12 @@
 
   <div class="entry-content"><p>Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia&rsquo;s contradance database and the letter Y.)</p>
 
-<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reivewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.</p>
-
-<p>Let&rsquo;s define a helper function:</p>
-
-<pre><code>&gt;&gt;&gt; def make_a_list():
-    ... print "Making a list..."
-    ... return [1,2,3]
-</code></pre>
-
-<p>and then some random function that takes a (called) function as a default value:</p>
-
-<pre><code>&gt;&gt;&gt; def list_length(mylist = make_a_list()):
-...     return len(mylist)
-Making a list...
-</code></pre>
-
-<p>The thing that&rsquo;s odd about the code that we just ran is that it printed &ldquo;Making a list&hellip;&rdquo;, which implies that the <code>make_a_list</code> function got <em>called</em>, even though all we did was assign it as a default variable. Interesting. Now what happens if we run <code>list_length</code>?</p>
-
-<pre><code>&gt;&gt;&gt; list_length([1,2,3,4,5])
-5
-&gt;&gt;&gt; list_length()
-3
-</code></pre>
-
-<p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&ndash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
-
-<pre><code>&gt;&gt;&gt; from random import randint
-&gt;&gt;&gt; def plus_one(num=randint(1,1000)):
-...     return num+1
-&gt;&gt;&gt; plus_one(5)
-6
-&gt;&gt;&gt; # that worked as we expected it to
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; # hmm, something tells me that
-&gt;&gt;&gt; # we aren't getting a new random
-&gt;&gt;&gt; # number every time we run this function.
-</code></pre>
-
-<p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&ndash;really, all it takes to break things is a mutable object.</p>
-
-<pre><code>&gt;&gt;&gt; def append_one(mylist = []):
-...     mylist.append(1)
-...     return mylist
-&gt;&gt;&gt; append_one()
-[1]
-&gt;&gt;&gt; append_one()
-[1, 1]
-&gt;&gt;&gt; append_one()
-[1, 1, 1]
-&gt;&gt;&gt; append_one()
-[1, 1, 1, 1]
-&gt;&gt;&gt; append_one()
-[1, 1, 1, 1, 1]
-</code></pre>
-
-<p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&ndash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
-
-<pre><code>&gt;&gt;&gt; stuff = [1,3,5,7]
-&gt;&gt;&gt; def append_one(mylist = stuff):
-...     mylist.append(1)
-...     return mylist
-&gt;&gt;&gt; append_one()
-[1, 3, 5, 7, 1]
-&gt;&gt;&gt; append_one()
-[1, 3, 5, 7, 1, 1]
-&gt;&gt;&gt; append_one()
-[1, 3, 5, 7, 1, 1, 1]
-</code></pre>
-
-<p>Perhaps it&rsquo;s a bit more intuitive this way, but the exact same thing is happening in the previous example; the function is modifying a distinct object in memory, whether it was named before it got passed as a default argument or not.</p>
-
-<p>Whacky fun! And a valuable lesson learned: <em>don&rsquo;t use mutable objects or functions as default values in your functions</em> unless you want a whole lot of hilarious code hijinks. (Which, hey, maybe you do, no judgements here!)</p>
-</div>
+<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reivewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/29/lessons-in-default-function-arguments/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -275,93 +195,12 @@ Making a list...
 
   <div class="entry-content"><p>Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
 
-<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. If it&rsquo;s avoidable, don&rsquo;t mix JS and JQuery&ndash;be consistent within one document. Usually, JQuery is more precise and prettier. Consider using dollar signs at the beginning of your variable names to indicate that they point to JQuery objects, so you don&rsquo;t get confused. Most if not all JS functions have (generally shorter, prettier) JQuery equivalents. Here are some that I replaced in my code today:</p>
-
-<table><tr><td>
-    <strong>JS</strong>
-</td><td>
-    <strong>JQuery</strong>
-</td></tr>
-<tr><td>
-<code>
-    getElementByID("foo")
-</code>
-</td><td>
-<code>
-    $('#foo')
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    getElementsByClassName("bar")
-</code>
-</td><td>
-<code>
-    $('.bar')
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    this
-</code>
-</td><td>
-<code>
-    $(this)
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .setAttribute("foo","bar")
-</code>
-</td><td>
-<code>
-    .attr("foo", "bar")
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .getAttribute("foo")
-</code>
-</td><td>
-<code>
-    .attr("foo")
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .value
-</code>
-</td><td>
-<code>
-    .val()
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .parentNode
-</code>
-</td><td>
-<code>
-    .parent()
-</code>
-</td></tr>
-</table>
-
-
-<p><p>
-JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which gets all elements matching class &ldquo;bar&rdquo; and html tag &ldquo;mytag&rdquo;, respectively) return arrays of DOM elements. If you want to get something from this array, it can be tempting to pluck it from its index, a la <code>$(".bar")[2]</code>. <em>Be warned</em>: this returns a DOM element, and therefore you can&rsquo;t do shiny JQuery stuff to it. Instead, get that same element as a JQuery object with <code>$(".bar").eq(2)</code> (where the <code>eq</code> function takes as an argument the index of the thing you want to get out of the array). I can&rsquo;t tell you how much pain this would have saved me if I had known this at the beginning of my project.</p>
-
-<p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
-
-<p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsable child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
-</div>
+<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/24/javascript-jquery-101/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -403,21 +242,12 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 
 <p><img src="/images/mingusbug_output.png" alt="Output file" /></p>
 
-<p>For the record, what seems to be going on here, as far as we can tell, is that while the notes have been preserved, the rhythms have all shifted over by one. The first note has been magically converted into a quarter note, and each note after that has the duration that ought to have belonged to the note before it. (To explain it another way: assume that we have a list of original notes and we&rsquo;re making a list of new notes, where each new note OUGHT to be identical to its corersponding original note. Instead, we get <code>newnote[0].duration == quarter</code>, <code>newnote[1].duration == orignote[0].duration</code>, <code>newnote[2].duration == orignote[1].duration</code>, etc.)</p>
-
-<p>So, <a href="https://code.google.com/p/mingus/issues/detail?id=125">we&rsquo;ve submitted a bug report</a> but we&rsquo;re not optimistic since, like I mentioned, the last answered bug is from 2011. But one day, when my heart has healed, I&rsquo;ll go off looking for ways to fix this or for other Python midi libraries that are suitable for this project, and then I&rsquo;ll take another swing at the choral generator! (Any suggestions? Send them my way! I&rsquo;m looking for a lib that can read, inspect, write, and output midi.)</p>
-
-<p>Until then, as I near the end of HS, it&rsquo;s actually surprisingly freeing to have one less thing to worry about getting done. Obviously I&rsquo;m not going to finish all of this stuff before HS ends, but here&rsquo;s what&rsquo;s on my docket at the moment:</p>
-
-<ul>
-<li>contradance database (search logic, and eventually expanding and populating database)</li>
-<li>sudoku solver (so close&hellip;!)</li>
-<li>more work on the fabulous <a href="http://hypatia.ca/">Leigh Honeywell</a>&rsquo;s <a href="https://github.com/hypatia/virtuoso">Virtuoso Project</a>, which will soon be a web app that doles out writing exercises to fight imposter syndrome, and is also a fabulous excuse for me to learn Bootstrap and play with design.</li>
-<li>goob.py, a fake git</li>
-</ul>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/17/so-much-for-that-project/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -461,15 +291,12 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 
 <p>Me: &ldquo;Well, it won&rsquo;t run bpython!&rdquo;</p>
 
-<p>Him: &ldquo;Come on, you can do better than that.&rdquo;</p>
-
-<p>When he said this, I was somewhat shocked to realize that I hadn&rsquo;t even fully read the text of the error message&ndash;I assumed that it would be gibberish to me, as such messages often are, and that I would need to find someone with greater terminal-fu to help me decipher it.</p>
-
-<p>I can&rsquo;t remember now what exactly the problem was, but it was something having to do with the fact that my shiny new un-borked $PATH wasn&rsquo;t finding bpython because I had sudo installed it somewhere outside the virtualenv&hellip; (That sounds kind of illogical now that I write it, but I promise it was a real problem.) Regardless, by carefully reading the error message and talking it through with Tristan, I was able to figure out what had to be done pretty much on my own. It was super exciting, of course, because for most of Hacker School the terminal has remained an almost entirely opaque black box of sorcery (and possibly gnomes), but more than that, it made me sit up and realize that it <em>is</em> within my power to solve a lot of the problems that I come across.</p>
-
-<p>Now I have two things to balance. Obviously, I want to keep asking questions, learning new things, keeping myself from getting stuck in ruts. But there&rsquo;s also something to be said for that fifteen-minute window to work on a problem before I turn to Zulip or the person next to me. I tend to assume that anything I don&rsquo;t know is a result of my limited programming background, and is something that I can learn <em>massively</em> faster from a person than from hunting around on StackOverflow. And yes, this is often the case, but when it&rsquo;s not&ndash;or even when it is&ndash;the trouble-shooting and debugging and StackOverflow-ing and playing around in the REPL are all supremely valuable skills. I can solve my own problems more often than I expect, and should remember that!</p>
-</div>
+<p>Him: &ldquo;Come on, you can do better than that.&rdquo;</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/16/asking-for-too-much-help/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -508,24 +335,12 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 <ul>
 <li>misc. layout stuff, like putting import statements in alphabetical order</li>
 <li>avoid global vars when possible. I already knew this, but it&rsquo;s good to remember. For example, if you&rsquo;ve assuming your program will be run on the command line, you can put global vars in the <code>main()</code> function.</li>
-<li>functions that only incedentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)</li>
-<li><p>relatedly, try/except is your friend. I suspect that if you need a function that checks something&rsquo;s validity before running another function on it, if the check is simple, that checking func is probably unnessary and you can handle that behavior with a try/except in the function that actually does stuff. Pydocs puts it wonderfully:</p>
-
-<p>  <em><a href="https://docs.python.org/2/glossary.html#term-eafp">EAFP</a></em>
-      Easier to ask for forgiveness than permission. This common Python coding style assumes the existence of valid keys or attributes and catches exceptions if the assumption proves false. This clean and fast style is characterized by the presence of many <code>try</code> and <code>except</code> statements. The technique contrasts with the <a href="https://docs.python.org/2/glossary.html#term-lbyl">LBYL</a> style common to many other languages such as C.</p></li>
-<li><p>but even though try/except is great, be wary! It can make debugging a mess&ndash;had something in here that caught TypeErrors, which exploded on Amy when she made a change that caught a type error, but my program printed &ldquo;more arguments needed&rdquo; instead of anything helpful like, y&#8217;know, a stacktrace.</p></li>
-<li>if you&rsquo;re defining a dict., it looks prettiest to put spaces on both sides of the colon</li>
-<li>string concat. is a) ugly and b) not very efficient. Use string interpolation (or in a pinch, <code>join</code>) instead.</li>
-<li>you can search for substrings with <code>"substring" in "string"</code>! Who knew? I wrote a whole human-written-input parser using <code>if string.find(substring) &gt; -1</code>. My life has just changed.</li>
-<li>in <code>for</code> loops, explicit var names are the way to go. I&rsquo;m usually decent about this when looping through lists, strings, whatever, but for some reason I tend to look through dictionaries with a very undescript <code>for key in mydict</code>.</li>
-<li><code>.txt</code> extensions are totally unnecessary. Text files don&rsquo;t even need extensions.</li>
-<li>streamlined, logical, one-thing-per-commit git histories are awesome!</li>
-<li><code>str.startswith</code> and <code>str.endswith</code> are a thing! (Are both things?) Exciting! Now I want to go through all of the code I&rsquo;ve been writing recently and use these to replace any hard-coded integers in string manipulation, because that stuff&rsquo;s gross, man.</li>
-<li>tests. Tests are good. Write them.</li>
-</ul>
-
-</div>
+<li>functions that only incedentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/12/observations-from-phonebook-code-review/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -569,137 +384,12 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 
 <h4>All of your Git-age lives in the .git folder</h4>
 
-<p>When you run <code>git init</code>, all it does is create a <code>.git</code> folder. That&rsquo;s it! Your machine knows what folders are and aren&rsquo;t by the presence or absence of a <code>.git</code> directory. <code>.git</code> is a hidden folder, so to see it, type <code>ls -a</code>. Whenever you add or commit things to your git repo, they&rsquo;ll get stored in here.</p>
-
-<p>I&rsquo;m now in the directory of my new project, <code>gittest</code>. It contains two files, <code>a</code> and <code>b</code>, and isn&rsquo;t yet a git repo. When I look at what&rsquo;s inside it, it looks like this:</p>
-
-<pre><code>maia$ ls -a
-.   ..  a   b
-</code></pre>
-
-<p>Let&rsquo;s make it a git repo:</p>
-
-<pre><code>maia$ git init
-Initialized empty Git repository in [stuff]/gittest/.git/
-maia$ ls -a
-.   ..  .git    a   b
-</code></pre>
-
-<p>We can see the <code>.git</code> folder! Success! Here&rsquo;s the stuff inside it:</p>
-
-<pre><code>maia$ ls -a
-.       HEAD        description info        refs
-..      config      hooks       objects
-</code></pre>
-
-<h4>Anatomy of a commit: blobs, trees, commits</h4>
-
-<p>The git magic happens largely in the <code>/objects</code> folder. Right now it&rsquo;s got two folders in it that we don&rsquo;t care about, <code>info</code> and <code>pack</code>, which have to do with misc. git magic. But this is where stuff goes when we add/commit it. So let&rsquo;s do that.</p>
-
-<pre><code>maia$ git add -A
-maia$ ls .git/objects/
-31  e9  info    pack
-</code></pre>
-
-<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):</p>
-
-<pre><code>maia$ glook e91ace6ef46e2244fc3588bdead8f66b35b20d12
-stuff inside file a
-</code></pre>
-
-<p>These big long hashes point to files, known in git-land as <code>blobs</code>. Right now these are staged. After we commit them, <code>.git/objects</code> looks like this:</p>
-
-<pre><code>maia$ ls .git/objects/
-31  81  a7  e9  info    pack
-</code></pre>
-
-<p>We have two new directories in here since our commit, both in the same <code>xx/yyyyyy</code> format where <code>xxyyyyyy</code> is a big long hash thing we can use to access the thing inside. Here&rsquo;s the stuff inside the two new things:</p>
-
-<pre><code>maia$ glook 81ad97f6d112d96081fffc3d3b729828917eff5e
-tree a720b6d097b88601c3647be863269539ccc7f64d
-author maianess &lt;maia.mcc@gmail.com&gt; 1409698376 -0400
-committer maianess &lt;maia.mcc@gmail.com&gt; 1409698376 -0400
-
-first commit
-maia$ glook a720b6d097b88601c3647be863269539ccc7f64d
-100644 blob e91ace6ef46e2244fc3588bdead8f66b35b20d12    a
-100644 blob 31e9dce72edaeb87f2b007b09230bfd5008da63e    b
-</code></pre>
-
-<p>The first thing is a <code>commit</code> object. It lists a <code>tree</code> object, author, committer, and commit message (which here is &ldquo;first commit&rdquo;). The second thing is a <code>tree</code> object: it contains references to all files or folders (which would also be tree objects) in the given commit. This tree points to our files a and b (identified by their magic git hashes).</p>
-
-<p>OH, but also, from the second commit onward, commit objects look a little different. They have one additional line that provides the hash of the parent, or the commit directly before that one. I added a file <code>c</code> in directory <code>foo</code>. Here&rsquo;s what my second commit looks like:</p>
-
-<pre><code>maia$ glook 33380bb5dfd152bf72dad49c3e388bccee1a4dfb
-tree 0d656c0ff73ea5315ec498acf144df9958e48819
-parent 81ad97f6d112d96081fffc3d3b729828917eff5e
-author maianess &lt;maia.mcc@gmail.com&gt; 1409709920 -0400
-committer maianess &lt;maia.mcc@gmail.com&gt; 1409709920 -0400
-
-second: added directory 'foo'
-</code></pre>
-
-<p>To sumarize, the three kinds of objects you&rsquo;ll find in <code>.git/objects</code> look like this.</p>
-
-<h5>Blob, aka file:</h5>
-
-<p><em>[encoded contents of the file]</em></p>
-
-<h5>Commit:</h5>
-
-<p><em>tree: [hash of tree pointing to the files of this commit]<br>
-author: [name]<br>
-[commit message]</em></p>
-
-<h5>Tree:</h5>
-
-<p><em>[hash of a blog (file)]<br>
-[hash of a blog (file)]<br>
-[hash of a blog (file)]<br>
-&hellip;as many times as you want<br>
-[hash of a tree (folder)]<br>
-[hash of a tree (folder)]<br>
-&hellip;as many times as you want</em></p>
-
-<h4>How a few commits might look</h4>
-
-<p>Git objects contain the hashes of other git objects, which is how the files keep track of each other. Given a commit, you can find the tree representing the root, and from there all of the files and/or folders (represented by trees) that it contains. From that same commit, you can also find it&rsquo;s parent commit, and then <em>its</em> parent, each with their attendant file-states, and so can trace your history back. Let&rsquo;s look at fun diagrams!</p>
-
-<p>Here&rsquo;s my initial commit, when the file tree looks like this, and my git looks like this:</p>
-
-<pre><code>.
-├── a
-├── b
-</code></pre>
-
-<p><img src="/images/git1.png" alt="Git diagram" /></p>
-
-<p>Now let&rsquo;s say I add a directory <code>foo</code>, and a file in foo <code>c</code>, and make changes to <code>a</code> and <code>b</code>. The file tree now looks like this, and my git looks like this:</p>
-
-<pre><code>.
-├── a
-├── b
-└── foo
-    └── c
-</code></pre>
-
-<p><img src="/images/git2.png" alt="Git guts" /></p>
-
-<p>You see that the main tree, <code>tree2</code>, is pointing directly to <code>a</code> and <code>b</code> but not to <code>c</code>&ndash;rather, it points to <code>tree2.1</code>, which points to <code>c</code>. It looks this way because git uses trees to represent directories; it references files living in subdirectories via trees (representing those directories) referencing those files.</p>
-
-<p>Note that git is still storing (in super-compact encoded form) all previous versions of the files, and given this network of things-that-contain-hashes-of-other-things, we know exactly where to look for any version of any file we want to find. And git only makes the necessary changes. Look what happens if we change <code>a</code> and <code>c</code> but leave <code>b</code> the same:</p>
-
-<p><img src="/images/git3.png" alt="Git guts" /></p>
-
-<p>There&rsquo;s no need to make another representation of <code>b</code>, since <code>b</code> hasn&rsquo;t been changed this commit. Instead, where the tree has to point to <code>b</code>, it points to the hash of the <em>existing</em> version of <code>b</code>.</p>
-
-<p>So, now I understand a biiiiit more about the whacky world of git and just what these cryptic commands are doing! I even understand pointers and branching and detached head state and all that a bit better, but that is perhaps another post for another day. Cheers!</p>
-
-<p>[1] To quote from the Git docs: &ldquo;When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a &lsquo;fast forward&rsquo;.&rdquo; Or, look at this <a href="https://sandofsky.com/images/fast_forward.pdf">explanation in pretty pictures</a>. By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.</p>
-
-<p>[2] <code>glook</code> is a shortcut I made; the full command to get file contents from one of these hashes is <code>git cat-file -p</code>.</p>
-</div>
+<p>When you run <code>git init</code>, all it does is create a <code>.git</code> folder. That&rsquo;s it! Your machine knows what folders are and aren&rsquo;t by the presence or absence of a <code>.git</code> directory. <code>.git</code> is a hidden folder, so to see it, type <code>ls -a</code>. Whenever you add or commit things to your git repo, they&rsquo;ll get stored in here.</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/02/taming-the-octopress/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -737,63 +427,45 @@ author: [name]<br>
 
 <p>The other day, as I was making this craaaazy dance parser (that&rsquo;s getting more and more convoluted by the minute), Alan suggested a really baller way of organizing it: using a bunch of little mini-parser functions that all look for something specific in your text, and smooshing related parsers together into one macro-parser that runs all of them in turn until one returns something. In Alan&rsquo;s lovely mock-up code that I&rsquo;m shamelessly copying over here, that might look like this:</p>
 
-<pre><code>def contains_an_a(input):
-    return input.find("a") &gt; -1
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">contains_an_a</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">contains_a_b</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">one_of</span><span class="p">(</span><span class="n">parsers</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parsers</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">result</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">parser</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">contains_an_a_or_a_b</span> <span class="o">=</span> <span class="n">one_of</span><span class="p">([</span><span class="n">contains_an_a</span><span class="p">,</span> <span class="n">contains_a_b</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
 
-def contains_a_b(input):
-    return input.find("b") &gt; -1
 
-def one_of(parsers):
-    def parser(input):
-        for p in parsers:
-            result = p(input)
-            if result:
-                return result
-    return parser
-
-contains_an_a_or_a_b = one_of([contains_an_a, contains_a_b])
-</code></pre>
-
-<p>The handy thing about having all of these bite-size functions is that none of them gets too crazy bulky, and also, since they&rsquo;re functions (and not dicts like I was using earlier), I can use regexes in them! I&rsquo;m also jamming on the idea of passing functions to other functions, so I made an even bigger function called <code>use_parser</code> that takes a parser, a default value, and an &lsquo;ask&rsquo;, which it uses to ask the user (via raw_input) what the value should be. This way, I can take a single parser and customize it in a variety of ways. Say for example I have a distance parser: for do-si-dos and gypsies it should default to False (because those moves don&rsquo;t necessarily need to take a distance) and for allemandes it should ask the user, &ldquo;what&rsquo;s the value of &lsquo;dist&rsquo; here?&rdquo;</p>
-
-<p>But there&rsquo;s something odd going on here that initially threw me for a loop. (&hellip;No lie, it kind of still does.) And that&rsquo;s defining a function INSIDE of another function!</p>
-
-<p>I got tripped up the first time when I tried to check if the parser returned anything, with code that looked like this:</p>
-
-<pre><code>def one_of(parsers):
-    def parser(input):
-        for p in parsers:
-            result = p(input)
-            if result:
-                return result
-    if parser:
-        return parser
-    else:
-        print "Your parser didn't return anything!"
-</code></pre>
-
-<p>But even when the parser returned None, my print statement didn&rsquo;t get tripped. What&rsquo;s happening here is that <code>return parser</code> isn&rsquo;t returning a value, <em>it&rsquo;s returning a function</em>, and that function, by virtue of existing, will always evaluate to <code>True</code>. That&rsquo;s the reason <code>contains_an_a_or_a_b = one_of([contains_an_a, contains_a_b])</code> makes a new function rather that returning a value: because <code>one_of</code> returns a function <em>without calling it</em>. That&rsquo;s why this works:</p>
-
-<pre><code>def math(x):
-    def add(y):
-        return x+y
-    return add
-
-&gt;&gt;&gt; add_to_5 = math(5)
-&gt;&gt;&gt; add_to_5
-&lt;function add at 0x104502f50&gt;
-&gt;&gt;&gt; # Look: Python recognizes this thing that I just defined as a function
-&gt;&gt;&gt; add_to_5(100)
-105
-# and it takes arguments just like a normal function.
-# since math(x) returns a function, we can do weird-lookin' stuff like this:
-&gt;&gt;&gt; math(30)(40)
-70
-</code></pre>
-
-<p>In Python, functions are first-class objects, which means they can be passed as arguments and manipulated just like other data types. Which lets you do neat things like define functions inside other functions, and return functions from functions which you can then call later with the arguments that you choose, etc. etc. Cool stuff!</p>
-</div>
+<p>The handy thing about having all of these bite-size functions is that none of them gets too crazy bulky, and also, since they&rsquo;re functions (and not dicts like I was using earlier), I can use regexes in them! I&rsquo;m also jamming on the idea of passing functions to other functions, so I made an even bigger function called <code>use_parser</code> that takes a parser, a default value, and an &lsquo;ask&rsquo;, which it uses to ask the user (via raw_input) what the value should be. This way, I can take a single parser and customize it in a variety of ways. Say for example I have a distance parser: for do-si-dos and gypsies it should default to False (because those moves don&rsquo;t necessarily need to take a distance) and for allemandes it should ask the user, &ldquo;what&rsquo;s the value of &lsquo;dist&rsquo; here?&rdquo;</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/08/28/nested-functions/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -829,207 +501,90 @@ contains_an_a_or_a_b = one_of([contains_an_a, contains_a_b])
 
   <div class="entry-content"><p>The sudoku solver that I&rsquo;m working on with <a href="https://mlauter.github.io/">Miriam</a> was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written&ndash;</p>
 
-<pre><code>def draw_board(board):
-    for i in range(0,9):
-        board[i].insert(6, "|")
-        board[i].insert(3, "|")
-        row_string = "  ".join(map(str, board[i]))
-        if i in [2, 5]:
-            print row_string
-            print "________________________________"
-        else:
-            print row_string
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">draw_board</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">row_string</span> <span class="o">=</span> <span class="s">&quot;  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">row_string</span>
+</span><span class='line'>            <span class="k">print</span> <span class="s">&quot;________________________________&quot;</span>
+</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">row_string</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">newboard</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+</span></code></pre></td></tr></table></div></figure>
 
-def newboard():
-    return [[0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0]]
-</code></pre>
 
 <p>and the shiny output!</p>
 
-<pre><code>&gt;&gt;&gt; myboard = newboard()
-&gt;&gt;&gt; draw_board(myboard)
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">myboard</span> <span class="o">=</span> <span class="n">newboard</span><span class="p">()</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">draw_board</span><span class="p">(</span><span class="n">myboard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
 
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-</code></pre>
 
-<p>Everything was awesome! Or so I thought. But look what happened when I ran the code again.</p>
-
-<pre><code>&gt;&gt;&gt; draw_board(myboard)
-
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-________________________________
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-________________________________
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-</code></pre>
-
-<p>And again.</p>
-
-<pre><code>&gt;&gt;&gt; draw_board(myboard)
-
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-________________________________
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-________________________________
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-</code></pre>
-
-<p>AAAAAHHHH!!! THE VERTICAL LINES ARE ATTACKING! RUN FOR YOUR LIVES!</p>
-
-<p>At this point, being a clever programmer, I realized that I was changing the myboard array every time, inserting more and more vertical lines every time at indeces 3 and 6 every time I called <code>draw_board</code>.</p>
-
-<pre><code>&gt;&gt;&gt; myboard
-[[0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|',
-'|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|',
-0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0,
- 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|',
- 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '
-|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0,
-0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0]]
-
-So I handily revised my code:
-
-def draw_board(board):
-    copyboard = board[:]
-    for i in range(0,9):
-        copyboard[i].insert(6, "|")
-        copyboard[i].insert(3, "|")
-        row_string = "  ".join(map(str, copyboard[i]))
-        if i in [2, 5]:
-            print row_string
-            print "________________________________"
-        else:
-            print row_string
-</code></pre>
-
-<p>Instead of modifying <code>board</code>, I was modifying <code>copyboard</code>, a <em>new</em> object made by slicing <code>board</code>. Since it wasn&rsquo;t point back to the original array passed into the function, I reasoned, the original array wouldn&rsquo;t be modified, and I could continue calling <code>draw_board(myboard)</code> to my heart&rsquo;s content.</p>
-
-<p>But, horror of horrors! The vertical lines kept attacking! I thought I knew how slicing worked! At this point I brought to code to Miriam, stumped. We did a sanity check:</p>
-
-<pre><code>&gt;&gt;&gt; a = [1,2,3]
-&gt;&gt;&gt; b = a
-&gt;&gt;&gt; b
-[1, 2, 3]
-&gt;&gt;&gt; a is b
-True
-&gt;&gt;&gt; c = a[:]
-&gt;&gt;&gt; c
-[1, 2, 3]
-&gt;&gt;&gt; a is c
-False
-&gt;&gt;&gt; a.append(4)
-&gt;&gt;&gt; a
-[1, 2, 3, 4]
-&gt;&gt;&gt; b
-[1, 2, 3, 4]
-&gt;&gt;&gt; c
-[1, 2, 3]
-&gt;&gt;&gt;
-</code></pre>
-
-<p>If you point a new object back to an existing object, then they&rsquo;re identical and the new object always refers back to the old one, <em>but</em> you can create a new list (via slicing) that is identical to the old list but doesn&rsquo;t refer back to it, has a separate identity, can be called and modified separately, etc. What was going onnn???</p>
-
-<p>The problem, we eventually discovered, was with nested lists. Turns out that slicing is not enough: you get a <em>new</em> list of lists, but all the lists inside point back to the old lists.</p>
-
-<pre><code>&gt;&gt;&gt; a = [[1,2,3],[1,2,3],[1,2,3]]
-&gt;&gt;&gt; c = a[:]
-&gt;&gt;&gt; a
-[[1, 2, 3], [1, 2, 3], [1, 2, 3]]
-&gt;&gt;&gt; c
-[[1, 2, 3], [1, 2, 3], [1, 2, 3]]
-&gt;&gt;&gt; a is c
-False
-&gt;&gt;&gt; a[0] is c[0]
-True
-</code></pre>
-
-<p>So even though we copied the board with slicing&ndash;<code>copyboard = board[:]</code>&ndash;all of the rows in <code>copyboard</code> still pointed at the rows in <code>board</code>: copyboard[i]<code>and</code>board[i] were the same thing, so modifying <code>copyboard</code> changed <code>board</code> as well, leading to the endless insertion of vertical lines observed above.</p>
-
-<p>Miriam hit upon this really excellent thing called <em>deep copy</em>; as opposed to regular &lsquo;ol shallow copying like that above, deep copy would make a <em>new list</em> populated by <em>new lists</em>. And hallelujah, the problem was solved! The vertical line monsters were vanquished, and the people of Sudoku-Land could live in peace once more!</p>
-
-<pre><code>import copy
-
-def draw_board(board):
-    copyboard = copy.deepcopy(board)
-    for i in range(0,9):
-        copyboard[i].insert(6, "|")
-        ...etc.
-
-&gt;&gt;&gt; myboard = newboard()
-&gt;&gt;&gt; draw_board(myboard)
-
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-
-&gt;&gt;&gt; draw_board(myboard)
-
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-
-&gt;&gt;&gt; draw_board(myboard)
-
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-</code></pre>
-</div>
+<p>Everything was awesome! Or so I thought. But look what happened when I ran the code again.</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/08/26/slicing-is-not-enough/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -1069,17 +624,12 @@ ________________________________
 
 <ul>
 <li>I want to get better at asking for help, surmounting imposter syndrom, etc. I&rsquo;m <em>pretty</em> good at this, all things considered, but I still need to do lots more work on this front. Sometimes asking a question on a Zulip thread isn&rsquo;t what I need&ndash;it happens to not get responded to, or (more often) I would benefit much more from discussing it in person.</li>
-<li>An interesting thing about the HS environment is how it&rsquo;s way more normal to Zulip someone from across the room than go over and tap them on the shoulder. Generally, I get way more out of an in-person conversation than an online one, so I&rsquo;d like to be better about just finding people in person to ask them questions. (Of course, the benefit of Zulip-ing is that you know who can/can&rsquo;t be interrupted. Tricky balance here. But I should feel more able to approach facilitators, at least.)</li>
-<li>A suggested rule of thumb: spend no more than 15 minutes figuring out some problem. Doing the research, reading the docs, trawling StackOverflow, etc. are all really good skills, but if the person next to you could answer in a minute what takes you half an hour to figure out online, that&rsquo;s a waste of time (plus needless suffering).</li>
-<li>Asking people questions is one thing, but I feel far more intimidated about <em>asking people to teach me things</em>, which is a shame, because it&rsquo;s really the way I learn best: talking to someone, being able to ask questions and go down tangents and figure out why various things work, rather than following tutorials online. I suspect I learn far more efficiently from people than from tutorials, so the next thing I want to learn (a la Django, etc.), I want to try asking someone to teach me for half an hour rather than self-teaching, and see how it works. (But alas, this makes me feel vary high-maintenence and un-self-sufficient. Is this a valid learning style or does it mean that I need to get better at self-teaching? Because I <em>can</em> self-teach, I just find learning from a person far more efficient.)</li>
-<li>Monday talks often go way over my head, because of my general lack of theoretical background. I would get way more out of them if I did reading in advance. I suspect other people are in this boat too. I want to start asking speakers for background reading recommendations. Maybe start a Monday study group?</li>
-<li>More pairing! More code review! (Even&ndash;nay, <em>especially</em>&ndash;before code is finished!) And blog more!</li>
-<li>Projects going forward: continue working on <a href="https://github.com/maianess/contradb">contradance database</a>, <a href="https://github.com/maianess/sudoku">sudoku solver</a>. Make a Zulip pun bot. Small challenges, maybe a 99-problems type thing in Python. Maybe dipping into js and making some games.</li>
-<li>Also, somtime, somehow, someday, I want to contribute to an open-source project! New goal for the end of Hacker School!</li>
-</ul>
-
-</div>
+<li>An interesting thing about the HS environment is how it&rsquo;s way more normal to Zulip someone from across the room than go over and tap them on the shoulder. Generally, I get way more out of an in-person conversation than an online one, so I&rsquo;d like to be better about just finding people in person to ask them questions. (Of course, the benefit of Zulip-ing is that you know who can/can&rsquo;t be interrupted. Tricky balance here. But I should feel more able to approach facilitators, at least.)</div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/08/25/checking-in-with-the-hacker-school-experience/">Read on &rarr;</a>
+    </footer>
   
 
 

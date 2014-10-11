@@ -110,205 +110,372 @@
 
 <div class="entry-content"><p>The sudoku solver that I&rsquo;m working on with <a href="https://mlauter.github.io/">Miriam</a> was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written&ndash;</p>
 
-<pre><code>def draw_board(board):
-    for i in range(0,9):
-        board[i].insert(6, "|")
-        board[i].insert(3, "|")
-        row_string = "  ".join(map(str, board[i]))
-        if i in [2, 5]:
-            print row_string
-            print "________________________________"
-        else:
-            print row_string
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">draw_board</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">row_string</span> <span class="o">=</span> <span class="s">&quot;  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">row_string</span>
+</span><span class='line'>            <span class="k">print</span> <span class="s">&quot;________________________________&quot;</span>
+</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">row_string</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">newboard</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+</span></code></pre></td></tr></table></div></figure>
 
-def newboard():
-    return [[0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0]]
-</code></pre>
 
 <p>and the shiny output!</p>
 
-<pre><code>&gt;&gt;&gt; myboard = newboard()
-&gt;&gt;&gt; draw_board(myboard)
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">myboard</span> <span class="o">=</span> <span class="n">newboard</span><span class="p">()</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">draw_board</span><span class="p">(</span><span class="n">myboard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
 
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-</code></pre>
 
-<p>Everything was awesome! Or so I thought. But look what happened when I ran the code again.</p>
+<p>Everything was awesome! Or so I thought. But look what happened when I ran the code again.<!-- more --></p>
 
-<pre><code>&gt;&gt;&gt; draw_board(myboard)
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">draw_board</span><span class="p">(</span><span class="n">myboard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
 
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-________________________________
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-________________________________
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-0  0  0  |  |  0  0  |  0  |  0  0  0
-</code></pre>
 
 <p>And again.</p>
 
-<pre><code>&gt;&gt;&gt; draw_board(myboard)
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">draw_board</span><span class="p">(</span><span class="n">myboard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
 
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-________________________________
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-________________________________
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
-</code></pre>
 
 <p>AAAAAHHHH!!! THE VERTICAL LINES ARE ATTACKING! RUN FOR YOUR LIVES!</p>
 
 <p>At this point, being a clever programmer, I realized that I was changing the myboard array every time, inserting more and more vertical lines every time at indeces 3 and 6 every time I called <code>draw_board</code>.</p>
 
-<pre><code>&gt;&gt;&gt; myboard
-[[0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|',
-'|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|',
-0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0,
- 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|',
- 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '
-|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0,
-0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0]]
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">myboard</span>
+</span><span class='line'><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span>
+</span><span class='line'> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
+</span><span class='line'> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;</span>
+</span><span class='line'><span class="o">|</span><span class="s">&#39;, 0, 0, 0], [0, 0, 0, &#39;</span><span class="o">|</span><span class="s">&#39;, &#39;</span><span class="o">|</span><span class="s">&#39;, &#39;</span><span class="o">|</span><span class="s">&#39;, 0, &#39;</span><span class="o">|</span><span class="s">&#39;, 0, &#39;</span><span class="o">|</span><span class="s">&#39;, 0, &#39;</span><span class="o">|</span><span class="s">&#39;, 0, 0, 0], [0, 0,</span>
+</span><span class='line'><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+</span></code></pre></td></tr></table></div></figure>
 
-So I handily revised my code:
 
-def draw_board(board):
-    copyboard = board[:]
-    for i in range(0,9):
-        copyboard[i].insert(6, "|")
-        copyboard[i].insert(3, "|")
-        row_string = "  ".join(map(str, copyboard[i]))
-        if i in [2, 5]:
-            print row_string
-            print "________________________________"
-        else:
-            print row_string
-</code></pre>
+<p>So I handily revised my code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">draw_board</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">copyboard</span> <span class="o">=</span> <span class="n">board</span><span class="p">[:]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">copyboard</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">copyboard</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">row_string</span> <span class="o">=</span> <span class="s">&quot;  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">copyboard</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">row_string</span>
+</span><span class='line'>            <span class="k">print</span> <span class="s">&quot;________________________________&quot;</span>
+</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">row_string</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Instead of modifying <code>board</code>, I was modifying <code>copyboard</code>, a <em>new</em> object made by slicing <code>board</code>. Since it wasn&rsquo;t point back to the original array passed into the function, I reasoned, the original array wouldn&rsquo;t be modified, and I could continue calling <code>draw_board(myboard)</code> to my heart&rsquo;s content.</p>
 
 <p>But, horror of horrors! The vertical lines kept attacking! I thought I knew how slicing worked! At this point I brought to code to Miriam, stumped. We did a sanity check:</p>
 
-<pre><code>&gt;&gt;&gt; a = [1,2,3]
-&gt;&gt;&gt; b = a
-&gt;&gt;&gt; b
-[1, 2, 3]
-&gt;&gt;&gt; a is b
-True
-&gt;&gt;&gt; c = a[:]
-&gt;&gt;&gt; c
-[1, 2, 3]
-&gt;&gt;&gt; a is c
-False
-&gt;&gt;&gt; a.append(4)
-&gt;&gt;&gt; a
-[1, 2, 3, 4]
-&gt;&gt;&gt; b
-[1, 2, 3, 4]
-&gt;&gt;&gt; c
-[1, 2, 3]
-&gt;&gt;&gt;
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+</span><span class='line'><span class="bp">True</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">c</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If you point a new object back to an existing object, then they&rsquo;re identical and the new object always refers back to the old one, <em>but</em> you can create a new list (via slicing) that is identical to the old list but doesn&rsquo;t refer back to it, has a separate identity, can be called and modified separately, etc. What was going onnn???</p>
 
 <p>The problem, we eventually discovered, was with nested lists. Turns out that slicing is not enough: you get a <em>new</em> list of lists, but all the lists inside point back to the old lists.</p>
 
-<pre><code>&gt;&gt;&gt; a = [[1,2,3],[1,2,3],[1,2,3]]
-&gt;&gt;&gt; c = a[:]
-&gt;&gt;&gt; a
-[[1, 2, 3], [1, 2, 3], [1, 2, 3]]
-&gt;&gt;&gt; c
-[[1, 2, 3], [1, 2, 3], [1, 2, 3]]
-&gt;&gt;&gt; a is c
-False
-&gt;&gt;&gt; a[0] is c[0]
-True
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+</span><span class='line'><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span>
+</span><span class='line'><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">c</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'><span class="bp">True</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>So even though we copied the board with slicing&ndash;<code>copyboard = board[:]</code>&ndash;all of the rows in <code>copyboard</code> still pointed at the rows in <code>board</code>: copyboard[i]<code>and</code>board[i] were the same thing, so modifying <code>copyboard</code> changed <code>board</code> as well, leading to the endless insertion of vertical lines observed above.</p>
 
 <p>Miriam hit upon this really excellent thing called <em>deep copy</em>; as opposed to regular &lsquo;ol shallow copying like that above, deep copy would make a <em>new list</em> populated by <em>new lists</em>. And hallelujah, the problem was solved! The vertical line monsters were vanquished, and the people of Sudoku-Land could live in peace once more!</p>
 
-<pre><code>import copy
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">copy</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">draw_board</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+</span><span class='line'><span class="o">...</span>     <span class="n">copyboard</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+</span><span class='line'><span class="o">...</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+</span><span class='line'><span class="o">...</span>         <span class="n">copyboard</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">...</span>         <span class="o">...</span><span class="n">etc</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">myboard</span> <span class="o">=</span> <span class="n">newboard</span><span class="p">()</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">draw_board</span><span class="p">(</span><span class="n">myboard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">draw_board</span><span class="p">(</span><span class="n">myboard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">draw_board</span><span class="p">(</span><span class="n">myboard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="n">________________________________</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
 
-def draw_board(board):
-    copyboard = copy.deepcopy(board)
-    for i in range(0,9):
-        copyboard[i].insert(6, "|")
-        ...etc.
-
-&gt;&gt;&gt; myboard = newboard()
-&gt;&gt;&gt; draw_board(myboard)
-
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-
-&gt;&gt;&gt; draw_board(myboard)
-
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-
-&gt;&gt;&gt; draw_board(myboard)
-
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-________________________________
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-0  0  0  |  0  0  0  |  0  0  0
-</code></pre>
 </div>
 
 

@@ -110,85 +110,141 @@
 
 <div class="entry-content"><p>Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia&rsquo;s contradance database and the letter Y.)</p>
 
-<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reivewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.</p>
+<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reivewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.<!-- more --></p>
 
 <p>Let&rsquo;s define a helper function:</p>
 
-<pre><code>&gt;&gt;&gt; def make_a_list():
-    ... print "Making a list..."
-    ... return [1,2,3]
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">make_a_list</span><span class="p">():</span>
+</span><span class='line'>    <span class="o">...</span> <span class="k">print</span> <span class="s">&quot;Making a list...&quot;</span>
+</span><span class='line'>    <span class="o">...</span> <span class="k">return</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>and then some random function that takes a (called) function as a default value:</p>
 
-<pre><code>&gt;&gt;&gt; def list_length(mylist = make_a_list()):
-...     return len(mylist)
-Making a list...
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">list_length</span><span class="p">(</span><span class="n">mylist</span> <span class="o">=</span> <span class="n">make_a_list</span><span class="p">()):</span>
+</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">mylist</span><span class="p">)</span>
+</span><span class='line'><span class="n">Making</span> <span class="n">a</span> <span class="nb">list</span><span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>The thing that&rsquo;s odd about the code that we just ran is that it printed &ldquo;Making a list&hellip;&rdquo;, which implies that the <code>make_a_list</code> function got <em>called</em>, even though all we did was assign it as a default variable. Interesting. Now what happens if we run <code>list_length</code>?</p>
 
-<pre><code>&gt;&gt;&gt; list_length([1,2,3,4,5])
-5
-&gt;&gt;&gt; list_length()
-3
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">list_length</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+</span><span class='line'><span class="mi">5</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">list_length</span><span class="p">()</span>
+</span><span class='line'><span class="mi">3</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&ndash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
 
-<pre><code>&gt;&gt;&gt; from random import randint
-&gt;&gt;&gt; def plus_one(num=randint(1,1000)):
-...     return num+1
-&gt;&gt;&gt; plus_one(5)
-6
-&gt;&gt;&gt; # that worked as we expected it to
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; plus_one()
-42
-&gt;&gt;&gt; # hmm, something tells me that
-&gt;&gt;&gt; # we aren't getting a new random
-&gt;&gt;&gt; # number every time we run this function.
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)):</span>
+</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="mi">6</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="c"># that worked as we expected it to</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
+</span><span class='line'><span class="mi">42</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
+</span><span class='line'><span class="mi">42</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
+</span><span class='line'><span class="mi">42</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
+</span><span class='line'><span class="mi">42</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
+</span><span class='line'><span class="mi">42</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
+</span><span class='line'><span class="mi">42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hmm. It would appear that we aren&rsquo;t getting a new random number every time we run this function.</p>
 
 <p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&ndash;really, all it takes to break things is a mutable object.</p>
 
-<pre><code>&gt;&gt;&gt; def append_one(mylist = []):
-...     mylist.append(1)
-...     return mylist
-&gt;&gt;&gt; append_one()
-[1]
-&gt;&gt;&gt; append_one()
-[1, 1]
-&gt;&gt;&gt; append_one()
-[1, 1, 1]
-&gt;&gt;&gt; append_one()
-[1, 1, 1, 1]
-&gt;&gt;&gt; append_one()
-[1, 1, 1, 1, 1]
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">append_one</span><span class="p">(</span><span class="n">mylist</span> <span class="o">=</span> <span class="p">[]):</span>
+</span><span class='line'><span class="o">...</span>     <span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="n">mylist</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&ndash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
 
-<pre><code>&gt;&gt;&gt; stuff = [1,3,5,7]
-&gt;&gt;&gt; def append_one(mylist = stuff):
-...     mylist.append(1)
-...     return mylist
-&gt;&gt;&gt; append_one()
-[1, 3, 5, 7, 1]
-&gt;&gt;&gt; append_one()
-[1, 3, 5, 7, 1, 1]
-&gt;&gt;&gt; append_one()
-[1, 3, 5, 7, 1, 1, 1]
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">stuff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">append_one</span><span class="p">(</span><span class="n">mylist</span> <span class="o">=</span> <span class="n">stuff</span><span class="p">):</span>
+</span><span class='line'><span class="o">...</span>     <span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="n">mylist</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Perhaps it&rsquo;s a bit more intuitive this way, but the exact same thing is happening in the previous example; the function is modifying a distinct object in memory, whether it was named before it got passed as a default argument or not.</p>
 

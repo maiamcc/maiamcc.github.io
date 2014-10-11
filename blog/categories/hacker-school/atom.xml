@@ -4,7 +4,7 @@
   <title><![CDATA[Category: hacker school | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/hacker-school/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-10-10T18:20:05-04:00</updated>
+  <updated>2014-10-11T15:28:57-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia McCormick]]></name>
@@ -20,25 +20,25 @@
     <id>http://maiamcc.github.io/blog/2014/09/29/lessons-in-default-function-arguments</id>
     <content type="html"><![CDATA[<p>Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia&rsquo;s contradance database and the letter Y.)</p>
 
-<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reivewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.</p>
+<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reivewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.<!-- more --></p>
 
 <p>Let&rsquo;s define a helper function:</p>
 
-<pre><code>&gt;&gt;&gt; def make_a_list():
+<pre><code class="python">&gt;&gt;&gt; def make_a_list():
     ... print "Making a list..."
     ... return [1,2,3]
 </code></pre>
 
 <p>and then some random function that takes a (called) function as a default value:</p>
 
-<pre><code>&gt;&gt;&gt; def list_length(mylist = make_a_list()):
+<pre><code class="python">&gt;&gt;&gt; def list_length(mylist = make_a_list()):
 ...     return len(mylist)
 Making a list...
 </code></pre>
 
 <p>The thing that&rsquo;s odd about the code that we just ran is that it printed &ldquo;Making a list&hellip;&rdquo;, which implies that the <code>make_a_list</code> function got <em>called</em>, even though all we did was assign it as a default variable. Interesting. Now what happens if we run <code>list_length</code>?</p>
 
-<pre><code>&gt;&gt;&gt; list_length([1,2,3,4,5])
+<pre><code class="python">&gt;&gt;&gt; list_length([1,2,3,4,5])
 5
 &gt;&gt;&gt; list_length()
 3
@@ -46,7 +46,7 @@ Making a list...
 
 <p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&ndash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
 
-<pre><code>&gt;&gt;&gt; from random import randint
+<pre><code class="python">&gt;&gt;&gt; from random import randint
 &gt;&gt;&gt; def plus_one(num=randint(1,1000)):
 ...     return num+1
 &gt;&gt;&gt; plus_one(5)
@@ -64,14 +64,13 @@ Making a list...
 42
 &gt;&gt;&gt; plus_one()
 42
-&gt;&gt;&gt; # hmm, something tells me that
-&gt;&gt;&gt; # we aren't getting a new random
-&gt;&gt;&gt; # number every time we run this function.
 </code></pre>
+
+<p>Hmm. It would appear that we aren&rsquo;t getting a new random number every time we run this function.</p>
 
 <p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&ndash;really, all it takes to break things is a mutable object.</p>
 
-<pre><code>&gt;&gt;&gt; def append_one(mylist = []):
+<pre><code class="python">&gt;&gt;&gt; def append_one(mylist = []):
 ...     mylist.append(1)
 ...     return mylist
 &gt;&gt;&gt; append_one()
@@ -88,7 +87,7 @@ Making a list...
 
 <p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&ndash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
 
-<pre><code>&gt;&gt;&gt; stuff = [1,3,5,7]
+<pre><code class="python">&gt;&gt;&gt; stuff = [1,3,5,7]
 &gt;&gt;&gt; def append_one(mylist = stuff):
 ...     mylist.append(1)
 ...     return mylist
@@ -113,7 +112,7 @@ Making a list...
     <id>http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101</id>
     <content type="html"><![CDATA[<p>Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
 
-<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. If it&rsquo;s avoidable, don&rsquo;t mix JS and JQuery&ndash;be consistent within one document. Usually, JQuery is more precise and prettier. Consider using dollar signs at the beginning of your variable names to indicate that they point to JQuery objects, so you don&rsquo;t get confused. Most if not all JS functions have (generally shorter, prettier) JQuery equivalents. Here are some that I replaced in my code today:</p>
+<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. <!-- more -->If it&rsquo;s avoidable, don&rsquo;t mix JS and JQuery&ndash;be consistent within one document. Usually, JQuery is more precise and prettier. Consider using dollar signs at the beginning of your variable names to indicate that they point to JQuery objects, so you don&rsquo;t get confused. Most if not all JS functions have (generally shorter, prettier) JQuery equivalents. Here are some that I replaced in my code today:</p>
 
 <table><tr><td>
     <strong>JS</strong>
@@ -214,6 +213,9 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 
 <p><img src="/images/mingusbug_output.png" alt="Output file" /></p>
 
+<!-- more -->
+
+
 <p>For the record, what seems to be going on here, as far as we can tell, is that while the notes have been preserved, the rhythms have all shifted over by one. The first note has been magically converted into a quarter note, and each note after that has the duration that ought to have belonged to the note before it. (To explain it another way: assume that we have a list of original notes and we&rsquo;re making a list of new notes, where each new note OUGHT to be identical to its corersponding original note. Instead, we get <code>newnote[0].duration == quarter</code>, <code>newnote[1].duration == orignote[0].duration</code>, <code>newnote[2].duration == orignote[1].duration</code>, etc.)</p>
 
 <p>So, <a href="https://code.google.com/p/mingus/issues/detail?id=125">we&rsquo;ve submitted a bug report</a> but we&rsquo;re not optimistic since, like I mentioned, the last answered bug is from 2011. But one day, when my heart has healed, I&rsquo;ll go off looking for ways to fix this or for other Python midi libraries that are suitable for this project, and then I&rsquo;ll take another swing at the choral generator! (Any suggestions? Send them my way! I&rsquo;m looking for a lib that can read, inspect, write, and output midi.)</p>
@@ -245,7 +247,7 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 
 <p>Me: &ldquo;Well, it won&rsquo;t run bpython!&rdquo;</p>
 
-<p>Him: &ldquo;Come on, you can do better than that.&rdquo;</p>
+<p>Him: &ldquo;Come on, you can do better than that.&rdquo;<!-- more --></p>
 
 <p>When he said this, I was somewhat shocked to realize that I hadn&rsquo;t even fully read the text of the error message&ndash;I assumed that it would be gibberish to me, as such messages often are, and that I would need to find someone with greater terminal-fu to help me decipher it.</p>
 
@@ -265,11 +267,12 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 <ul>
 <li>misc. layout stuff, like putting import statements in alphabetical order</li>
 <li>avoid global vars when possible. I already knew this, but it&rsquo;s good to remember. For example, if you&rsquo;ve assuming your program will be run on the command line, you can put global vars in the <code>main()</code> function.</li>
-<li>functions that only incedentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)</li>
+<li>functions that only incedentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)<!-- more --></li>
 <li><p>relatedly, try/except is your friend. I suspect that if you need a function that checks something&rsquo;s validity before running another function on it, if the check is simple, that checking func is probably unnessary and you can handle that behavior with a try/except in the function that actually does stuff. Pydocs puts it wonderfully:</p>
 
-<p>  <em><a href="https://docs.python.org/2/glossary.html#term-eafp">EAFP</a></em>
-      Easier to ask for forgiveness than permission. This common Python coding style assumes the existence of valid keys or attributes and catches exceptions if the assumption proves false. This clean and fast style is characterized by the presence of many <code>try</code> and <code>except</code> statements. The technique contrasts with the <a href="https://docs.python.org/2/glossary.html#term-lbyl">LBYL</a> style common to many other languages such as C.</p></li>
+<blockquote><p><a href="https://docs.python.org/2/glossary.html#term-eafp">EAFP</a> (Easier to Ask for Forgiveness than Permission):</p>
+
+<p>This common Python coding style assumes the existence of valid keys or attributes and catches exceptions if the assumption proves false. This clean and fast style is characterized by the presence of many <code>try</code> and <code>except</code> statements. The technique contrasts with the <a href="https://docs.python.org/2/glossary.html#term-lbyl">LBYL</a> style common to many other languages such as C.</p></blockquote></li>
 <li><p>but even though try/except is great, be wary! It can make debugging a mess&ndash;had something in here that caught TypeErrors, which exploded on Amy when she made a change that caught a type error, but my program printed &ldquo;more arguments needed&rdquo; instead of anything helpful like, y&#8217;know, a stacktrace.</p></li>
 <li>if you&rsquo;re defining a dict., it looks prettiest to put spaces on both sides of the colon</li>
 <li>string concat. is a) ugly and b) not very efficient. Use string interpolation (or in a pinch, <code>join</code>) instead.</li>
