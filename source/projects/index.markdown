@@ -4,7 +4,7 @@ title: "Projects"
 date: 2014-10-07 18:00
 comments: false
 sharing: false
-footer: true
+footer: false
 sidebar: true
 ---
-Hello! Stuff will go here in a bit! Until then, you can amuse yourself with [this dorky game I wrote](/projects/gravity/play.html)!
+This page under construction. In the meantime, check out my [github](https://github.com/maiamcc) or amuse yourself with [this game I wrote](/projects/gravity/play.html).

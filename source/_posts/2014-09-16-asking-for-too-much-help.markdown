@@ -15,7 +15,7 @@ His response: "What do you think is going on?"
 
 Me: "Well, it won't run bpython!"
 
-Him: "Come on, you can do better than that."
+Him: "Come on, you can do better than that."<!-- more -->
 
 When he said this, I was somewhat shocked to realize that I hadn't even fully read the text of the error message--I assumed that it would be gibberish to me, as such messages often are, and that I would need to find someone with greater terminal-fu to help me decipher it.
 

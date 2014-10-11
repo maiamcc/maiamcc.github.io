@@ -5,7 +5,6 @@ date: 2014-07-21 14:53:25 -0400
 comments: true
 categories: [Hacker School]
 ---
-
 Hello all, and welcome to Maia's journey through Hacker School, as chronicled on a blog that probably only she herself will actually read. Here's where I'll keep track of projects, goals, progress, thoughts and feelings, etc. This morning was spent getting oriented and configuring my machine. Then eating lunch. Now I'm gonna go learn how to git.
 
 **Language:** Python

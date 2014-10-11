@@ -5,14 +5,13 @@ date: 2014-08-05 15:57:11 -0400
 comments: true
 categories: [Hacker School]
 ---
-
 **War and Peace**
 
 "Prince Andrew had gone about barefoot and in the streets and there out of the people is always delightful to Pierre with a painfully joyous emotion. Her favorite sonata bore her into slavery! Pull down your houses and the Cossack's information that the French soldiers. The company marched on gaily. The governor's good-natured wife came to town and was ready and a cadet to restrain a happy page who had thought and said it was merely a hindrance and obstacle to the insistence of Bennigsen, Konovnitsyn, and Ermolov received fresh appointments. Everyone spoke loudly of the possibility of active brotherly"
 
 **Pride and Prejudice**
 
-'impropriety of expression. When all of these things, and happily I am sure I shall have no objection was made by the assurance that I am perfectly serious in meditating a dance at Meryton, I believe, in every respect so altered a creature, that when they were all getting so intimate together. After lamenting it, however, at last very rapidly, as well inquire," replied she, "why with so little dignified, never had she so honestly felt that even Bingley\'s good humour itself, and many trials of other rich men; and lastly, it was not wholly without hope that the Collinses were come away, when her sisters were anxious for his intrusion by letting you see by Jane\'s letter last Wednesday, that her former friends than she expected, she soon afterwards ordered her carriage. Upon this signal, the youngest should tax Mr. Bingley on the spot. She had not been seated at table: "This is no talk of nothing but his father\'s favourite in such matters as these; but I did not think the worse of you is, to assure him how much it must only deter him from having a companion. Lydia was too cross to write. You supposed more'
+'impropriety of expression. When all of these things, and happily I am sure I shall have no objection was made by the assurance that I am perfectly serious in meditating a dance at Meryton, I believe, in every respect so altered a creature, that when they were all getting so intimate together. After lamenting it, however, at last very rapidly, as well inquire," replied she, "why with so little dignified, never had she so honestly felt that even Bingley\'s good humour itself, and many trials of other rich men; and lastly, it was not wholly without hope that the Collinses were come away, when her sisters were anxious for his intrusion by letting you see by Jane\'s letter last Wednesday, that her former friends than she expected, she soon afterwards ordered her carriage. Upon this signal, the youngest should tax Mr. Bingley on the spot. She had not been seated at table: "This is no talk of nothing but his father\'s favourite in such matters as these; but I did not think the worse of you is, to assure him how much it must only deter him from having a companion. Lydia was too cross to write. You supposed more'<!-- more -->
 
 **Shakespeare**
 
