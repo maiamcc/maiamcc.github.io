@@ -19,3 +19,42 @@
 //$sidebar-pad-medium: 15px;
 //$sidebar-pad-wide: 20px;
 //$sidebar-width-wide: 300px;
+
+#biocontainer {
+  .selected {
+    background-color: #FF0000;
+    @include rounded(top, right);
+    @include rounded(top, left);
+    display: inline;
+    padding: {
+      bottom: 3px;
+      top: 3px;
+    }
+    a {
+      color: $head-hov-color;
+    }
+  }
+  ul {
+    width: 100%;
+    border-bottom: 2px solid #000000;
+    margin-left: 0px
+  }
+  li {
+    list-style: none;
+    display: inline;
+    padding: 3px 15px;
+    a {
+      text-decoration: none;
+      color: $link-color;
+      width: 100%;
+    }
+    &:hover {
+      background-color: #cccccc;
+      @include rounded(top, right);
+      @include rounded(top, left);
+      a {
+        color: $head-hov-color;
+      }
+    }
+  }
+}
