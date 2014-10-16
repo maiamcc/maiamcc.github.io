@@ -26,35 +26,47 @@
     @include rounded(top, right);
     @include rounded(top, left);
     display: inline;
-    padding: {
-      bottom: 3px;
-      top: 3px;
-    }
-    a {
-      color: $head-hov-color;
-    }
+    padding-bottom: 3px;
+    padding-top: 3px;
+    border-bottom: 2px solid #000000;
   }
+
+  .selected > a {
+      color: $head-hov-color;
+      color: #cccccc;
+    }
+
+  .spacer {
+    display: inline;
+    padding: 3px 15px;
+  }
+
+  a {
+    text-decoration: none;
+    color: $link-color;
+    width: 100%;
+  }
+
   ul {
     width: 100%;
     border-bottom: 2px solid #000000;
-    margin-left: 0px
-  }
-  li {
-    list-style: none;
-    display: inline;
-    padding: 3px 15px;
-    a {
-      text-decoration: none;
-      color: $link-color;
-      width: 100%;
+    margin-left: 0px;
+    list-style-type: none;
+    padding-bottom: 1.5px;
+
+    li {
+      display: inline;
+      padding: 3px 15px;
     }
-    &:hover {
-      background-color: #cccccc;
-      @include rounded(top, right);
-      @include rounded(top, left);
-      a {
-        color: $head-hov-color;
-      }
+
+    li:hover {
+        background-color: #cccccc;
+        @include rounded(top, right);
+        @include rounded(top, left);
+
+    }
+    a:hover {
+          color: $head-hov-color;
     }
   }
 }
