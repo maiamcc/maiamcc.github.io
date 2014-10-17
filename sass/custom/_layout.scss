@@ -25,13 +25,16 @@
     background-color: #cccccc;
     @include rounded(top, right);
     @include rounded(top, left);
-    border-bottom: 2px solid #000000;
-    color: $head-hov-color;
+
+    a {
+      color: $head-hov-color;
+    }
   }
 
   .spacer {
     display: inline;
     padding: 3px 15px;
+    float: left;
   }
 
   a {
@@ -45,18 +48,26 @@
     border-bottom: 2px solid #000000;
     margin-left: 0px;
     list-style-type: none;
-    padding-bottom: 1.5px;
+    overflow: hidden;
 
     li {
       display: inline;
       padding: 3px 15px;
+      margin-bottom: -2px;
+      float: left;
     }
+
+      .resume {
+        float: right;
+      }
 
     li:hover {
         background-color: #cccccc;
         @include rounded(top, right);
         @include rounded(top, left);
+      a {
         color: $head-hov-color;
+      }
     }
   }
 }
