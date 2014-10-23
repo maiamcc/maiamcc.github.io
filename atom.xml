@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-10-23T16:26:20-04:00</updated>
+  <updated>2014-10-23T16:29:34-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia McCormick]]></name>
@@ -22,9 +22,12 @@
 
 <p>The other thing I got up to today was implementing some sort of (questionable) part-of-speech-based intelligence. The idea was to have a dictionary for parts of speech, in addition to a dictionary of words. Then the work flow would go something like this:</p>
 
-<p>1) start with a random seed
-2) what part of speech should come next? Given the POS&rsquo;s we already have, pick at random one that might follow it.
-3) given the words we have, pick a word that might follow <em>of the correct part of speech</em>. If none exists, repeat from step 2.</p>
+<ol>
+<li>start with a random seed</li>
+<li>what part of speech should come next? Given the POS&rsquo;s we already have, pick at random one that might follow it.</li>
+<li>given the words we have, pick a word that might follow <em>of the correct part of speech</em>. If none exists, repeat from step 2.</li>
+</ol>
+
 
 <p>Now, using word trigrams and POS trigrams, the above process doesn&rsquo;t really add much beyond what using plain &lsquo;ol word trigrams gets you. Could I make something better, though, by using, say, 4-grams or 5-grams of parts of speech?<!--more--></p>
 
