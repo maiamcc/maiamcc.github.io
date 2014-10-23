@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-10-22T16:19:42-04:00</updated>
+  <updated>2014-10-23T16:24:58-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia McCormick]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Markov Madness, Part 2]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/10/23/markov-madness-2/"/>
+    <updated>2014-10-23T16:13:34-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/10/23/markov-madness-2</id>
+    <content type="html"><![CDATA[<p>(If you&rsquo;re confused, see <a href="http://maiamcc.github.io/blog/2014/10/23/markov-madness/">my previous post on my Markov generator adventures</a>.)</p>
+
+<p>The other thing I got up to today was implementing some sort of (questionable) part-of-speech-based intelligence. The idea was to have a dictionary for parts of speech, in addition to a dictionary of words. Then the work flow would go something like this:</p>
+
+<p>1) start with a random seed
+2) what part of speech should come next? Given the POS&rsquo;s we already have, pick at random one that might follow it.
+3) given the words we have, pick a word that might follow <em>of the correct part of speech</em>. If none exists, repeat from step 2.</p>
+
+<p>Now, using word trigrams and POS trigrams, the above process doesn&rsquo;t really add much beyond what using plain &lsquo;ol word trigrams gets you. Could I make something better, though, by using, say, 4-grams or 5-grams of parts of speech?</p>
+
+<p>Well&hellip; I&rsquo;ll leave that to you to decide. Here are a bunch of different sample texts from Pride and Prejudice. All are word-gram-3. Some have no POS support, some are POS-gram-3, and some are POS-gram-4. (POS-gram-5, incedentally, doesn&rsquo;t really work&ndash;the requirements on what word you need to come next get so specific that there generally isn&rsquo;t one and the program crashes.) Which of these seem the most sensical? Can you guess which are no-POS, POS-gram-3, and POS-gram-4? Make your guesses&ndash;and then, if you want to check yourself, look at the HTML source for answers.</p>
+
+<pre><code>1) 'into a marriage with Miss Bennet. Miss Bingley\'s pretended regard." "Would you believe it, Lizzy, that is the most uncomfortable in her favour. Bingley was then disclosed in the same house with the length of his going away when I tell you, Miss Bennet. I send no compliments to Mr. Darcy:--but let me shift for myself; and, perhaps, if I were agreeing that we should all be there by Mrs. Hurst and Miss Bingley in a prudential light it places Mr. Darcy, by the awkwardness of the letter nor its writer were at the gate in the discharge of his'&lt;!--POS-gram = 4--&gt;
+
+2) 'difference of situation and temper. Consider Mr. Collins\'s picture of a sort of man; and of late it has not time to reply, but hurrying instantly to her so expressively, and shook hands with great enjoyment; and the mere ceremonious salutation attending his entrance. Anxious and uneasy, the period to which you have pleasure," said Bingley; "and I am in earnest. I speak plainer? Do not wish me such an assurance of it, that the match with a bow of superior society; but I know very well able to do it, she turned suddenly towards him and Mr. Darcy, "There'&lt;!--POS-gram = 3--&gt;
+
+3) 'from my thoughts." "When they all are." "All young ladies were ready enough to determine her feelings in the time. Good gracious! when I have always seen a great deal more than I might have sufficient charms; and though the probability of error, and seek to recommend them," replied he; "they are married!" Elizabeth read on: "I have no wish of seeing him almost for the felicity which a pair of fine eyes in amazement, but was too happy, however, and if he sees enough of Bingley\'s being withheld from seeing Jane, she seriously hoped he might change his mind' &lt;!--no POS support--&gt;
+
+4) 'ever have courage to shew Mrs. Gardiner\'s former residence, and where she had listened to her eyes, envied everyone to whom they would have been impossible for us to Miss Darcy, who had only set that down as soon as they used to be privileged to whisper to Elizabeth, "I hope not so. Painful recollections will not have forgotten where she was ready enough to make her resigned. As for my impertinence?" "For the liveliness of your own. But we are better acquainted--" He was resolutely silent, however, and, from a circulating library), he started back, and begging pardon, protested' &lt;!--no POS support--&gt;
+
+5) 'months. Of having another daughter married to Mr. Bingley. It was at length return home; and she was to bring it in my own doing, and I thought only of the peace of the world, must make Hunsford extremely dull to a real, strong attachment. Pray, how violent was Mr. Bingley\'s chaise to go with him; and unwilling, for her sister\'s sake, to provoke him. Elizabeth was the son of old Wickham, the late perverse occurrences had thrown on many of the largest folios in the neighbourhood." "Oh! no--it is not so handsome as Wickham; or, rather, he has not'&lt;!--POS-gram = 4--&gt;
+
+6) 'Darcy\'s praise occupied the chief of it. Can I speak plainer? Do not let your fancy run away with you. You will be an object of it, but Colonel Fitzwilliam was no more than she knew it myself, as it had not yet been able to enter the ----shire. She had no other reply to this effect: "I have been to persuade him against returning into Hertfordshire, anxiously renewing them at any time, etc. etc.; and if not, it would be gone in five minutes, you meant it to another, not to an end by exclamations and inquiries about the'&lt;!--POS-gram = 3--&gt;
+
+7) 'but tell Lydia she shall have as much a debt of gratitude cannot enough acknowledge. By this time have been too pleasantly engaged to my fair cousins, though my brother left us yesterday, he imagined that we have found some resemblance of character to love each other in large mixed parties, it is the man! Now, Lizzy, I hardly know myself what it is no occasion for such a man would satisfy me. We will settle so quietly, and live in my power, I am very far from suspecting that she was discontented, she fancied that praise of himself, of' &lt;!--no POS support--&gt;
+
+8) 'the opportunity of saying: "Is your sister make such an evil. Human nature is particularly prone to it, and sometimes with playful gaiety, replied to her housekeeping, her parish and her uncle had been her firmest opinion. Her keenest attention was suddenly roused by the middle of June, Kitty was too much sense to recommend myself to hope the best, in accepting a man on the subject. This will never be in want of money. Younger sons cannot marry where they were grieved, how shocking it was to distribute her presents and describe the newest fashions. When this information was'&lt;!--POS-gram = 3--&gt;
+
+9) 'the pleasantness of the park," he replied, "it has been my profession--I was brought up by him alone, was such as did think, than such a way." "I can readily believe," answered he gravely, "that reports may vary greatly with respect to me; and as she had not by any particular person, for though the uncomfortable feelings arising from all restraint, his life that, instead of a man of five-and-twenty. His air was grave and stately, and his relation of my nephew! Unfeeling, selfish girl! Do you think of themselves before anybody and everybody! If my vanity had taken on'&lt;!--POS-gram = 4--&gt;
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Markov Madness, Part 1]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/10/23/markov-madness/"/>
+    <updated>2014-10-23T15:52:47-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/10/23/markov-madness</id>
+    <content type="html"><![CDATA[<p>Man, I&rsquo;ve hardly written code in <em>three whole weeks!</em> Such a strange feelings, after 3 solid months of coding. Anyway, back at Hacker School for the day, and with my OPW application in, I&rsquo;ve been itching to actually <em>write some code</em>, so I revisited my old <a href="https://github.com/maiamcc/markovgen">Markov generator</a> project, which takes a training corpus and generates psuedo-random texts in the style of that corpus.<!--more--></p>
+
+<p>I&rsquo;ve tried a few different tacks today for getting texts that actually resembled English and not just word-soup. The first was using n-grams of varying n&rsquo;s when generating my texts[1]. n = 1 is just random words and not worth testing. n = 2 is very nearly gibberish. n = 3 and n = 4 are the sweet spot of sensical-yet-random text; when we get to n = 5, it tends to be several verbatim sentences from the corpus patched together in odd ways, and at n = 6, it is almost consistently exact quotes from the text. At a guess, in more quote-unquote complex texts (i.e., those with more unique words) n = 5 will be closer to verbatim, and in texts with more common words, there will be more room for deviation from any pattern that the generator falls into, and thus n = 5 will be distinct from the original text. Here are generated texts using n-grams of increasing n, from <em>Pride and Prejudice</em>.</p>
+
+<pre><code>In [67]: straight_up_markov_gen = Markov("texts/plain/pride_prejudice")
+
+In [68]: straight_up_markov_gen.generate(n=2)
+Out[68]: 'to-morrow; and as she could not do. He looked towards clearing him, Charlotte Lucas, when you an admiration will afford, and the establishment were said Miss Darcy was at no reason away, where Mr. Bingley was meant by me. I am sure," she had scarcely ever mentioned to her, "these offenses might have the temptation, added, "that my manner in the walk to Mr. Darcy liked him." "But it was diffuse in money which had ended only could listen, therefore, pardon for having very day confirms my dear," said by their present party; but their separation. To these three or'
+
+In [69]: straight_up_markov_gen.generate(n=3)
+Out[69]: 'been used to want to speak with composure when she ceased speaking, "I have just received from Mr. Collins." "From Mr. Collins! and what can he mean by apologising for being simply dressed. She likes to have on the instrument, Eliza, and you ought to have on the length of his description of Jane. She felt it incumbent on her side. But I am in such awe of her wishes. Their sister\'s wedding day arrived; and Jane seem so wholly unconnected with any other man it would go. But he found, in reply to his ideas of happiness! But it'
+
+In [70]: straight_up_markov_gen.generate(n=4)
+Out[70]: 'was his conviction of its being heard. Elizabeth soon saw that she was not very differently engaged. "There is also one other person in the room. Colonel Fitzwilliam seemed really glad to see them; he had felt the smallest interest, and from none received either attention or pleasure. Miss Bennet he acknowledged to be pretty, but she smiled too much. Mrs. Hurst and Miss Bingley was uncivil to her, and she felt how little would be gained by her attempting to pursue them. Calling back the servant, therefore, she commissioned him, though in so breathless an accent as made her'
+
+In [71]: straight_up_markov_gen.generate(n=5)
+Out[71]: 'some manner connected with the letter he held. It suddenly struck her that it might be from Lady Catherine; and she anticipated with dismay all the consequent explanations. She followed her father to the fire place, and they both sat down. He then said, "I have received a letter this morning that has astonished me exceedingly. As it principally concerns yourself, you ought to know its contents. I did not know what to think." "She is a very good kind of woman, not too clever to be a valuable neighbour to Mrs. Bennet. They had several children. The eldest of'
+</code></pre>
+
+<p>Compare that to n-grams of increasing n from <em>Harry Potter and the Chamber of Secrets</em>. There&rsquo;s the same pattern of higher n&rsquo;s both making more sense and being closer to the original text, but we don&rsquo;t start getting verbatim text excerpts until n = 6.</p>
+
+<pre><code>In [76]: harry_potter_markov_gen = Markov("texts/plain/chamber_secrets")
+
+In [77]: harry_potter_markov_gen.generate(n=2)
+Out[77]: 'knock people knew what Ginny out, reflecting the train harder than his hand- picked it into a nobody heard him - three of that your fault," retorted Draco. "The diary," said in the stairs. "Remember, boy was always top Ron had in Transfiguration. "I don\'t care, he saw the clouds and George must\'ve opened the elf came back in the pitch - the wiser -" "But, Professor," said Harry had never touched Harry\'s own free rein from his feet climbing through the full of whom were trickling down to turn up off the ground with a beacon of excitement gripped'
+
+In [78]: harry_potter_markov_gen.generate(n=3)
+Out[78]: 'Near sunset, Fred and George were now crammed into boxes on the side road where the photographer had stepped on what to do. "Not lost are you, Myrtle?" said Hermione as the Weasleys slouched outside with Harry behind them. "No, he was doing something and I, um, I asked her not to smile. And Lockhart was looking furious, and as he tried to put himself under arrest. It drives Mum mad." "That\'s the main road ahead, but their street was empty. "Okay," he said. "Id better get going, Hagrid, it\'s Transfiguration next and I\'ve got -well, I think he did,"'
+
+In [79]: harry_potter_markov_gen.generate(n=4)
+Out[79]: 'say no to a large bottle of something labeled Skele-Gro. "You\'re in for a rough night," she said, pouring out a steaming beakerful and handing it to them. "I told your dad how to use a telephone last summer - he\'ll know. Call me at the orphanage she lived just long enough to copy down a name or date, then falling asleep again. He had made up his mind what he was going to tear it. While Ron kept watch he tugged and twisted, and at last, after several tense minutes, the paper came free. It was a nightmare -'
+
+In [80]: harry_potter_markov_gen.generate(n=5)
+Out[80]: 'side of the field. "They love it here .... Dad\'s too soft with them; he thinks they\'re funny . . . ." He swept off his plumed hat and bowed them inside. It was an incredible sight. The dungeon was full of hundreds of pearly-white, translucent people, mostly drifting around a crowded dance floor, waltzing to the dreadful, quavering sound of thirty musical saws, played by an orchestra on a raised, black-draped platform. A chandelier overhead blazed midnight-blue with a thousand more black candles. Their breath rose in a mist before them; it was like stepping into a freezer. "Shall'
+
+In [81]: harry_potter_markov_gen.generate(n=6)
+Out[81]: 'into the station. Harry had caught the Hogwarts Express the previous year. The tricky part was getting onto platform nine and three-quarters, which wasn\'t visible to the Muggle eye. What you had to do was walk through the solid barrier dividing platforms nine and ten. It didn\'t hurt, but it had to be done carefully so that none of the Muggles noticed you vanishing. "Percy first," said Mrs. Weasley, looking nervously at the clock overhead, which showed they had only five minutes to disappear casually through the barrier. Percy strode briskly forward and vanished. Mr. Weasley went next; Fred and'
+</code></pre>
+
+<p>Fun bonus: infinite loop!</p>
+
+<pre><code>In [74]: straight_up_markov_gen.generate(n=5)
+Out[74]: "as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine's being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine's being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady"
+</code></pre>
+
+<p>[1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &ndash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflections on My First Open-Source Contribution]]></title>
@@ -1264,84 +1356,6 @@ nt a tour She had to make the&rsquo;</p>
 
 
 <p>I&rsquo;ve figured out my next project! I&rsquo;ll be doing fun stuff with the English language (always a hoot) and <a href="http://setosa.io/blog/2014/07/26/markov-chains/">Markov Chains</a>. More specifically, I&rsquo;m gonna write a program that will generate moderately-intelligible English text, based on patterns it leanrs from a sample text that I feed it. I&rsquo;ll start simple (just learning patterns of the words themselves), and if that works, I&rsquo;ll build a more complicated version (that recognizes syntactical patterns as well). Maybe if I have great success, I&rsquo;ll be able to do something whacky like a haiku generator!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[I'm Baaaack!]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/07/30/im-baaaack/"/>
-    <updated>2014-07-30T17:40:18-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/07/30/im-baaaack</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m baaaack! Miss me? Well, if you didn&rsquo;t, that&rsquo;s okay, because I&rsquo;m not even sure who you are or why you&rsquo;re reading this. But if you are reading this and you did miss me, well, then, great!</p>
-
-<p>Nearing the end of week 2 of Hacker School. I really did mean to blog much more regularly, but then I installed Mavericks (unintentionally locking myself out of my computer for an hour) and it borked my Octopress/Ruby set-up, and then I didn&rsquo;t manage to get it all working again until just now.</p>
-
-<p>ANYWAY. So I wrote a thing in Python! I made a <a href="github.com/maianess/studentchooser">Student Chooser</a> that runs out of command line and will pick  a student at random from a given roster of students, with decreasing likelihood according to how many times that student has been picked already. It also lets you keep track of who is absent and move between multiple rosters (i.e. multiple classes). It&rsquo;s dorktastic and clocks in at 500 lines, and I can&rsquo;t tell if that&rsquo;s because it actually needed to be 500 lines long or because it&rsquo;s inefficient coding. But it&rsquo;s done, and it&rsquo;s my first completed piece of code in Python, and it was super enlightening to write! Really got the basics of Python (syntax, loops, some of the common list/string/dict. operators, etc.) under my fingers, plus some reading/writing file stuff.<!-- more --></p>
-
-<p>I think I did a halfway decent job of staying on task, but I definitely got distracted from Big Thing I Was Trying to Implement by Ooh, Shiny Little Thing. I had some to-do lists along the way, but none of them were ordered (by priority or otherwise), and I think that might be a good thing to keep in mind for my next project. Also, having these by <em>physical, paper lists</em>, I imagine, would be a lot more helpful and a lot more satisfying than having them in Evernote. Also, I ought to remember how helpful I find it to write out confusing bits of code longhand, and to chart the flow of a program with pen and paper. Cuz apparently I&rsquo;m some sort of visual learner&ndash;thanks, <a href="http://melchua.com/">Mel Chua</a>! (Mel Chua is a super excellent programmer and educator who gave a <a href="http://blog.melchua.com/2013/06/19/hacker-school-session-engineering-learning-styles/">talk on learning styles</a> last week. Fascinating and useful stuff.)</p>
-
-<p>(Remember when I was working my way through <a href="http://learnpythonthehardway.org/book/">Learn Python the Hard Way</a>? Yeah, I stopped. Turns out I REALLY don&rsquo;t like this guy&rsquo;s writing style. So I decided to just write some code. Which I did. And which was super helpful! (Maybe I&rsquo;m an active learner? See above&hellip;))</p>
-
-<p>Other stuff: am now participating in a weekly algorithms group, which I&rsquo;m very happy about. It&rsquo;s helping offset the &ldquo;Oh my god, I know nothing, I&rsquo;m so inadequate&rdquo; panic of being one of the less experienced programmers of a batch of Hacker Schoolers, because now I feel like I&rsquo;m being proactive and doing something about the stuff I don&rsquo;t know, rather than sitting there panicking about how much I don&rsquo;t know. (Which is tricky business, because I don&rsquo;t even know enough to know what I want to learn, so I just sit there and panic. Useful, huh?)</p>
-
-<p><em>Upcoming</em>: I&rsquo;m thinking of something involving Markov chains to teach a program basic language syntax and generate text. If I&rsquo;m feeling cute, I might make it into a haiku gen. This is a stepping stone towards a possible choral harmonizer, which in its fully complete form will probably use Markov chains to determind the probability of various chords following one another, and maybe also towards a contradance generator, which will do something similar with contradance moves. Also, I&rsquo;ve been encouraged to use more custom Classes in the next thing I write, and give a little more thought to how I use functions to capitalize on that&ndash;e.g., I don&rsquo;t need to worry about when variables are global vs. local and oh my gosh am I changing the right variable if I call a method that&rsquo;s _attached to the thing I want to change__. Handy.</p>
-
-<p>Also, I&rsquo;m gonna read through bits of that big purple Python book and see what I don&rsquo;t know and go find out more about that, and maybe dip my toes into the <a href="http://interactivepython.org/">Interactive Python</a> tutorials.</p>
-
-<p>That&rsquo;s all for now! Hopefully actual, somewhat regular blogging will commence soon, stay tuned!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hacker School: Day 1]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/07/21/hacker-school-day-1/"/>
-    <updated>2014-07-21T14:53:25-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/07/21/hacker-school-day-1</id>
-    <content type="html"><![CDATA[<p>Hello all, and welcome to Maia&rsquo;s journey through Hacker School, as chronicled on a blog that probably only she herself will actually read. Here&rsquo;s where I&rsquo;ll keep track of projects, goals, progress, thoughts and feelings, etc. This morning was spent getting oriented and configuring my machine. Then eating lunch. Now I&rsquo;m gonna go learn how to git.</p>
-
-<p><strong>Language:</strong> Python</p>
-
-<p><strong>Current Project:</strong> Work my way through <a href="http://learnpythonthehardway.org/book/">Learn Python the Hard Way</a>. (Oberservation: this guy is kind of a jerkhead.)</p>
-
-<p><strong>Future Project Possibilities:</strong></p>
-
-<ul>
-<li>Chorale harmonizer</li>
-<li>Ear training chorale error game</li>
-<li>Contradance datebase/contra card program</li>
-<li>Random contra generator</li>
-<li>iTunes composer homogonizer (because my iTunes categorization is a mess)</li>
-<li>Facebook/net distraction time limit</li>
-<li>Tic-tac-toe?</li>
-<li>Hero name gen., tavern name gen., NPC trait gen., etc.</li>
-<li>&ldquo;Are you being productive??&rdquo; app (possibly will post your failures to Zulip)</li>
-<li>Keychain-like password/password hint storage</li>
-</ul>
-
-
-<p><strong>Misc. Maintenance Stuff:</strong></p>
-
-<ul>
-<li>SSH git (so I don&rsquo;t need to put my password in every time)</li>
-<li>Pretty way to view git log</li>
-<li>fix $PATH later so it&rsquo;s not redundant</li>
-<li>iterm pretty colors</li>
-<li>(Gravity online correctly, with mute button etc) <strong>DONE</strong></li>
-<li>Make my real website, or at least put this blog on my domain name</li>
-<li>Streamline Octopress blogging (including fixing whatever means that I need to put quotes around <em>rake &ldquo;new_post[postname]&rdquo;</em>)</li>
-<li>Clean up my github day notes</li>
-</ul>
-
-
-<p><strong>Other Stuff to Learn:</strong></p>
-
-<ul>
-<li>How to git properly</li>
-<li>How to terminal properly</li>
-</ul>
-
-
-<p><strong>Where I&rsquo;ll Pick Up Tomorrow:</strong> <a href="http://learnpythonthehardway.org/book/ex8.html">Lesson 8</a></p>
 ]]></content>
   </entry>
   

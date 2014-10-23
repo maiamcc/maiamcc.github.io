@@ -9,7 +9,7 @@
   <meta name="author" content="Maia McCormick">
 
   
-  <meta name="description" content="Having successfully submitted my OPW application, and in the process submitting my first open-source contribution, I have lots of thoughts and &hellip;">
+  <meta name="description" content="(If you&rsquo;re confused, see my previous post on my Markov generator adventures.) The other thing I got up to today was implementing some sort of ( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,110 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/23/markov-madness-2/">Markov Madness, Part 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-23T16:13:34-04:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>(If you&rsquo;re confused, see <a href="/blog/2014/10/23/markov-madness/">my previous post on my Markov generator adventures</a>.)</p>
+
+<p>The other thing I got up to today was implementing some sort of (questionable) part-of-speech-based intelligence. The idea was to have a dictionary for parts of speech, in addition to a dictionary of words. Then the work flow would go something like this:</p>
+
+<p>1) start with a random seed
+2) what part of speech should come next? Given the POS&rsquo;s we already have, pick at random one that might follow it.
+3) given the words we have, pick a word that might follow <em>of the correct part of speech</em>. If none exists, repeat from step 2.</p>
+
+<p>Now, using word trigrams and POS trigrams, the above process doesn&rsquo;t really add much beyond what using plain &lsquo;ol word trigrams gets you. Could I make something better, though, by using, say, 4-grams or 5-grams of parts of speech?</p>
+
+<p>Well&hellip; I&rsquo;ll leave that to you to decide. Here are a bunch of different sample texts from Pride and Prejudice. All are word-gram-3. Some have no POS support, some are POS-gram-3, and some are POS-gram-4. (POS-gram-5, incedentally, doesn&rsquo;t really work&ndash;the requirements on what word you need to come next get so specific that there generally isn&rsquo;t one and the program crashes.) Which of these seem the most sensical? Can you guess which are no-POS, POS-gram-3, and POS-gram-4? Make your guesses&ndash;and then, if you want to check yourself, look at the HTML source for answers.</p>
+
+<pre><code>1) 'into a marriage with Miss Bennet. Miss Bingley\'s pretended regard." "Would you believe it, Lizzy, that is the most uncomfortable in her favour. Bingley was then disclosed in the same house with the length of his going away when I tell you, Miss Bennet. I send no compliments to Mr. Darcy:--but let me shift for myself; and, perhaps, if I were agreeing that we should all be there by Mrs. Hurst and Miss Bingley in a prudential light it places Mr. Darcy, by the awkwardness of the letter nor its writer were at the gate in the discharge of his'&lt;!--POS-gram = 4--&gt;
+
+2) 'difference of situation and temper. Consider Mr. Collins\'s picture of a sort of man; and of late it has not time to reply, but hurrying instantly to her so expressively, and shook hands with great enjoyment; and the mere ceremonious salutation attending his entrance. Anxious and uneasy, the period to which you have pleasure," said Bingley; "and I am in earnest. I speak plainer? Do not wish me such an assurance of it, that the match with a bow of superior society; but I know very well able to do it, she turned suddenly towards him and Mr. Darcy, "There'&lt;!--POS-gram = 3--&gt;
+
+3) 'from my thoughts." "When they all are." "All young ladies were ready enough to determine her feelings in the time. Good gracious! when I have always seen a great deal more than I might have sufficient charms; and though the probability of error, and seek to recommend them," replied he; "they are married!" Elizabeth read on: "I have no wish of seeing him almost for the felicity which a pair of fine eyes in amazement, but was too happy, however, and if he sees enough of Bingley\'s being withheld from seeing Jane, she seriously hoped he might change his mind' &lt;!--no POS support--&gt;
+
+4) 'ever have courage to shew Mrs. Gardiner\'s former residence, and where she had listened to her eyes, envied everyone to whom they would have been impossible for us to Miss Darcy, who had only set that down as soon as they used to be privileged to whisper to Elizabeth, "I hope not so. Painful recollections will not have forgotten where she was ready enough to make her resigned. As for my impertinence?" "For the liveliness of your own. But we are better acquainted--" He was resolutely silent, however, and, from a circulating library), he started back, and begging pardon, protested' &lt;!--no POS support--&gt;
+
+5) 'months. Of having another daughter married to Mr. Bingley. It was at length return home; and she was to bring it in my own doing, and I thought only of the peace of the world, must make Hunsford extremely dull to a real, strong attachment. Pray, how violent was Mr. Bingley\'s chaise to go with him; and unwilling, for her sister\'s sake, to provoke him. Elizabeth was the son of old Wickham, the late perverse occurrences had thrown on many of the largest folios in the neighbourhood." "Oh! no--it is not so handsome as Wickham; or, rather, he has not'&lt;!--POS-gram = 4--&gt;
+
+6) 'Darcy\'s praise occupied the chief of it. Can I speak plainer? Do not let your fancy run away with you. You will be an object of it, but Colonel Fitzwilliam was no more than she knew it myself, as it had not yet been able to enter the ----shire. She had no other reply to this effect: "I have been to persuade him against returning into Hertfordshire, anxiously renewing them at any time, etc. etc.; and if not, it would be gone in five minutes, you meant it to another, not to an end by exclamations and inquiries about the'&lt;!--POS-gram = 3--&gt;
+
+7) 'but tell Lydia she shall have as much a debt of gratitude cannot enough acknowledge. By this time have been too pleasantly engaged to my fair cousins, though my brother left us yesterday, he imagined that we have found some resemblance of character to love each other in large mixed parties, it is the man! Now, Lizzy, I hardly know myself what it is no occasion for such a man would satisfy me. We will settle so quietly, and live in my power, I am very far from suspecting that she was discontented, she fancied that praise of himself, of' &lt;!--no POS support--&gt;
+
+8) 'the opportunity of saying: "Is your sister make such an evil. Human nature is particularly prone to it, and sometimes with playful gaiety, replied to her housekeeping, her parish and her uncle had been her firmest opinion. Her keenest attention was suddenly roused by the middle of June, Kitty was too much sense to recommend myself to hope the best, in accepting a man on the subject. This will never be in want of money. Younger sons cannot marry where they were grieved, how shocking it was to distribute her presents and describe the newest fashions. When this information was'&lt;!--POS-gram = 3--&gt;
+
+9) 'the pleasantness of the park," he replied, "it has been my profession--I was brought up by him alone, was such as did think, than such a way." "I can readily believe," answered he gravely, "that reports may vary greatly with respect to me; and as she had not by any particular person, for though the uncomfortable feelings arising from all restraint, his life that, instead of a man of five-and-twenty. His air was grave and stately, and his relation of my nephew! Unfeeling, selfish girl! Do you think of themselves before anybody and everybody! If my vanity had taken on'&lt;!--POS-gram = 4--&gt;
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/23/markov-madness/">Markov Madness, Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-23T15:52:47-04:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Man, I&rsquo;ve hardly written code in <em>three whole weeks!</em> Such a strange feelings, after 3 solid months of coding. Anyway, back at Hacker School for the day, and with my OPW application in, I&rsquo;ve been itching to actually <em>write some code</em>, so I revisited my old <a href="https://github.com/maiamcc/markovgen">Markov generator</a> project, which takes a training corpus and generates psuedo-random texts in the style of that corpus.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/10/23/markov-madness/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -434,131 +538,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/02/taming-the-octopress/">Taming the Octopress/All About Git</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-02T17:59:40-04:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits[1] and just commit anyway.</p>
-
-<p>So, my website is alive, I have lost hours of my life to the jaws of the Octopress, and I may be switching to Jekyll or Pelican soon. But in the meantime, all of this made me intensely curious about git! I hit up <a href="http://maryrosecook.com/">Mary</a> for a mini-seminar, and I will now write it all out on my blog to make sure I understood it. Feel free to read along, learn from my simplistic explanation, correct my gross misunderstandings, etc.! So now, on to our feature presentation:</p>
-
-<h2>All About Git!</h2>
-
-<h3>The Bestest SCM with the Worstest UI</h3>
-
-<h4>All of your Git-age lives in the .git folder</h4>
-
-<p>When you run <code>git init</code>, all it does is create a <code>.git</code> folder. That&rsquo;s it! Your machine knows what folders are and aren&rsquo;t by the presence or absence of a <code>.git</code> directory. <code>.git</code> is a hidden folder, so to see it, type <code>ls -a</code>. Whenever you add or commit things to your git repo, they&rsquo;ll get stored in here.</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/02/taming-the-octopress/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/28/nested-functions/">Nested Functions</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-28T11:20:16-04:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Know what&rsquo;s cool? Nested functions.</p>
-
-<p>The other day, as I was making this craaaazy dance parser (that&rsquo;s getting more and more convoluted by the minute), Alan suggested a really baller way of organizing it: using a bunch of little mini-parser functions that all look for something specific in your text, and smooshing related parsers together into one macro-parser that runs all of them in turn until one returns something. In Alan&rsquo;s lovely mock-up code that I&rsquo;m shamelessly copying over here, that might look like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">contains_an_a</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">contains_a_b</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">one_of</span><span class="p">(</span><span class="n">parsers</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parsers</span><span class="p">:</span>
-</span><span class='line'>            <span class="n">result</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
-</span><span class='line'>                <span class="k">return</span> <span class="n">result</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">parser</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">contains_an_a_or_a_b</span> <span class="o">=</span> <span class="n">one_of</span><span class="p">([</span><span class="n">contains_an_a</span><span class="p">,</span> <span class="n">contains_a_b</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The handy thing about having all of these bite-size functions is that none of them gets too crazy bulky, and also, since they&rsquo;re functions (and not dicts like I was using earlier), I can use regexes in them! I&rsquo;m also jamming on the idea of passing functions to other functions, so I made an even bigger function called <code>use_parser</code> that takes a parser, a default value, and an &lsquo;ask&rsquo;, which it uses to ask the user (via raw_input) what the value should be. This way, I can take a single parser and customize it in a variety of ways. Say for example I have a distance parser: for do-si-dos and gypsies it should default to False (because those moves don&rsquo;t necessarily need to take a distance) and for allemandes it should ask the user, &ldquo;what&rsquo;s the value of &lsquo;dist&rsquo; here?&rdquo;</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/08/28/nested-functions/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -574,6 +553,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/10/23/markov-madness-2/">Markov Madness, Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/23/markov-madness/">Markov Madness, Part 1</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/22/reflections-on-my-first-open-source-contribution/">Reflections on My First Open-Source Contribution</a>
       </li>
     
@@ -583,14 +570,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/06/choice-paralysis/">Choice Paralysis</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/29/lessons-in-default-function-arguments/">Lessons in Default Function Arguments</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/24/javascript-jquery-101/">Javascript/JQuery 101</a>
       </li>
     
   </ul>
