@@ -4,7 +4,7 @@
   <title><![CDATA[Category: hacker school | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/hacker-school/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-10-23T16:36:43-04:00</updated>
+  <updated>2014-10-23T16:41:00-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia McCormick]]></name>
@@ -31,7 +31,7 @@
 
 <p>Now, using word trigrams and POS trigrams, the above process doesn&rsquo;t really add much beyond what using plain &lsquo;ol word trigrams gets you. Could I make something better, though, by using, say, 4-grams or 5-grams of parts of speech?<!--more--></p>
 
-<p>Well&hellip; I&rsquo;ll leave that to you to decide. Here are a bunch of different sample texts from Pride and Prejudice. All are word-gram-3. Some have no POS support, some are POS-gram-3, and some are POS-gram-4. (POS-gram-5, incedentally, doesn&rsquo;t really work&ndash;the requirements on what word you need to come next get so specific that there generally isn&rsquo;t one and the program crashes.) Which of these seem the most sensical? Can you guess which are no-POS, POS-gram-3, and POS-gram-4? Make your guesses&ndash;and then, if you want to check yourself, look at the HTML source for answers.</p>
+<p>Well&hellip; I&rsquo;ll leave that to you to decide. Here are a bunch of different sample texts from Pride and Prejudice. All are word-gram-3. Some have no POS support, some are POS-gram-3, and some are POS-gram-4. (POS-gram-5, incedentally, doesn&rsquo;t really work&ndash;the requirements on what word you need to come next get so specific that there generally isn&rsquo;t one and the program crashes.) Which of these seem the most sensical? Can you guess which are no-POS, POS-gram-3, and POS-gram-4? (There are three of each.) Make your guesses&ndash;and then, if you want to check yourself, look at the HTML source for answers.</p>
 
 <blockquote><p>1) &lsquo;into a marriage with Miss Bennet. Miss Bingley\&rsquo;s pretended regard.&ldquo; &#8220;Would you believe it, Lizzy, that is the most uncomfortable in her favour. Bingley was then disclosed in the same house with the length of his going away when I tell you, Miss Bennet. I send no compliments to Mr. Darcy:&ndash;but let me shift for myself; and, perhaps, if I were agreeing that we should all be there by Mrs. Hurst and Miss Bingley in a prudential light it places Mr. Darcy, by the awkwardness of the letter nor its writer were at the gate in the discharge of his&rsquo;<!--POS-gram = 4--></p>
 
