@@ -8,9 +8,9 @@ footer: false
 sidebar: false
 ---
 
-I am a contradance caller and dance writer based in New York City. I call both contra evenings and family dances, full programs and guest spots. Additionally, I have experience as a dance organizer, having run the monthly Williams College dance for three years (and having organized the NYC Contra Flash Mob for the past two summers! Here's a video of the [First Annual NYC Contra Flash Mob, in Grand Central](https://www.youtube.com/watch?v=gEY5rTqO62Y)). In addition to calling and dancing wherever I can, I also write dances, and have been dabbling in writing contra tunes.
+I am a contradance caller and dance writer based in New York City. I call both contra evenings and family dances, full programs and guest spots. Additionally, I have experience as a dance organizer, having run the monthly Williams College dance for three years. (I've also been organizing the NYC Contra Flash Mob for the past two summers--the first was at [Grand Central](//www.youtube.com/watch?v=gEY5rTqO62Y), the second at [Union Square](//www.youtube.com/watch?v=kUGyxwBVCTc).) In addition to calling and dancing wherever I can, I also write dances, and have been dabbling in writing contra tunes.
 
-Look at some [dances I've written](/contra/dances.html) or [tunes I've written](/contra/tunes.html), or read on for more about my experience as a dance caller.
+Look at some [dances I've written](/contra/dances.html) or [tunes I've written](/contra/tunes.html), or read on for media samples and my <a href="#callhist">calling history</a>.
 
 ### Media Samples
 
@@ -19,6 +19,8 @@ Look at some [dances I've written](/contra/dances.html) or [tunes I've written](
 <iframe width="100%" height="100%" src="//www.youtube.com/embed/nZ7VvdXD9rA" frameborder="0" allowfullscreen></iframe>
 
 <iframe width="100%" height="100%" src="//www.youtube.com/embed/D2622W_nrk8" frameborder="0" allowfullscreen></iframe>
+
+<a name="callhist"></a>
 
 ### My Calling History
 
@@ -35,10 +37,10 @@ Look at some [dances I've written](/contra/dances.html) or [tunes I've written](
 
 #### Guest Spots
 
-* [Greenfield, MA](http://www.guidingstargrange.org/events)
-* [Village Contra](http://www.lcfd.org/nyc/) (New York, NY)
+* [Greenfield, MA](//www.guidingstargrange.org/events)
+* [Village Contra](//www.lcfd.org/nyc/) (New York, NY)
 * CDNY
-* [YDW](www.youthdanceweekend.org)
+* [YDW](//www.youthdanceweekend.org)
 * Berkeley, CA
 * Northern Berkshire Contradance
 
