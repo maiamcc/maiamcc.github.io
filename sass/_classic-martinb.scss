@@ -18,9 +18,9 @@ $header-sep-color: #888;
 body > header {
   padding-bottom: 0;
   padding-top: 0;
-  background:url('/images/shatter.png');
+  background:url('/images/shatter_dark.png');
   h1 > a:hover {
-    color: $head-hov-color;
+    color: lighten($head-hov-color, 3);
   }
 
   // Left hand side of the header

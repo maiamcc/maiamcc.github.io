@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Hobo';
+    src: url("fonts/HoboStd.otf");
+}
+
 $blockquote: $type-border !default;
 $sans: "PT Sans", "Helvetica Neue", Arial, sans-serif !default;
 $serif: "PT Serif", Georgia, Times, "Times New Roman", serif !default;
@@ -17,7 +22,7 @@ $header-subtitle-font-family: $heading-font-family !default;
 body > header h1 {
   font-size: 2.2em;
   @extend .heading;
-  font-family: $header-title-font-family;
+  font-family: "Hobo";
   font-weight: normal;
   line-height: 1.2em;
   margin-bottom: 0.6667em;
