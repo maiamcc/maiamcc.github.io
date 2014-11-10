@@ -7,7 +7,7 @@ categories: [Hacker School]
 ---
 Today on "Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway", we're going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia's contradance database and the letter Y.)
 
-No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reivewers raised red flags about this line in my code: `def resolve_query_dict(d, moves_list=Move.objects.all())`. `Move.objects.all()`, by the way, is a fancy Django function that returns a list of all of the `Move` objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of "all of the moves in my database" wouldn't have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.<!-- more -->
+No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reviewers raised red flags about this line in my code: `def resolve_query_dict(d, moves_list=Move.objects.all())`. `Move.objects.all()`, by the way, is a fancy Django function that returns a list of all of the `Move` objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of "all of the moves in my database" wouldn't have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.<!-- more -->
 
 Let's define a helper function:
 
@@ -94,4 +94,4 @@ As with the function-as-default-arg example, your default argument binds *at def
 
 Perhaps it's a bit more intuitive this way, but the exact same thing is happening in the previous example; the function is modifying a distinct object in memory, whether it was named before it got passed as a default argument or not.
 
-Whacky fun! And a valuable lesson learned: *don't use mutable objects or functions as default values in your functions* unless you want a whole lot of hilarious code hijinks. (Which, hey, maybe you do, no judgements here!)
+Whacky fun! And a valuable lesson learned: *don't use mutable objects or functions as default values in your functions* unless you want a whole lot of hilarious code hijinks. (Which, hey, maybe you do, no judgments here!)

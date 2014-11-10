@@ -89,4 +89,4 @@ JQuery functions like `$(".bar")` or `$(".mytag")` (which gets all elements matc
 
 On the "pesky formatting details" front, JS indents with only two spaces, and puts semicolons after every line that doesn't end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.
 
-Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsable child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!
+Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!

@@ -9,15 +9,15 @@ Hello all, and welcome to Maia's journey through Hacker School, as chronicled on
 
 **Language:** Python
 
-**Current Project:** Work my way through [Learn Python the Hard Way](http://learnpythonthehardway.org/book/). (Oberservation: this guy is kind of a jerkhead.)
+**Current Project:** Work my way through [Learn Python the Hard Way](http://learnpythonthehardway.org/book/). (Observation: this guy is kind of a jerkhead.)
 
 **Future Project Possibilities:**
 
 *   Chorale harmonizer
 *   Ear training chorale error game
-*   Contradance datebase/contra card program
+*   Contradance database/contra card program
 *   Random contra generator
-*   iTunes composer homogonizer (because my iTunes categorization is a mess)
+*   iTunes composer homogenizer (because my iTunes categorization is a mess)
 *   Facebook/net distraction time limit
 *   Tic-tac-toe?
 *   Hero name gen., tavern name gen., NPC trait gen., etc.
@@ -29,7 +29,7 @@ Hello all, and welcome to Maia's journey through Hacker School, as chronicled on
 -   SSH git (so I don't need to put my password in every time)
 -   Pretty way to view git log
 -   fix $PATH later so it's not redundant
--   iterm pretty colors
+-   iTerm pretty colors
 -   (Gravity online correctly, with mute button etc) **DONE**
 -   Make my real website, or at least put this blog on my domain name
 -   Streamline Octopress blogging (including fixing whatever means that I need to put quotes around *rake "new_post[postname]"*)
