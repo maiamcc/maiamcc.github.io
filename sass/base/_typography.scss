@@ -2,9 +2,9 @@ $blockquote: $type-border !default;
 $sans: "PT Sans", "Helvetica Neue", Arial, sans-serif !default;
 $serif: "PT Serif", Georgia, Times, "Times New Roman", serif !default;
 $mono: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace !default;
-$heading-font-family: "PT Serif", "Georgia", "Helvetica Neue", Arial, sans-serif !default;
-$header-title-font-family: $heading-font-family !default;
-$header-subtitle-font-family: $heading-font-family !default;
+$heading-font-family: "Overlock", "PT Serif", "Georgia", "Helvetica Neue", Arial, sans-serif;
+$header-title-font-family: "Overlock", $heading-font-family;
+$header-subtitle-font-family: "Overlock SC", $heading-font-family;
 
 // Fonts
 .heading {
@@ -14,16 +14,23 @@ $header-subtitle-font-family: $heading-font-family !default;
 .serif { font-family: $serif; }
 .mono { font-family: $mono; }
 
-body > header h1 {
-  font-size: 2.2em;
-  @extend .heading;
-  font-family: $header-title-font-family;
-  font-weight: normal;
-  line-height: 1.2em;
-  margin-bottom: 0.6667em;
-}
-body > header h2 {
-  font-family: $header-subtitle-font-family;
+body > header {
+  font-family: $heading-font-family;
+
+  h1 {
+    font-size: 2.2em;
+    @extend .heading;
+    font-family: $header-title-font-family;
+    font-weight: 600;
+    line-height: 1.2em;
+    letter-spacing: 1.2px;
+    margin-bottom: 0.6667em;
+  }
+ h2 {
+    font-size: 1em;
+    letter-spacing: 1.5px;
+    font-family: $header-subtitle-font-family;
+  }
 }
 
 body {
