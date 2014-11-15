@@ -4,6 +4,7 @@ $max-width: 100% !default;
 $pad-min: 18px !default;
 $pad-narrow: 25px !default;
 $pad-medium: 35px !default;
+$pad-less-wide: 100px;
 $pad-wide: 150px !default;
 
 // Sidebar widths used in media queries
@@ -18,7 +19,7 @@ $header-font-size: 1em !default;
 $header-padding-top: 1em !default;
 $header-padding-bottom: 1em !default;
 $header-height: 175px !default;
-$header-h1-size: 40pt;
+$header-h1-size: 2.22em;
 
 .group { @include pie-clearfix; }
 
@@ -62,7 +63,7 @@ body {
   max-width: $max-width;
   position: relative;
   margin: 0 auto;
-  > header, > nav, > footer, #content > article, #content > div > article, #content > div > section {
+  > header, > nav, > footer, #content > article, #content > div > section {
     @extend .group;
     padding-left: $pad-min;
     padding-right: $pad-min;
@@ -80,6 +81,25 @@ body {
     }
   }
 
+  #content > div > article {
+    @media only screen and (min-width: 480px) {
+      padding-left: $pad-narrow;
+      padding-right: $pad-narrow;
+    }
+    @media only screen and (min-width: 768px) {
+      padding-left: $pad-medium;
+      padding-right: $pad-medium;
+    }
+    @media only screen and (min-width: 1000px) {
+        margin-left: $pad-less-wide;
+        margin-right: $pad-less-wide;
+    }
+    @media only screen and (min-width: 1220px) {
+      margin-left: $pad-wide;
+      margin-right: $pad-wide;
+    }
+  }
+
   div.pagination {
     @extend .group;
     margin-left: $pad-min;
@@ -93,6 +113,10 @@ body {
       margin-right: $pad-medium;
     }
     @media only screen and (min-width: 1000px) {
+      margin-left: $pad-less-wide;
+      margin-right: $pad-less-wide;
+    }
+    @media only screen and (min-width: 1130px) {
       margin-left: $pad-wide;
       margin-right: $pad-wide;
     }
