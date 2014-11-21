@@ -107,7 +107,7 @@
   </header>
 
 
-<div class="entry-content"><p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits[1] and just commit anyway.</p>
+<div class="entry-content"><p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and just commit anyway.</p>
 
 <p>So, my website is alive, I have lost hours of my life to the jaws of the Octopress, and I may be switching to Jekyll or Pelican soon. But in the meantime, all of this made me intensely curious about git! I hit up <a href="http://maryrosecook.com/">Mary</a> for a mini-seminar, and I will now write it all out on my blog to make sure I understood it. Feel free to read along, learn from my simplistic explanation, correct my gross misunderstandings, etc.! So now, on to our feature presentation:</p>
 
@@ -161,7 +161,7 @@
 </span><span class='line'>31  e9  info    pack</span></code></pre></td></tr></table></div></figure>
 
 
-<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):</p>
+<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -282,10 +282,16 @@ author: [name]<br>
 <p>There&rsquo;s no need to make another representation of <code>b</code>, since <code>b</code> hasn&rsquo;t been changed this commit. Instead, where the tree has to point to <code>b</code>, it points to the hash of the <em>existing</em> version of <code>b</code>.</p>
 
 <p>So, now I understand a biiiiit more about the whacky world of git and just what these cryptic commands are doing! I even understand pointers and branching and detached head state and all that a bit better, but that is perhaps another post for another day. Cheers!</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>To quote from the Git docs: &ldquo;When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a &lsquo;fast forward&rsquo;.&rdquo; Or, look at this <a href="https://sandofsky.com/images/fast_forward.pdf">explanation in pretty pictures</a>. By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><code>glook</code> is a shortcut I made; the full command to get file contents from one of these hashes is <code>git cat-file -p</code>.<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
 
-<p>[1] To quote from the Git docs: &ldquo;When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a &lsquo;fast forward&rsquo;.&rdquo; Or, look at this <a href="https://sandofsky.com/images/fast_forward.pdf">explanation in pretty pictures</a>. By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.</p>
-
-<p>[2] <code>glook</code> is a shortcut I made; the full command to get file contents from one of these hashes is <code>git cat-file -p</code>.</p>
 </div>
 
 
@@ -353,6 +359,10 @@ author: [name]<br>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/23/markov-madness-2/">Markov Madness, Part 2</a>
       </li>
     
@@ -366,10 +376,6 @@ author: [name]<br>
     
       <li class="post">
         <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/06/choice-paralysis/">Choice Paralysis</a>
       </li>
     
   </ul>

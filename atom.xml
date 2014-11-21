@@ -4,7 +4,7 @@
   <title><![CDATA[Maia Remez McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-11-18T22:21:14-05:00</updated>
+  <updated>2014-11-20T22:17:49-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,6 +12,196 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Revisiting My First Python Program]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/11/20/revisiting-my-first-python-program/"/>
+    <updated>2014-11-20T20:36:26-05:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/11/20/revisiting-my-first-python-program</id>
+    <content type="html"><![CDATA[<p>Back in mid-July, I started at Hacker School, wide-eyed and green and totally freaked out. With only a little bit of Javascript under my belt(and a basically negligible amount of Java, so we&rsquo;re not even counting that), I decided to teach myself Python, slogged halfway through Zed Shaw&rsquo;s <em>Learn Python the Hard Way</em>, then went off to go build something, because I work best by getting my hands dirty. For my first Python project, I wrote <a href="//github.com/maiamcc/studentchooser">studentchooser</a>, a little command-line app request by a teacher friend of mine, who wanted a fair way to call on her students at random (for putting homework problems on the board, etc.). The idea was that, once a student had been selected, it was <em>less</em> likely that they would be selected again, but not impossible&ndash;the chance of them being picked subsequently would go down, but they would still be in the running.</p>
+
+<p>So, I made a program to do that! You store a list of students for a given class period in what I called the <code>roster</code> (just a dictionary of students). Each <code>Student</code> object keeps track of the number of times it has been selected and its probability of being selected in the next round, as well as whether or not the student is absent.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> It took me a little more than a week to finish, as I was still muddling through Python as I went, and at the end, I had a working final product! A rough one, but a working one! And then I went off on my merry way, doing more and varied projects and slowly building up my Python chops, getting code review, etc. Somewhere along the way, so gradually I didn&rsquo;t even realize it, I began to feel competent, like with enough time to think and maybe a little Googling, I could Python my way out of most problems that were thrown at me. And so today, back at Hacker School for Alumni Thursday and itching to write some code (because I&rsquo;ve been up to my neck in web work for the past few weeks), I opted for a blast from the past, and dived into my very first Python project to poke around, refactor, clean up, and chronicle what I found and what I had learned in the past four months. Here are some findings, accomplishments, and reflections.<!--more--></p>
+
+<h4>Little things I changed</h4>
+
+<p>There were a handful of little things that now strike me as really silly that I changed straight off. Stuff like the realization that text files don&rsquo;t actually need an extension (<code>.txt</code> or otherwise), or that instead of <code>myfile = open("foo.txt", "r"); contents = myfile.read(); myfile.close()</code> I could do the whole thing more cleanly and more efficiently with <code>with open("foo.txt") as myfile:</code>. Similarly, I found loads of places where a little more specificity in variable naming would have made the code hugely easier to read. So given something like, say, <code>for item in roster_list</code>, I changed it to <code>for roster_name in roster_list</code>.</p>
+
+<h4>Gratuitous, &ldquo;useless&rdquo; comments</h4>
+
+<p>There were comments EVERYWHERE. Like seriously, look at the code sample below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="sd">&quot;&quot;&quot;Load a roster from file.&quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Boolean saying that this is NOT a new roster</span>
+</span><span class='line'>    <span class="c"># i.e. when the program saves data, it will NOT edit the &quot;config&quot; file</span>
+</span><span class='line'><span class="k">global</span> <span class="n">new_roster</span>
+</span><span class='line'><span class="n">new_roster</span> <span class="o">=</span> <span class="bp">False</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># make list of all rosters in config file</span>
+</span><span class='line'><span class="n">roster_list</span> <span class="o">=</span> <span class="n">get_all_rosters</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">roster_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c"># if list is empty, make a new roster instead</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;No rosters available to load. Make a new one instead.&quot;</span>
+</span><span class='line'>    <span class="n">make_new_roster</span><span class="p">()</span>
+</span><span class='line'><span class="k">else</span><span class="p">:</span> <span class="c"># if config file contains at least one roster to load...</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Which roster would you like to load? Enter a number.&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># print a list of available rosters from config file</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">roster_list</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">item_index</span> <span class="o">=</span> <span class="n">roster_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="n">pretty_name</span> <span class="o">=</span> <span class="n">get_pretty_name</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="c"># (name of the file w/o the file extension)</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="si">%d</span><span class="s">. </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">item_index</span><span class="p">,</span> <span class="n">pretty_name</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">=</span> <span class="n">ask</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c"># if possible, turn answer from a string into an int.</span>
+</span><span class='line'>        <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">answer_int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">answer_int</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c"># if the answer is an int. in the range of # items in the list...</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">answer_int</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">roster_list</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">index</span> <span class="o">=</span> <span class="n">answer_int</span> <span class="o">-</span> <span class="mi">1</span> <span class="c"># (b/c list as displayed is 1-indexed)</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c"># save the given filename as the &#39;current file&#39;</span>
+</span><span class='line'>            <span class="k">global</span> <span class="n">current_file</span>
+</span><span class='line'>            <span class="n">current_file</span> <span class="o">=</span> <span class="n">roster_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</span><span class='line'>            <span class="k">print</span> <span class="s">&quot;File to load:&quot;</span><span class="p">,</span> <span class="n">current_file</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c"># populate the roster using the data in the selected file</span>
+</span><span class='line'>            <span class="n">populate_roster</span><span class="p">(</span><span class="n">current_file</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c"># returns name of the class (= name of the file) for display</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">get_pretty_name</span><span class="p">(</span><span class="n">current_file</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">else</span><span class="p">:</span> <span class="c"># if user input isn&#39;t in range or isn&#39;t an integer</span>
+</span><span class='line'>            <span class="k">print</span> <span class="s">&quot;Sorry, I didn&#39;t get that. Try again.&quot;</span> <span class="c"># run the loop again</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This comments-every-step-of-the-way thing pops up again and again in studentchooser, and looking at the code now, it seems pretty silly, because I can tell just by looking what most of these lines do&ndash;or at least, I can after rewriting it a bit so that variable names are intuitive, code is readable, etc. So I took a lot of these comments out of the refactored version, but I think it&rsquo;s really important to remember why I put them in in the first place. When I was first writing this code, it wasn&rsquo;t gratuitous, it was <em>super helpful</em> to know step by step exactly what was happening in my code, and to write it down so I couldn&rsquo;t get away with fudging that understanding. This is actually one of the few things I really took with me from <em>Learn Python the Hard Way</em> (see for instance <a href="//learnpythonthehardway.org/book/ex6.html#study-drills">these study drills</a>&ndash;that explaining your code in English line by line is a <em>great</em> tool for understanding and internalizing it! This is something I still keep in my toolbox for unknown/particularly tricky bits of code.</p>
+
+<h4>Now I know better&hellip;</h4>
+
+<p>This project has a) no tests, which make it a giant pain to refactor; b) haphazard architecture, because I was adding features as they occurred to me and I didn&rsquo;t go in with an overarching plan, and so variable names are unclear, patterns of work are inconsistent, bits of the code are held together with tape and bubble gum, etc., and c) poor readability, due in part to the inconsistent naming schemes, in part to the fact that I wasn&rsquo;t prioritizing readability and didn&rsquo;t know how to code for it, and in part to the fact that I thought gratuitous commenting would make up for hard-to-read code. Now I know better, or at least I hope I do. (When I&rsquo;m not lazy,) I write tests for my projects; I outline my projects ahead of time and plan for the features I may add in the future so the architecture stays coherent and I don&rsquo;t have to refactor halfway through (hopefully); and I strive for readability in my code itself (and don&rsquo;t rely on gratuitous commenting to do that work for me).</p>
+
+<h4>New tools, new sensibilities</h4>
+
+<p>I first learned about list comprehension when <a href="//ballingt.com/">Tom</a> code-reviewed this project for me, though I didn&rsquo;t really understand what they were until much later&ndash;I initially thought they were something cool you could do in a return statement, which now makes me laugh. But now that I actually understand list comprehensions and a bunch of other handy tricks, I can write much tighter, more efficient code. What used to be this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">get_all_rosters</span><span class="p">():</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot;&quot;Return a list of all of the roster filenames in the config file.&quot;&quot;&quot;</span>
+</span><span class='line'>    <span class="n">all_rosters_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">all_rosters_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">all_rosters_file</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">all_rosters_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>    <span class="n">all_rosters_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">all_rosters_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">all_rosters_list</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip;is now this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">get_all_rosters</span><span class="p">():</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot;&quot;Return a list of all of the roster filenames in the config file.&quot;&quot;&quot;</span>
+</span><span class='line'>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">all_rosters_file</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">all_rosters_file</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code is more compact not only because of the list comprehension (did I mention that list comprehensions are <em>awesome</em>?) but also because I smooshed the sorting into the same line as the list-making. There are other cases where before, I make a list, joined it into a string, and returned the string, but now, I return-a-join-this-list-into-a-string-please-thx-bai, all in one line. The more comfortable I get with Python, the less I need to separate things out and the more able I am to smush things together into fewer lines while still knowing what&rsquo;s going on.</p>
+
+<h4>Global variables, global variables everywhere!</h4>
+
+<p>By far the biggest pain in the neck about this whole program was keeping track of the global variables. I had a few of them floating around: a roster where I stored all of my students, a list of the students (because for some reason I needed to keep a separate list instead of just extracting it from the roster), the filename under which this roster was stored, a boolean telling me whether this was a new roster or not&hellip; And so every time there was a function that needed to interact with and modify, say, the roster, it had to go look for this global variable called <code>roster</code> (I guess because I didn&rsquo;t think to pass in the roster as an argument).</p>
+
+<p>The solution to my dilemna? Classes!</p>
+
+<p><img src="http://maiamcc.github.io/images/stayclassy.jpg" alt="&quot;Stay classy, San Diego!&quot;" /></p>
+
+<p>I made a <code>Roster</code> class so that methods like <code>choose()</code>, instead of finding the global variable <code>roster</code>, accessing it, changing it, and sending it back into the ether to live its global-variable life, would instead be called as <code>myroster.choose()</code> and act on that specific instance of <code>Roster</code>, and there would be no confusion as to what the method was accessing/modifying. This refactoring solved another handful of problems, because I could decree that file names would be the same as roster names, and so <code>myroster.name</code> would also keep track of our current file name; similarly, <code>myroster.new</code> would keep track of whether or not this was a newly created roster. Basically, the <code>Roster</code> class let me get rid of all of my global variables, and now all I have to keep track of is the <code>current_roster</code> object. (Also, now I know better than to make it a global variable; if there are functions that need to access it&ndash;which I have tried to minimize&ndash;I pass it to that function as an argument.) Check out a high-level view of my <code>Roster</code> class to see all the functions contained therein:</p>
+
+<p><img src="http://maiamcc.github.io/images/roster_class.png" alt="Can't see this? Bummer, I guess you have to go check out my github." /></p>
+
+<h4>In conclusion</h4>
+
+<p>I refactored some code and had a total blast from the past. I decided to see what I could improve without changing any of the functionality, just the code, and I cut my program from 536 lines down to 432, and to 399 if we remove vestigial testing functions. That&rsquo;s about a 20% reduction in length! I also convinced myself that I <em>do</em>, in fact, know how to write Python, and checked in with myself about how far I&rsquo;ve come in the last four months. I obviously have loads more to learn&ndash;and this exercise reminded me of some of the helpful strategies in my toolbox, like temporarily over-commenting to wrap my head around whacky and confusing code.</p>
+
+<p>So, after reflection, my advice to new programmers who are jumping in the deep end like I did? Get your hands dirty. Write lots of code, without necessarily caring about what the finished product looks like&ndash;you&rsquo;ll learn so much more from finishing it and fixing it later than you will from agonizing over it. Get code review and pair with people who know more than you do&ndash;it&rsquo;s how you pick up the stuff that makes you a better programmer. But mostly, don&rsquo;t panic!</p>
+
+<p>(This blog post presented as a Hacker School Thursday Talk on 11/20/14.)</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>There are some slightly more finicky mechanics going on that you can read about in the README on github if you&rsquo;re really curious, but this is all that&rsquo;s relevant for this post.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Markov Madness, Part 2]]></title>
@@ -60,7 +250,7 @@
     <id>http://maiamcc.github.io/blog/2014/10/23/markov-madness</id>
     <content type="html"><![CDATA[<p>Man, I&rsquo;ve hardly written code in <em>three whole weeks!</em> Such a strange feelings, after 3 solid months of coding. Anyway, back at Hacker School for the day, and with my OPW application in, I&rsquo;ve been itching to actually <em>write some code</em>, so I revisited my old <a href="https://github.com/maiamcc/markovgen">Markov generator</a> project, which takes a training corpus and generates psuedo-random texts in the style of that corpus.<!--more--></p>
 
-<p>I&rsquo;ve tried a few different tacks today for getting texts that actually resembled English and not just word-soup. The first was using n-grams of varying n&rsquo;s when generating my texts[1]. n = 1 is just random words and not worth testing. n = 2 is very nearly gibberish. n = 3 and n = 4 are the sweet spot of sensical-yet-random text; when we get to n = 5, it tends to be several verbatim sentences from the corpus patched together in odd ways, and at n = 6, it is almost consistently exact quotes from the text. At a guess, in more quote-unquote complex texts (i.e., those with more unique words) n = 5 will be closer to verbatim, and in texts with more common words, there will be more room for deviation from any pattern that the generator falls into, and thus n = 5 will be distinct from the original text. Here are generated texts using n-grams of increasing n, from <em>Pride and Prejudice</em>.</p>
+<p>I&rsquo;ve tried a few different tacks today for getting texts that actually resembled English and not just word-soup. The first was using n-grams of varying n&rsquo;s when generating my texts[^1]. n = 1 is just random words and not worth testing. n = 2 is very nearly gibberish. n = 3 and n = 4 are the sweet spot of sensical-yet-random text; when we get to n = 5, it tends to be several verbatim sentences from the corpus patched together in odd ways, and at n = 6, it is almost consistently exact quotes from the text. At a guess, in more quote-unquote complex texts (i.e., those with more unique words) n = 5 will be closer to verbatim, and in texts with more common words, there will be more room for deviation from any pattern that the generator falls into, and thus n = 5 will be distinct from the original text. Here are generated texts using n-grams of increasing n, from <em>Pride and Prejudice</em>.</p>
 
 <p>n = 2:</p>
 
@@ -104,7 +294,7 @@
 
 <blockquote><p>&ldquo;as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine&rsquo;s being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine&rsquo;s being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady&rdquo;</p></blockquote>
 
-<p>[1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &ndash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
+<p>[^1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &ndash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
 ]]></content>
   </entry>
   
@@ -520,7 +710,7 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
     <link href="http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress/"/>
     <updated>2014-09-02T17:59:40-04:00</updated>
     <id>http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress</id>
-    <content type="html"><![CDATA[<p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits[1] and just commit anyway.</p>
+    <content type="html"><![CDATA[<p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and just commit anyway.</p>
 
 <p>So, my website is alive, I have lost hours of my life to the jaws of the Octopress, and I may be switching to Jekyll or Pelican soon. But in the meantime, all of this made me intensely curious about git! I hit up <a href="http://maryrosecook.com/">Mary</a> for a mini-seminar, and I will now write it all out on my blog to make sure I understood it. Feel free to read along, learn from my simplistic explanation, correct my gross misunderstandings, etc.! So now, on to our feature presentation:</p>
 
@@ -574,7 +764,7 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 </span><span class='line'>31  e9  info    pack</span></code></pre></td></tr></table></div></figure>
 
 
-<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):</p>
+<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -695,10 +885,16 @@ author: [name]<br>
 <p>There&rsquo;s no need to make another representation of <code>b</code>, since <code>b</code> hasn&rsquo;t been changed this commit. Instead, where the tree has to point to <code>b</code>, it points to the hash of the <em>existing</em> version of <code>b</code>.</p>
 
 <p>So, now I understand a biiiiit more about the whacky world of git and just what these cryptic commands are doing! I even understand pointers and branching and detached head state and all that a bit better, but that is perhaps another post for another day. Cheers!</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>To quote from the Git docs: &ldquo;When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a &lsquo;fast forward&rsquo;.&rdquo; Or, look at this <a href="https://sandofsky.com/images/fast_forward.pdf">explanation in pretty pictures</a>. By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><code>glook</code> is a shortcut I made; the full command to get file contents from one of these hashes is <code>git cat-file -p</code>.<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
 
-<p>[1] To quote from the Git docs: &ldquo;When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a &lsquo;fast forward&rsquo;.&rdquo; Or, look at this <a href="https://sandofsky.com/images/fast_forward.pdf">explanation in pretty pictures</a>. By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.</p>
-
-<p>[2] <code>glook</code> is a shortcut I made; the full command to get file contents from one of these hashes is <code>git cat-file -p</code>.</p>
 ]]></content>
   </entry>
   
@@ -1257,11 +1453,17 @@ author: [name]<br>
 
 <p>Unlike that first chunk of wasted time, at the end of my dynamic content spree I felt no more knowledgeable than when I began, no better equipped to tackle the problem. All I felt was inadequate and impostor-y because I couldn&rsquo;t decipher any of the history.js walkthroughs or code examples.</p>
 
-<p>So, lessons learned from all this: I want to start setting myself discrete chunks of time in which to do things. Not only will this make it easier to start on daunting projects[1] and give my workflow more structure so that I&rsquo;m not jumping around all the time, it will (hopefully) keep me back from the edge of the black hole. After I&rsquo;ve spent an hour (especially late in the evening) on something like the dynamic content thing and a timer goes off on my computer, I have to step back and reevaluate. &ldquo;Am I getting stuff done? Is it time to ask for help? Is my brain too mushy to keep doing this? Is my current approach still working?&rdquo; Even if I do the same task for several hours straight, setting myself a little mental check-in every hour or every 45 minutes will, I hope, help keep me on track. Plus, I do much better with accountability when I have a concrete timeline. Yesterday I resolved that before lunch I would write a README for my <a href="https://github.com/maianess/markovgen">abandoned Markov generator</a> so that I could come back to it later, and I&rsquo;d go through a chapter of the <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Interactive Python Algorithms and Data Structures</a> course. I did both of those things, and I felt <em>so good</em> about doing all the things that I&rsquo;d said I was going to do!</p>
+<p>So, lessons learned from all this: I want to start setting myself discrete chunks of time in which to do things. Not only will this make it easier to start on daunting projects<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and give my workflow more structure so that I&rsquo;m not jumping around all the time, it will (hopefully) keep me back from the edge of the black hole. After I&rsquo;ve spent an hour (especially late in the evening) on something like the dynamic content thing and a timer goes off on my computer, I have to step back and reevaluate. &ldquo;Am I getting stuff done? Is it time to ask for help? Is my brain too mushy to keep doing this? Is my current approach still working?&rdquo; Even if I do the same task for several hours straight, setting myself a little mental check-in every hour or every 45 minutes will, I hope, help keep me on track. Plus, I do much better with accountability when I have a concrete timeline. Yesterday I resolved that before lunch I would write a README for my <a href="https://github.com/maianess/markovgen">abandoned Markov generator</a> so that I could come back to it later, and I&rsquo;d go through a chapter of the <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Interactive Python Algorithms and Data Structures</a> course. I did both of those things, and I felt <em>so good</em> about doing all the things that I&rsquo;d said I was going to do!</p>
 
 <p>Also, I&rsquo;m curious how I will react to having more, smaller projects that I can work on in fits and starts, without oversaturating my brain with any one thing. I&rsquo;m thinking of giving this a try&ndash;maybe some of the coding exercises in the Interactive Python tutorial, maybe <a href="http://mathamy.com/pages/phonebook.html">Amy Hanlon&rsquo;s phonebook exercise</a>, or one of the mini-projects from the old HS <a href="https://hackpad.com/Iron-Forger-kEmauANGcV5">Ironforger</a> group. Something to put on the back-burners of my brain!</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>For instance, after I finish this post, I&rsquo;m gonna go spend 30 minutes working on the actual content of my website, which is something I&rsquo;ve been putting of for <em>forever</em>.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
 
-<p>[1] For instance, after I finish this post, I&rsquo;m gonna go spend 30 minutes working on the actual content of my website, which is something I&rsquo;ve been putting of for <em>forever</em>.</p>
 ]]></content>
   </entry>
   
@@ -1338,27 +1540,6 @@ nt a tour She had to make the&rsquo;</p>
 <p><strong>King James Bible</strong></p>
 
 <p>&ldquo;woman alive, to bring to pass on the doors were shut. And as they cried out in the strength of my teachers, nor inclined your ear receive the office of a deacon well purchase to themselves instruments of war, mighty men which were there bound unto Caiaphas the high mountains of Israel; because they received not correction; she trusted not in Gath, where was no sword in my mother&rsquo;s womb, and the face at Bethshemesh, which belongeth to Judah, and from the lions&#8217; mouths, that they had been carried away, whom Nebuchadnezzar king of Arpad, and the city of David and Ahaz his son reigned in Jerusalem the day of your doings from before thy feet, and worshipped him, saying, Lord, have mercy on whom I serve, Saying, Fear not, Paul; thou must do after your lewdness. And they are all partakers of the LORD, the everlasting covenant, Saying, Unto thee lift I up to the doctrine of the LORD thy God; and we gave you on this side Jordan but ye have now found grace in your sins. Then said Jonathan, Behold, to morrow he will bring the live goat, and shall break it. Of the children of Israel&rdquo;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Target: Acquired]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/07/31/target-acquired/"/>
-    <updated>2014-07-31T18:42:31-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/07/31/target-acquired</id>
-    <content type="html"><![CDATA[<p>At the end of Week 2, I&rsquo;m still overwhelmed, but a bit less, and with a bit more conviction that I can in fact write code. I finished my first project in Python yesterday, and spent this morning implementing some code review I got. Here are some things I learned, mainly for my own reference but perhaps other beginning Python folks will find it useful as well:<!-- more --></p>
-
-<ul>
-<li>4x spaces instead of tabs (Sublime will do this for you really easily! Sublime is magic!)</li>
-<li>instead of a million &ldquo;or&rsquo;s&rdquo; in some truth statement, ask if it&rsquo;s in a list instead. So for instance, instead of <code>if a == 1 or a == True or a == true</code>, use <code>if a in [1, "True", "true"]</code>.</li>
-<li>next time I write a program that makes the user pick among options from the command line (dear God, hopefully never again), instead of a giant string of if/elif&rsquo;s, consider a dictionary that maps user responses to the functions they execute.</li>
-<li>if I did this again, I&rsquo;d have made better use of classes, both as a) a way to group related methods and b) a way to keep track of the objects I was modifying. (Had a hell of a time trying to change some global variable, only to find that I&rsquo;d somehow modified it as a local variable instead. Calling a method ON that object would eliminate that problem.)</li>
-<li>modular code is useful. Next time.</li>
-<li>you can do way more in <code>return</code> statements than I ever thought you could (like funky if statements and for loops).</li>
-</ul>
-
-
-<p>I&rsquo;ve figured out my next project! I&rsquo;ll be doing fun stuff with the English language (always a hoot) and <a href="http://setosa.io/blog/2014/07/26/markov-chains/">Markov Chains</a>. More specifically, I&rsquo;m gonna write a program that will generate moderately-intelligible English text, based on patterns it learns from a sample text that I feed it. I&rsquo;ll start simple (just learning patterns of the words themselves), and if that works, I&rsquo;ll build a more complicated version (that recognizes syntactical patterns as well). Maybe if I have great success, I&rsquo;ll be able to do something whacky like a haiku generator!</p>
 ]]></content>
   </entry>
   

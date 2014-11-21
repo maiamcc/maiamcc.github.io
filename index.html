@@ -9,7 +9,7 @@
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="(If you&rsquo;re confused, see my previous post on my Markov generator adventures.) The other thing I got up to today was implementing some sort of ( &hellip;">
+  <meta name="description" content="Back in mid-July, I started at Hacker School, wide-eyed and green and totally freaked out. With only a little bit of Javascript under my belt(and a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,12 +80,53 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-  
-  
-  
   <article>
     My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
   </article>
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-20T20:36:26-05:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Back in mid-July, I started at Hacker School, wide-eyed and green and totally freaked out. With only a little bit of Javascript under my belt(and a basically negligible amount of Java, so we&rsquo;re not even counting that), I decided to teach myself Python, slogged halfway through Zed Shaw&rsquo;s <em>Learn Python the Hard Way</em>, then went off to go build something, because I work best by getting my hands dirty. For my first Python project, I wrote <a href="//github.com/maiamcc/studentchooser">studentchooser</a>, a little command-line app request by a teacher friend of mine, who wanted a fair way to call on her students at random (for putting homework problems on the board, etc.). The idea was that, once a student had been selected, it was <em>less</em> likely that they would be selected again, but not impossible&ndash;the chance of them being picked subsequently would go down, but they would still be in the running.</p>
+
+<p>So, I made a program to do that! You store a list of students for a given class period in what I called the <code>roster</code> (just a dictionary of students). Each <code>Student</code> object keeps track of the number of times it has been selected and its probability of being selected in the next round, as well as whether or not the student is absent.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> It took me a little more than a week to finish, as I was still muddling through Python as I went, and at the end, I had a working final product! A rough one, but a working one! And then I went off on my merry way, doing more and varied projects and slowly building up my Python chops, getting code review, etc. Somewhere along the way, so gradually I didn&rsquo;t even realize it, I began to feel competent, like with enough time to think and maybe a little Googling, I could Python my way out of most problems that were thrown at me. And so today, back at Hacker School for Alumni Thursday and itching to write some code (because I&rsquo;ve been up to my neck in web work for the past few weeks), I opted for a blast from the past, and dived into my very first Python project to poke around, refactor, clean up, and chronicle what I found and what I had learned in the past four months. Here are some findings, accomplishments, and reflections.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/11/20/revisiting-my-first-python-program/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
     <article>
       
   <header>
@@ -136,9 +177,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -178,9 +216,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -224,9 +259,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -270,9 +302,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -316,9 +345,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -360,9 +386,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -404,9 +427,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -454,9 +474,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -505,53 +522,6 @@
 
     </article>
   
-  
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/12/observations-from-phonebook-code-review/">Observations From Phonebook Code Review</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-12T15:38:52-04:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here are some gleanings from Amy&rsquo;s code review of <a href="https://github.com/maiamcc/phonebook">my phonebook applet</a>, and some self-study. Mostly for my own records and so I actually absorb all of this by writing out, but if anyone has comments, additions, disagreements with anything I&rsquo;ve written here, fire away!</p>
-
-<ul>
-<li>misc. layout stuff, like putting import statements in alphabetical order</li>
-<li>avoid global vars when possible. I already knew this, but it&rsquo;s good to remember. For example, if you&rsquo;ve assuming your program will be run on the command line, you can put global vars in the <code>main()</code> function.</li>
-<li>functions that only incidentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/12/observations-from-phonebook-code-review/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -567,6 +537,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/23/markov-madness-2/">Markov Madness, Part 2</a>
       </li>
     
@@ -580,10 +554,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/06/choice-paralysis/">Choice Paralysis</a>
       </li>
     
   </ul>

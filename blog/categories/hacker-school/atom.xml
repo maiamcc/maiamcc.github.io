@@ -4,7 +4,7 @@
   <title><![CDATA[Category: hacker school | Maia Remez McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/hacker-school/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-11-18T22:21:14-05:00</updated>
+  <updated>2014-11-20T22:17:49-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,6 +12,133 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Revisiting My First Python Program]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/11/20/revisiting-my-first-python-program/"/>
+    <updated>2014-11-20T20:36:26-05:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/11/20/revisiting-my-first-python-program</id>
+    <content type="html"><![CDATA[<p>Back in mid-July, I started at Hacker School, wide-eyed and green and totally freaked out. With only a little bit of Javascript under my belt(and a basically negligible amount of Java, so we&rsquo;re not even counting that), I decided to teach myself Python, slogged halfway through Zed Shaw&rsquo;s <em>Learn Python the Hard Way</em>, then went off to go build something, because I work best by getting my hands dirty. For my first Python project, I wrote <a href="//github.com/maiamcc/studentchooser">studentchooser</a>, a little command-line app request by a teacher friend of mine, who wanted a fair way to call on her students at random (for putting homework problems on the board, etc.). The idea was that, once a student had been selected, it was <em>less</em> likely that they would be selected again, but not impossible&ndash;the chance of them being picked subsequently would go down, but they would still be in the running.</p>
+
+<p>So, I made a program to do that! You store a list of students for a given class period in what I called the <code>roster</code> (just a dictionary of students). Each <code>Student</code> object keeps track of the number of times it has been selected and its probability of being selected in the next round, as well as whether or not the student is absent.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> It took me a little more than a week to finish, as I was still muddling through Python as I went, and at the end, I had a working final product! A rough one, but a working one! And then I went off on my merry way, doing more and varied projects and slowly building up my Python chops, getting code review, etc. Somewhere along the way, so gradually I didn&rsquo;t even realize it, I began to feel competent, like with enough time to think and maybe a little Googling, I could Python my way out of most problems that were thrown at me. And so today, back at Hacker School for Alumni Thursday and itching to write some code (because I&rsquo;ve been up to my neck in web work for the past few weeks), I opted for a blast from the past, and dived into my very first Python project to poke around, refactor, clean up, and chronicle what I found and what I had learned in the past four months. Here are some findings, accomplishments, and reflections.<!--more--></p>
+
+<h4>Little things I changed</h4>
+
+<p>There were a handful of little things that now strike me as really silly that I changed straight off. Stuff like the realization that text files don&rsquo;t actually need an extension (<code>.txt</code> or otherwise), or that instead of <code>myfile = open("foo.txt", "r"); contents = myfile.read(); myfile.close()</code> I could do the whole thing more cleanly and more efficiently with <code>with open("foo.txt") as myfile:</code>. Similarly, I found loads of places where a little more specificity in variable naming would have made the code hugely easier to read. So given something like, say, <code>for item in roster_list</code>, I changed it to <code>for roster_name in roster_list</code>.</p>
+
+<h4>Gratuitous, &ldquo;useless&rdquo; comments</h4>
+
+<p>There were comments EVERYWHERE. Like seriously, look at the code sample below.</p>
+
+<pre><code class="python">"""Load a roster from file."""
+
+# Boolean saying that this is NOT a new roster
+    # i.e. when the program saves data, it will NOT edit the "config" file
+global new_roster
+new_roster = False
+
+# make list of all rosters in config file
+roster_list = get_all_rosters()
+
+if len(roster_list) == 0: # if list is empty, make a new roster instead
+    print "No rosters available to load. Make a new one instead."
+    make_new_roster()
+else: # if config file contains at least one roster to load...
+    print "Which roster would you like to load? Enter a number."
+
+    # print a list of available rosters from config file
+    for item in roster_list:
+        item_index = roster_list.index(item) + 1
+        pretty_name = get_pretty_name(item) # (name of the file w/o the file extension)
+        print "\t%d. %s" % (item_index, pretty_name)
+
+    while True:
+        answer = ask()
+
+        # if possible, turn answer from a string into an int.
+        try:
+            answer_int = int(answer)
+        except ValueError:
+            answer_int = None
+
+        # if the answer is an int. in the range of # items in the list...
+        if answer_int in range(1, len(roster_list) + 1):
+            index = answer_int - 1 # (b/c list as displayed is 1-indexed)
+
+            # save the given filename as the 'current file'
+            global current_file
+            current_file = roster_list[index]
+            print "File to load:", current_file
+
+            # populate the roster using the data in the selected file
+            populate_roster(current_file)
+
+            # returns name of the class (= name of the file) for display
+            return get_pretty_name(current_file)
+        else: # if user input isn't in range or isn't an integer
+            print "Sorry, I didn't get that. Try again." # run the loop again
+</code></pre>
+
+<p>This comments-every-step-of-the-way thing pops up again and again in studentchooser, and looking at the code now, it seems pretty silly, because I can tell just by looking what most of these lines do&ndash;or at least, I can after rewriting it a bit so that variable names are intuitive, code is readable, etc. So I took a lot of these comments out of the refactored version, but I think it&rsquo;s really important to remember why I put them in in the first place. When I was first writing this code, it wasn&rsquo;t gratuitous, it was <em>super helpful</em> to know step by step exactly what was happening in my code, and to write it down so I couldn&rsquo;t get away with fudging that understanding. This is actually one of the few things I really took with me from <em>Learn Python the Hard Way</em> (see for instance <a href="//learnpythonthehardway.org/book/ex6.html#study-drills">these study drills</a>&ndash;that explaining your code in English line by line is a <em>great</em> tool for understanding and internalizing it! This is something I still keep in my toolbox for unknown/particularly tricky bits of code.</p>
+
+<h4>Now I know better&hellip;</h4>
+
+<p>This project has a) no tests, which make it a giant pain to refactor; b) haphazard architecture, because I was adding features as they occurred to me and I didn&rsquo;t go in with an overarching plan, and so variable names are unclear, patterns of work are inconsistent, bits of the code are held together with tape and bubble gum, etc., and c) poor readability, due in part to the inconsistent naming schemes, in part to the fact that I wasn&rsquo;t prioritizing readability and didn&rsquo;t know how to code for it, and in part to the fact that I thought gratuitous commenting would make up for hard-to-read code. Now I know better, or at least I hope I do. (When I&rsquo;m not lazy,) I write tests for my projects; I outline my projects ahead of time and plan for the features I may add in the future so the architecture stays coherent and I don&rsquo;t have to refactor halfway through (hopefully); and I strive for readability in my code itself (and don&rsquo;t rely on gratuitous commenting to do that work for me).</p>
+
+<h4>New tools, new sensibilities</h4>
+
+<p>I first learned about list comprehension when <a href="//ballingt.com/">Tom</a> code-reviewed this project for me, though I didn&rsquo;t really understand what they were until much later&ndash;I initially thought they were something cool you could do in a return statement, which now makes me laugh. But now that I actually understand list comprehensions and a bunch of other handy tricks, I can write much tighter, more efficient code. What used to be this:</p>
+
+<pre><code class="python">def get_all_rosters():
+    """"Return a list of all of the roster filenames in the config file."""
+    all_rosters_file = open(config_file)
+    all_rosters_list = []
+    for line in all_rosters_file:
+        all_rosters_list.append(line.strip())
+    all_rosters_list.sort(key=string.lower)
+    all_rosters_file.close()
+    return all_rosters_list
+</code></pre>
+
+<p>&hellip;is now this:</p>
+
+<pre><code class="python">def get_all_rosters():
+    """"Return a list of all of the roster filenames in the config file."""
+    with open(config_file) as all_rosters_file:
+        return sorted([line.strip() for line in all_rosters_file], key=string.lower)
+</code></pre>
+
+<p>This code is more compact not only because of the list comprehension (did I mention that list comprehensions are <em>awesome</em>?) but also because I smooshed the sorting into the same line as the list-making. There are other cases where before, I make a list, joined it into a string, and returned the string, but now, I return-a-join-this-list-into-a-string-please-thx-bai, all in one line. The more comfortable I get with Python, the less I need to separate things out and the more able I am to smush things together into fewer lines while still knowing what&rsquo;s going on.</p>
+
+<h4>Global variables, global variables everywhere!</h4>
+
+<p>By far the biggest pain in the neck about this whole program was keeping track of the global variables. I had a few of them floating around: a roster where I stored all of my students, a list of the students (because for some reason I needed to keep a separate list instead of just extracting it from the roster), the filename under which this roster was stored, a boolean telling me whether this was a new roster or not&hellip; And so every time there was a function that needed to interact with and modify, say, the roster, it had to go look for this global variable called <code>roster</code> (I guess because I didn&rsquo;t think to pass in the roster as an argument).</p>
+
+<p>The solution to my dilemna? Classes!</p>
+
+<p><img src="/images/stayclassy.jpg" alt="&quot;Stay classy, San Diego!&quot;" /></p>
+
+<p>I made a <code>Roster</code> class so that methods like <code>choose()</code>, instead of finding the global variable <code>roster</code>, accessing it, changing it, and sending it back into the ether to live its global-variable life, would instead be called as <code>myroster.choose()</code> and act on that specific instance of <code>Roster</code>, and there would be no confusion as to what the method was accessing/modifying. This refactoring solved another handful of problems, because I could decree that file names would be the same as roster names, and so <code>myroster.name</code> would also keep track of our current file name; similarly, <code>myroster.new</code> would keep track of whether or not this was a newly created roster. Basically, the <code>Roster</code> class let me get rid of all of my global variables, and now all I have to keep track of is the <code>current_roster</code> object. (Also, now I know better than to make it a global variable; if there are functions that need to access it&ndash;which I have tried to minimize&ndash;I pass it to that function as an argument.) Check out a high-level view of my <code>Roster</code> class to see all the functions contained therein:</p>
+
+<p><img src="/images/roster_class.png" alt="Can't see this? Bummer, I guess you have to go check out my github." /></p>
+
+<h4>In conclusion</h4>
+
+<p>I refactored some code and had a total blast from the past. I decided to see what I could improve without changing any of the functionality, just the code, and I cut my program from 536 lines down to 432, and to 399 if we remove vestigial testing functions. That&rsquo;s about a 20% reduction in length! I also convinced myself that I <em>do</em>, in fact, know how to write Python, and checked in with myself about how far I&rsquo;ve come in the last four months. I obviously have loads more to learn&ndash;and this exercise reminded me of some of the helpful strategies in my toolbox, like temporarily over-commenting to wrap my head around whacky and confusing code.</p>
+
+<p>So, after reflection, my advice to new programmers who are jumping in the deep end like I did? Get your hands dirty. Write lots of code, without necessarily caring about what the finished product looks like&ndash;you&rsquo;ll learn so much more from finishing it and fixing it later than you will from agonizing over it. Get code review and pair with people who know more than you do&ndash;it&rsquo;s how you pick up the stuff that makes you a better programmer. But mostly, don&rsquo;t panic!</p>
+
+<p>(This blog post presented as a Hacker School Thursday Talk on 11/20/14.)</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>There are some slightly more finicky mechanics going on that you can read about in the README on github if you&rsquo;re really curious, but this is all that&rsquo;s relevant for this post.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Markov Madness, part 2]]></title>
@@ -60,7 +187,7 @@
     <id>http://maiamcc.github.io/blog/2014/10/23/markov-madness</id>
     <content type="html"><![CDATA[<p>Man, I&rsquo;ve hardly written code in <em>three whole weeks!</em> Such a strange feelings, after 3 solid months of coding. Anyway, back at Hacker School for the day, and with my OPW application in, I&rsquo;ve been itching to actually <em>write some code</em>, so I revisited my old <a href="https://github.com/maiamcc/markovgen">Markov generator</a> project, which takes a training corpus and generates psuedo-random texts in the style of that corpus.<!--more--></p>
 
-<p>I&rsquo;ve tried a few different tacks today for getting texts that actually resembled English and not just word-soup. The first was using n-grams of varying n&rsquo;s when generating my texts[1]. n = 1 is just random words and not worth testing. n = 2 is very nearly gibberish. n = 3 and n = 4 are the sweet spot of sensical-yet-random text; when we get to n = 5, it tends to be several verbatim sentences from the corpus patched together in odd ways, and at n = 6, it is almost consistently exact quotes from the text. At a guess, in more quote-unquote complex texts (i.e., those with more unique words) n = 5 will be closer to verbatim, and in texts with more common words, there will be more room for deviation from any pattern that the generator falls into, and thus n = 5 will be distinct from the original text. Here are generated texts using n-grams of increasing n, from <em>Pride and Prejudice</em>.</p>
+<p>I&rsquo;ve tried a few different tacks today for getting texts that actually resembled English and not just word-soup. The first was using n-grams of varying n&rsquo;s when generating my texts[^1]. n = 1 is just random words and not worth testing. n = 2 is very nearly gibberish. n = 3 and n = 4 are the sweet spot of sensical-yet-random text; when we get to n = 5, it tends to be several verbatim sentences from the corpus patched together in odd ways, and at n = 6, it is almost consistently exact quotes from the text. At a guess, in more quote-unquote complex texts (i.e., those with more unique words) n = 5 will be closer to verbatim, and in texts with more common words, there will be more room for deviation from any pattern that the generator falls into, and thus n = 5 will be distinct from the original text. Here are generated texts using n-grams of increasing n, from <em>Pride and Prejudice</em>.</p>
 
 <p>n = 2:</p>
 
@@ -104,7 +231,7 @@
 
 <blockquote><p>&ldquo;as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine&rsquo;s being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine&rsquo;s being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady&rdquo;</p></blockquote>
 
-<p>[1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &ndash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
+<p>[^1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &ndash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
 ]]></content>
   </entry>
   
@@ -292,38 +419,6 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 <p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
 
 <p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[So Much for That Project]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project/"/>
-    <updated>2014-09-17T12:22:01-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project</id>
-    <content type="html"><![CDATA[<p>Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on <a href="https://code.google.com/p/mingus/">mingus</a>, a midi/music theory Python library. Unfortunately, it seems like no one&rsquo;s addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:</p>
-
-<p><img src="/images/mingusbug_input.png" alt="Input file" /></p>
-
-<p>It returned this mess here:</p>
-
-<p><img src="/images/mingusbug_output.png" alt="Output file" /></p>
-
-<!-- more -->
-
-
-<p>For the record, what seems to be going on here, as far as we can tell, is that while the notes have been preserved, the rhythms have all shifted over by one. The first note has been magically converted into a quarter note, and each note after that has the duration that ought to have belonged to the note before it. (To explain it another way: assume that we have a list of original notes and we&rsquo;re making a list of new notes, where each new note OUGHT to be identical to its corresponding original note. Instead, we get <code>newnote[0].duration == quarter</code>, <code>newnote[1].duration == orignote[0].duration</code>, <code>newnote[2].duration == orignote[1].duration</code>, etc.)</p>
-
-<p>So, <a href="https://code.google.com/p/mingus/issues/detail?id=125">we&rsquo;ve submitted a bug report</a> but we&rsquo;re not optimistic since, like I mentioned, the last answered bug is from 2011. But one day, when my heart has healed, I&rsquo;ll go off looking for ways to fix this or for other Python midi libraries that are suitable for this project, and then I&rsquo;ll take another swing at the choral generator! (Any suggestions? Send them my way! I&rsquo;m looking for a lib that can read, inspect, write, and output midi.)</p>
-
-<p>Until then, as I near the end of HS, it&rsquo;s actually surprisingly freeing to have one less thing to worry about getting done. Obviously I&rsquo;m not going to finish all of this stuff before HS ends, but here&rsquo;s what&rsquo;s on my docket at the moment:</p>
-
-<ul>
-<li>contradance database (search logic, and eventually expanding and populating database)</li>
-<li>sudoku solver (so close&hellip;!)</li>
-<li>more work on the fabulous <a href="http://hypatia.ca/">Leigh Honeywell</a>&rsquo;s <a href="https://github.com/hypatia/virtuoso">Virtuoso Project</a>, which will soon be a web app that doles out writing exercises to fight imposter syndrome, and is also a fabulous excuse for me to learn Bootstrap and play with design.</li>
-<li>goob.py, a fake git</li>
-</ul>
-
 ]]></content>
   </entry>
   

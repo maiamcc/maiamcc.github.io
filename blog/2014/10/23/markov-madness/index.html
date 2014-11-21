@@ -109,7 +109,7 @@
 
 <div class="entry-content"><p>Man, I&rsquo;ve hardly written code in <em>three whole weeks!</em> Such a strange feelings, after 3 solid months of coding. Anyway, back at Hacker School for the day, and with my OPW application in, I&rsquo;ve been itching to actually <em>write some code</em>, so I revisited my old <a href="https://github.com/maiamcc/markovgen">Markov generator</a> project, which takes a training corpus and generates psuedo-random texts in the style of that corpus.<!--more--></p>
 
-<p>I&rsquo;ve tried a few different tacks today for getting texts that actually resembled English and not just word-soup. The first was using n-grams of varying n&rsquo;s when generating my texts[1]. n = 1 is just random words and not worth testing. n = 2 is very nearly gibberish. n = 3 and n = 4 are the sweet spot of sensical-yet-random text; when we get to n = 5, it tends to be several verbatim sentences from the corpus patched together in odd ways, and at n = 6, it is almost consistently exact quotes from the text. At a guess, in more quote-unquote complex texts (i.e., those with more unique words) n = 5 will be closer to verbatim, and in texts with more common words, there will be more room for deviation from any pattern that the generator falls into, and thus n = 5 will be distinct from the original text. Here are generated texts using n-grams of increasing n, from <em>Pride and Prejudice</em>.</p>
+<p>I&rsquo;ve tried a few different tacks today for getting texts that actually resembled English and not just word-soup. The first was using n-grams of varying n&rsquo;s when generating my texts[^1]. n = 1 is just random words and not worth testing. n = 2 is very nearly gibberish. n = 3 and n = 4 are the sweet spot of sensical-yet-random text; when we get to n = 5, it tends to be several verbatim sentences from the corpus patched together in odd ways, and at n = 6, it is almost consistently exact quotes from the text. At a guess, in more quote-unquote complex texts (i.e., those with more unique words) n = 5 will be closer to verbatim, and in texts with more common words, there will be more room for deviation from any pattern that the generator falls into, and thus n = 5 will be distinct from the original text. Here are generated texts using n-grams of increasing n, from <em>Pride and Prejudice</em>.</p>
 
 <p>n = 2:</p>
 
@@ -153,7 +153,7 @@
 
 <blockquote><p>&ldquo;as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine&rsquo;s being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine&rsquo;s being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady&rdquo;</p></blockquote>
 
-<p>[1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &ndash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
+<p>[^1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &ndash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
 </div>
 
 
@@ -221,6 +221,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/23/markov-madness-2/">Markov Madness, Part 2</a>
       </li>
     
@@ -234,10 +238,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/06/choice-paralysis/">Choice Paralysis</a>
       </li>
     
   </ul>

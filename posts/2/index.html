@@ -9,7 +9,7 @@
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in &hellip;">
+  <meta name="description" content="Here are some gleanings from Amy&rsquo;s code review of my phonebook applet, and some self-study. Mostly for my own records and so I actually absorb &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,12 +80,56 @@
   <div id="main">
     <div id="content">
       <div class="blog-index">
-  
-  
-  
   <article>
     My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
   </article>
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/12/observations-from-phonebook-code-review/">Observations From Phonebook Code Review</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-12T15:38:52-04:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here are some gleanings from Amy&rsquo;s code review of <a href="https://github.com/maiamcc/phonebook">my phonebook applet</a>, and some self-study. Mostly for my own records and so I actually absorb all of this by writing out, but if anyone has comments, additions, disagreements with anything I&rsquo;ve written here, fire away!</p>
+
+<ul>
+<li>misc. layout stuff, like putting import statements in alphabetical order</li>
+<li>avoid global vars when possible. I already knew this, but it&rsquo;s good to remember. For example, if you&rsquo;ve assuming your program will be run on the command line, you can put global vars in the <code>main()</code> function.</li>
+<li>functions that only incidentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/12/observations-from-phonebook-code-review/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
     <article>
       
   <header>
@@ -113,7 +157,7 @@
   </header>
 
 
-  <div class="entry-content"><p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits[1] and just commit anyway.</p>
+  <div class="entry-content"><p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and just commit anyway.</p>
 
 <p>So, my website is alive, I have lost hours of my life to the jaws of the Octopress, and I may be switching to Jekyll or Pelican soon. But in the meantime, all of this made me intensely curious about git! I hit up <a href="http://maryrosecook.com/">Mary</a> for a mini-seminar, and I will now write it all out on my blog to make sure I understood it. Feel free to read along, learn from my simplistic explanation, correct my gross misunderstandings, etc.! So now, on to our feature presentation:</p>
 
@@ -135,9 +179,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -214,9 +255,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -336,9 +374,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -384,9 +419,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -432,9 +464,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -478,9 +507,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -524,9 +550,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -572,9 +595,6 @@
     </article>
   
   
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
     <article>
       
   <header>
@@ -619,48 +639,6 @@
 
     </article>
   
-  
-  <article>
-    My name is Maia. I&#8217;m a programmer based in New York City. This is where I chronicle my journeys through code, as well as other vaguely related adventures.
-  </article>
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/31/target-acquired/">Target: Acquired</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-31T18:42:31-04:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>At the end of Week 2, I&rsquo;m still overwhelmed, but a bit less, and with a bit more conviction that I can in fact write code. I finished my first project in Python yesterday, and spent this morning implementing some code review I got. Here are some things I learned, mainly for my own reference but perhaps other beginning Python folks will find it useful as well:</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/07/31/target-acquired/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -678,6 +656,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/23/markov-madness-2/">Markov Madness, Part 2</a>
       </li>
     
@@ -691,10 +673,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/06/choice-paralysis/">Choice Paralysis</a>
       </li>
     
   </ul>
