@@ -1,13 +1,113 @@
-<hr />
 
-<p>layout: post
-title: &ldquo;Revisiting My First Python Program&rdquo;
-date: 2014-11-20 20:36:26 -0500
-comments: true</p>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Revisiting My First Python Program - Maia Remez McCormick</title>
+  <meta name="author" content="Maia Remez McCormick">
 
-<h2>categories: [Hacker School, code review]</h2>
+  
+  <meta name="description" content="Back in mid-July, I started at Hacker School, wide-eyed and green and totally freaked out. With only a little bit of Javascript under my belt(and a &hellip;">
+  
 
-<p>Back in mid-July, I started at Hacker School, wide-eyed and green and totally freaked out. With only a little bit of Javascript under my belt(and a basically negligible amount of Java, so we&rsquo;re not even counting that), I decided to teach myself Python, slogged halfway through Zed Shaw&rsquo;s <em>Learn Python the Hard Way</em>, then went off to go build something, because I work best by getting my hands dirty. For my first Python project, I wrote <a href="//github.com/maiamcc/studentchooser">studentchooser</a>, a little command-line app request by a teacher friend of mine, who wanted a fair way to call on her students at random (for putting homework problems on the board, etc.). The idea was that, once a student had been selected, it was <em>less</em> likely that they would be selected again, but not impossible&mdash;the chance of them being picked subsequently would go down, but they would still be in the running.</p>
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://maiamcc.github.io/blog/2014/11/20/revisiting-my-first-python-program">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Maia Remez McCormick" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Overlock+SC|Overlock:400,700|Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fancybox").fancybox();
+        $(".fancybox").fancybox({
+    width  : 600,
+    height : 300,
+    type   :'iframe'
+    });
+
+});
+</script>
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Maia Remez McCormick</a></h1>
+  
+  <div class="subtitle">
+    <h2>Programmer, writer, nerd</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div class="selected"> 
+  <li><a href="/">blog</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/projects">projects</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div id="thepost">
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Revisiting My First Python Program</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-20T20:36:26-05:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Back in mid-July, I started at Hacker School, wide-eyed and green and totally freaked out. With only a little bit of Javascript under my belt(and a basically negligible amount of Java, so we&rsquo;re not even counting that), I decided to teach myself Python, slogged halfway through Zed Shaw&rsquo;s <em>Learn Python the Hard Way</em>, then went off to go build something, because I work best by getting my hands dirty. For my first Python project, I wrote <a href="//github.com/maiamcc/studentchooser">studentchooser</a>, a little command-line app request by a teacher friend of mine, who wanted a fair way to call on her students at random (for putting homework problems on the board, etc.). The idea was that, once a student had been selected, it was <em>less</em> likely that they would be selected again, but not impossible&mdash;the chance of them being picked subsequently would go down, but they would still be in the running.</p>
 
 <p>So, I made a program to do that! You store a list of students for a given class period in what I called the <code>roster</code> (just a dictionary of students). Each <code>Student</code> object keeps track of the number of times it has been selected and its probability of being selected in the next round, as well as whether or not the student is absent.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> It took me a little more than a week to finish, as I was still muddling through Python as I went, and at the end, I had a working final product! A rough one, but a working one! And then I went off on my merry way, doing more and varied projects and slowly building up my Python chops, getting code review, etc. Somewhere along the way, so gradually I didn&rsquo;t even realize it, I began to feel competent, like with enough time to think and maybe a little Googling, I could Python my way out of most problems that were thrown at me. And so today, back at Hacker School for Alumni Thursday and itching to write some code (because I&rsquo;ve been up to my neck in web work for the past few weeks), I opted for a blast from the past, and dived into my very first Python project to poke around, refactor, clean up, and chronicle what I found and what I had learned in the past four months. Here are some findings, accomplishments, and reflections.<!--more--></p>
 
@@ -189,3 +289,164 @@ comments: true</p>
 </ol>
 </div>
 
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Maia Remez McCormick</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-20T20:36:26-05:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/code-review/'>code review</a>, <a class='category' href='/blog/categories/hacker-school/'>hacker school</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/23/markov-madness-2/" title="Previous Post: Markov Madness, part 2">&laquo; Markov Madness, part 2</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  <img src = "/images/headshot.jpg">
+<section>
+  <a href="blog/archives/"><h1>Posts</h1></a>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/23/markov-madness-2/">Markov Madness, Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/23/markov-madness/">Markov Madness, Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/22/reflections-on-my-first-open-source-contribution/">Reflections on My First Open-Source Contribution</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/maiamcc">@maiamcc</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'maiamcc',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+</p>
+
+<p>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'maia-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://maiamcc.github.io/blog/2014/11/20/revisiting-my-first-python-program/';
+        var disqus_url = 'http://maiamcc.github.io/blog/2014/11/20/revisiting-my-first-python-program/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
