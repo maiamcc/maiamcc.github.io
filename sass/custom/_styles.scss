@@ -75,7 +75,27 @@ html {
   body {
      > div {
        border-bottom: 0px solid $page-border-bottom;
-   }
+       }
+  }
 
-
-}
+  .project {
+    margin-bottom: 1.5em;
+    .heading {
+      margin-bottom: 0;
+    }
+    @media only screen and (min-width: 480px) {
+      .heading{
+        display: inline-block;
+      }
+      h3 {
+        width: 50%;
+      }
+      h4 {
+        width: 50%;
+        text-align: right;
+      }
+    }
+    p {
+      margin-bottom: 0.2em;
+    }
+  }

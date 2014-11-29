@@ -12,6 +12,7 @@
   {% endcomment %}
 </div>
 
-<div class="header-right">
+{% if page.navbar != 'none' %}<div class="header-right">
   {% include navigation.html %}
 </div>
+{% endif %}

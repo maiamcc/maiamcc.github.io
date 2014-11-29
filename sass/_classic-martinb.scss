@@ -21,6 +21,7 @@ body > header {
   padding-bottom: 0;
   padding-top: 0;
   background:url('/images/shatter_dark.png');
+  margin-bottom: 10px;
   h1 > a:hover {
     color: lighten($head-hov-color, 3);
   }

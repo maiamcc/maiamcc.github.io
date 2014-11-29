@@ -82,6 +82,8 @@ body {
   }
 
   #content > div > article {
+  padding-left: $pad-narrow/2;
+  padding-right: $pad-narrow/2;
     @media only screen and (min-width: 480px) {
       padding-left: $pad-narrow;
       padding-right: $pad-narrow;
