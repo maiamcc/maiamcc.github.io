@@ -5,7 +5,7 @@ date: 2014-08-26 11:56:57 -0400
 comments: true
 categories: [Hacker School]
 ---
-The sudoku solver that I'm working on with [Miriam](https://mlauter.github.io/) was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written--
+The sudoku solver that I'm working on with [Miriam](https://mlauter.github.io/) was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written---
 
 ```python
 def draw_board(board):
@@ -159,7 +159,7 @@ False
 True
 ```
 
-So even though we copied the board with slicing--`copyboard = board[:]`--all of the rows in `copyboard` still pointed at the rows in `board`: copyboard[i]` and `board[i] were the same thing, so modifying `copyboard` changed `board` as well, leading to the endless insertion of vertical lines observed above.
+So even though we copied the board with slicing---`copyboard = board[:]`---all of the rows in `copyboard` still pointed at the rows in `board`: copyboard[i]` and `board[i] were the same thing, so modifying `copyboard` changed `board` as well, leading to the endless insertion of vertical lines observed above.
 
 Miriam hit upon this really excellent thing called _deep copy_; as opposed to regular 'ol shallow copying like that above, deep copy would make a _new list_ populated by _new lists_. And hallelujah, the problem was solved! The vertical line monsters were vanquished, and the people of Sudoku-Land could live in peace once more!
 

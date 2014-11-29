@@ -34,7 +34,7 @@ The thing that's odd about the code that we just ran is that it printed "Making 
 3
 ```
 
-If you pass it an argument, it runs just as you'd expect it to. If you don't pass it arguments, it returns the value you'd expect, but notice that it doesn't print "Making a list..."--which implies that it hasn't run the `make_a_list` function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) *at assignment*, *not* whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function... well, it won't! If you needed more convincing:
+If you pass it an argument, it runs just as you'd expect it to. If you don't pass it arguments, it returns the value you'd expect, but notice that it doesn't print "Making a list..."---which implies that it hasn't run the `make_a_list` function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) *at assignment*, *not* whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function... well, it won't! If you needed more convincing:
 
 ```python
 >>> from random import randint
@@ -59,7 +59,7 @@ If you pass it an argument, it runs just as you'd expect it to. If you don't pas
 
 Hmm. It would appear that we aren't getting a new random number every time we run this function.
 
-That's not the only weird thing about default arguments, though. Things can get messy even when you're not setting functions as default args--really, all it takes to break things is a mutable object.
+That's not the only weird thing about default arguments, though. Things can get messy even when you're not setting functions as default args---really, all it takes to break things is a mutable object.
 
 ```python
 >>> def append_one(mylist = []):
@@ -77,7 +77,7 @@ That's not the only weird thing about default arguments, though. Things can get 
 [1, 1, 1, 1, 1]
 ```
 
-As with the function-as-default-arg example, your default argument binds *at definition*--and what's more, it binds to a specific object in memory. So every time you call `append_one`, you're not appending one to a new empty list, you're appending one to *that exact empty list that you created in memory, which now has more and more things in it*. It's the same as if you passed in an existing, named list as your default:
+As with the function-as-default-arg example, your default argument binds *at definition*---and what's more, it binds to a specific object in memory. So every time you call `append_one`, you're not appending one to a new empty list, you're appending one to *that exact empty list that you created in memory, which now has more and more things in it*. It's the same as if you passed in an existing, named list as your default:
 
 ```python
 >>> stuff = [1,3,5,7]

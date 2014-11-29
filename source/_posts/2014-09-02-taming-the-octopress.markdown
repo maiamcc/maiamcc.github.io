@@ -5,7 +5,7 @@ date: 2014-09-02 17:59:40 -0400
 comments: true
 categories: [Hacker School]
 ---
-I was messing around with my website yesterday, and trying to make two sub-websites for my 'Music' and 'Programming' hats in a single Octopress install, and I _really was going to be on time to my dinner plans_ except once my website experiment was borked and I tried to restore my previous site... well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with [Allison](http://akaptur.github.io/) trying to fix the problem. Turns out that in trying to roll back my changes, I'd introduced some discrepancy between my `master` and `gh-pages` branches, and I could get around all of this on github with force pushes (`-f`), but not so easily with actually deploying my site (`rake deploy`). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it's doing fast-forward commits[1] and just commit anyway.
+I was messing around with my website yesterday, and trying to make two sub-websites for my 'Music' and 'Programming' hats in a single Octopress install, and I _really was going to be on time to my dinner plans_ except once my website experiment was borked and I tried to restore my previous site... well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with [Allison](http://akaptur.github.io/) trying to fix the problem. Turns out that in trying to roll back my changes, I'd introduced some discrepancy between my `master` and `gh-pages` branches, and I could get around all of this on github with force pushes (`-f`), but not so easily with actually deploying my site (`rake deploy`). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it's doing fast-forward commits[^1] and just commit anyway.
 
 So, my website is alive, I have lost hours of my life to the jaws of the Octopress, and I may be switching to Jekyll or Pelican soon. But in the meantime, all of this made me intensely curious about git! I hit up [Mary](http://maryrosecook.com/) for a mini-seminar, and I will now write it all out on my blog to make sure I understood it. Feel free to read along, learn from my simplistic explanation, correct my gross misunderstandings, etc.! So now, on to our feature presentation:
 
@@ -48,7 +48,7 @@ maia$ ls .git/objects/
 31  e9  info    pack
 ```
 
-31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: `31/e9dce72edaeb87f2b007b09230bfd5008da63e` and `e9/1ace6ef46e2244fc3588bdead8f66b35b20d12`. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[2] (`xx/yyyyyy` --> the hash `xxyyyyyy`):
+31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: `31/e9dce72edaeb87f2b007b09230bfd5008da63e` and `e9/1ace6ef46e2244fc3588bdead8f66b35b20d12`. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents[^2] (`xx/yyyyyy` ---> the hash `xxyyyyyy`):
 
 ```
 maia$ glook e91ace6ef46e2244fc3588bdead8f66b35b20d12
@@ -134,7 +134,7 @@ Now let's say I add a directory `foo`, and a file in foo `c`, and make changes t
 
 ![Git guts](/images/git2.png)
 
-You see that the main tree, `tree2`, is pointing directly to `a` and `b` but not to `c`--rather, it points to `tree2.1`, which points to `c`. It looks this way because git uses trees to represent directories; it references files living in subdirectories via trees (representing those directories) referencing those files.
+You see that the main tree, `tree2`, is pointing directly to `a` and `b` but not to `c`---rather, it points to `tree2.1`, which points to `c`. It looks this way because git uses trees to represent directories; it references files living in subdirectories via trees (representing those directories) referencing those files.
 
 Note that git is still storing (in super-compact encoded form) all previous versions of the files, and given this network of things-that-contain-hashes-of-other-things, we know exactly where to look for any version of any file we want to find. And git only makes the necessary changes. Look what happens if we change `a` and `c` but leave `b` the same:
 
@@ -144,6 +144,6 @@ There's no need to make another representation of `b`, since `b` hasn't been cha
 
 So, now I understand a biiiiit more about the whacky world of git and just what these cryptic commands are doing! I even understand pointers and branching and detached head state and all that a bit better, but that is perhaps another post for another day. Cheers!
 
-[1] To quote from the Git docs: "When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a 'fast forward'." Or, look at this [explanation in pretty pictures](https://sandofsky.com/images/fast_forward.pdf). By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.
+[^1]: To quote from the Git docs: "When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a 'fast forward'." Or, look at this [explanation in pretty pictures](https://sandofsky.com/images/fast_forward.pdf). By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.
 
-[2] `glook` is a shortcut I made; the full command to get file contents from one of these hashes is `git cat-file -p`.
+[^2]: `glook` is a shortcut I made; the full command to get file contents from one of these hashes is `git cat-file -p`.
