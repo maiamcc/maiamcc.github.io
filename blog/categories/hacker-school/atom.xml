@@ -4,7 +4,7 @@
   <title><![CDATA[Category: hacker school | Maia Remez McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/hacker-school/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2014-11-28T21:47:17-05:00</updated>
+  <updated>2014-12-01T12:19:23-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Design Principles from Liz]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/12/01/design-principles-from-liz/"/>
+    <updated>2014-12-01T12:17:19-05:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/12/01/design-principles-from-liz</id>
+    <content type="html"><![CDATA[<p>The other week, I chatted with the fabulous <a href="//lizstarin.com">Liz Starin</a> and picked her aesthetically-enabled brain about fonts and layouts for websites. Below is some stuff I learned from our design adventures, both wisdom straight from her and stuff I picked up from my experience overhauling fonts and layout: <!-- more --></p>
+
+<ul>
+<li>x-height is a unit referring to how tall the letter ‘x’ is in a given font. The larger the x-height, the easier to read on-screen. (Some fonts with small x-heights include Garamond and Futura.)</li>
+</ul>
+
+
+<p><img src="/images/xheight.gif" alt="A shiny graphic about x-height" />
+Graphic found in PAPress’s <a href="//www.papress.com/thinkingwithtype/index.htm">Thinking with Type</a> project.</p>
+
+<ul>
+<li>serifs are generally the best choice for body text—they tend to be more readable on-screen.</li>
+<li>in CSS, you can set <code>line-height</code>, which controls the space between lines of text. Increasing line spacing just a bit can improve readability a <em>lot</em>.</li>
+<li>when picking a font, it’s helpful to have some adjectives in mind, rather than blindly scanning around for a font that you like. At the very least, it will give you a place to start.</li>
+<li><a href="//www.google.com/fonts">Google Fonts</a> is an incredible thing.</li>
+<li>a surprisingly good way to gauge whether a font has the intended effect: imagine you got a wedding invitation written in that font, and think of what that invitation would say about the people getting married. Is that the image you want your website/blog/pony-rental business to convey?</li>
+<li>rounded fonts tend to be more playful. Or is it that playful fonts tend to be more rounded? In any case, if you’re looking for something with a “playful” vibe (like I was), rounded-ness is a good feature to start looking for.</li>
+<li>you can achieve a lot of variety with the same font. (In fact, you WANT to achieve a lot of variety with the same font—if no variety, your site looks boring, and if variety achieved by different fonts, your site looks like it got sloppy-drunk and made a bunch of poor decisions at the font bar. Some ways to achieve variety within the same font: varying font weight (CSS: <code>font-weight</code>), case (upper/lower/title—CSS: <code>text-transform</code>), and letter spacing (CSS: <code>letter-spacing</code>), to name a few.</li>
+<li>I had (and still have) massive struggles with making favicons that look like anything besides a blob. A feature I hadn’t consciously thought to look at was <em>light/dark contrast</em>. As a quick way of checking, Liz suggests putting the image in grayscale and seeing if it looks decent like that.</li>
+<li>some fonting resources: <a href="//alistapart.com/">A List Apart</a> and <a href="//www.smashingmagazine.com/">Smashing Magazine</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Revisiting My First Python Program]]></title>
@@ -158,25 +188,25 @@ else: # if config file contains at least one roster to load...
 
 <p>Now, using word trigrams and POS trigrams, the above process doesn&rsquo;t really add much beyond what using plain &lsquo;ol word trigrams gets you. Could I make something better, though, by using, say, 4-grams or 5-grams of parts of speech?<!--more--></p>
 
-<p>Well&hellip; I&rsquo;ll leave that to you to decide. Here are a bunch of different sample texts from Pride and Prejudice. All are word-gram-3. Some have no POS support, some are POS-gram-3, and some are POS-gram-4. (POS-gram-5, incidentally, doesn&rsquo;t really work&ndash;the requirements on what word you need to come next get so specific that there generally isn&rsquo;t one and the program crashes.) Which of these seem the most sensical? Can you guess which are no-POS, POS-gram-3, and POS-gram-4? (There are three of each.) Make your guesses&ndash;and then, if you want to check yourself, look at the HTML source for answers.</p>
+<p>Well&hellip; I&rsquo;ll leave that to you to decide. Here are a bunch of different sample texts from Pride and Prejudice. All are word-gram-3. Some have no POS support, some are POS-gram-3, and some are POS-gram-4. (POS-gram-5, incidentally, doesn&rsquo;t really work&mdash;the requirements on what word you need to come next get so specific that there generally isn&rsquo;t one and the program crashes.) Which of these seem the most sensical? Can you guess which are no-POS, POS-gram-3, and POS-gram-4? (There are three of each.) Make your guesses&mdash;and then, if you want to check yourself, look at the HTML source for answers.</p>
 
-<blockquote><p>1) &lsquo;into a marriage with Miss Bennet. Miss Bingley&rsquo;s pretended regard.&ldquo; &#8220;Would you believe it, Lizzy, that is the most uncomfortable in her favour. Bingley was then disclosed in the same house with the length of his going away when I tell you, Miss Bennet. I send no compliments to Mr. Darcy:&ndash;but let me shift for myself; and, perhaps, if I were agreeing that we should all be there by Mrs. Hurst and Miss Bingley in a prudential light it places Mr. Darcy, by the awkwardness of the letter nor its writer were at the gate in the discharge of his&rsquo;<!--POS-gram = 4--></p>
+<blockquote><p>1) &lsquo;into a marriage with Miss Bennet. Miss Bingley&rsquo;s pretended regard.&ldquo; &#8220;Would you believe it, Lizzy, that is the most uncomfortable in her favour. Bingley was then disclosed in the same house with the length of his going away when I tell you, Miss Bennet. I send no compliments to Mr. Darcy:&mdash;but let me shift for myself; and, perhaps, if I were agreeing that we should all be there by Mrs. Hurst and Miss Bingley in a prudential light it places Mr. Darcy, by the awkwardness of the letter nor its writer were at the gate in the discharge of his&rsquo;<!--POS-gram = 4--></p>
 
 <p>2) &lsquo;difference of situation and temper. Consider Mr. Collins&rsquo;s picture of a sort of man; and of late it has not time to reply, but hurrying instantly to her so expressively, and shook hands with great enjoyment; and the mere ceremonious salutation attending his entrance. Anxious and uneasy, the period to which you have pleasure,&ldquo; said Bingley; &#8220;and I am in earnest. I speak plainer? Do not wish me such an assurance of it, that the match with a bow of superior society; but I know very well able to do it, she turned suddenly towards him and Mr. Darcy, &#8220;There&rsquo;<!--POS-gram = 3--></p>
 
 <p>3) &lsquo;from my thoughts.&ldquo; &#8220;When they all are.&rdquo; &ldquo;All young ladies were ready enough to determine her feelings in the time. Good gracious! when I have always seen a great deal more than I might have sufficient charms; and though the probability of error, and seek to recommend them,&rdquo; replied he; &ldquo;they are married!&rdquo; Elizabeth read on: &ldquo;I have no wish of seeing him almost for the felicity which a pair of fine eyes in amazement, but was too happy, however, and if he sees enough of Bingley&rsquo;s being withheld from seeing Jane, she seriously hoped he might change his mind&rsquo; <!--no POS support--></p>
 
-<p>4) &lsquo;ever have courage to shew Mrs. Gardiner&rsquo;s former residence, and where she had listened to her eyes, envied everyone to whom they would have been impossible for us to Miss Darcy, who had only set that down as soon as they used to be privileged to whisper to Elizabeth, &ldquo;I hope not so. Painful recollections will not have forgotten where she was ready enough to make her resigned. As for my impertinence?&rdquo; &ldquo;For the liveliness of your own. But we are better acquainted&ndash;&rdquo; He was resolutely silent, however, and, from a circulating, he started back, and begging pardon, protested&rsquo; <!--no POS support--></p>
+<p>4) &lsquo;ever have courage to shew Mrs. Gardiner&rsquo;s former residence, and where she had listened to her eyes, envied everyone to whom they would have been impossible for us to Miss Darcy, who had only set that down as soon as they used to be privileged to whisper to Elizabeth, &ldquo;I hope not so. Painful recollections will not have forgotten where she was ready enough to make her resigned. As for my impertinence?&rdquo; &ldquo;For the liveliness of your own. But we are better acquainted&mdash;&rdquo; He was resolutely silent, however, and, from a circulating, he started back, and begging pardon, protested&rsquo; <!--no POS support--></p>
 
-<p>5) &lsquo;months. Of having another daughter married to Mr. Bingley. It was at length return home; and she was to bring it in my own doing, and I thought only of the peace of the world, must make Hunsford extremely dull to a real, strong attachment. Pray, how violent was Mr. Bingley&rsquo;s chaise to go with him; and unwilling, for her sister&rsquo;s sake, to provoke him. Elizabeth was the son of old Wickham, the late perverse occurrences had thrown on many of the largest folios in the neighbourhood.&ldquo; &#8220;Oh! no&ndash;it is not so handsome as Wickham; or, rather, he has not&rsquo;<!--POS-gram = 4--></p>
+<p>5) &lsquo;months. Of having another daughter married to Mr. Bingley. It was at length return home; and she was to bring it in my own doing, and I thought only of the peace of the world, must make Hunsford extremely dull to a real, strong attachment. Pray, how violent was Mr. Bingley&rsquo;s chaise to go with him; and unwilling, for her sister&rsquo;s sake, to provoke him. Elizabeth was the son of old Wickham, the late perverse occurrences had thrown on many of the largest folios in the neighbourhood.&ldquo; &#8220;Oh! no&mdash;it is not so handsome as Wickham; or, rather, he has not&rsquo;<!--POS-gram = 4--></p>
 
-<p>6) &lsquo;Darcy&rsquo;s praise occupied the chief of it. Can I speak plainer? Do not let your fancy run away with you. You will be an object of it, but Colonel Fitzwilliam was no more than she knew it myself, as it had not yet been able to enter the &mdash;-shire. She had no other reply to this effect: &ldquo;I have been to persuade him against returning into Hertfordshire, anxiously renewing them at any time, etc. etc.; and if not, it would be gone in five minutes, you meant it to another, not to an end by exclamations and inquiries about the&rsquo;<!--POS-gram = 3--></p>
+<p>6) &lsquo;Darcy&rsquo;s praise occupied the chief of it. Can I speak plainer? Do not let your fancy run away with you. You will be an object of it, but Colonel Fitzwilliam was no more than she knew it myself, as it had not yet been able to enter the &mdash;shire. She had no other reply to this effect: &ldquo;I have been to persuade him against returning into Hertfordshire, anxiously renewing them at any time, etc. etc.; and if not, it would be gone in five minutes, you meant it to another, not to an end by exclamations and inquiries about the&rsquo;<!--POS-gram = 3--></p>
 
 <p>7) &lsquo;but tell Lydia she shall have as much a debt of gratitude cannot enough acknowledge. By this time have been too pleasantly engaged to my fair cousins, though my brother left us yesterday, he imagined that we have found some resemblance of character to love each other in large mixed parties, it is the man! Now, Lizzy, I hardly know myself what it is no occasion for such a man would satisfy me. We will settle so quietly, and live in my power, I am very far from suspecting that she was discontented, she fancied that praise of himself, of&rsquo; <!--no POS support--></p>
 
 <p>8) &lsquo;the opportunity of saying: &ldquo;Is your sister make such an evil. Human nature is particularly prone to it, and sometimes with playful gaiety, replied to her housekeeping, her parish and her uncle had been her firmest opinion. Her keenest attention was suddenly roused by the middle of June, Kitty was too much sense to recommend myself to hope the best, in accepting a man on the subject. This will never be in want of money. Younger sons cannot marry where they were grieved, how shocking it was to distribute her presents and describe the newest fashions. When this information was&rsquo;<!--POS-gram = 3--></p>
 
-<p>9) &lsquo;the pleasantness of the park,&ldquo; he replied, &#8220;it has been my profession&ndash;I was brought up by him alone, was such as did think, than such a way.&rdquo; &ldquo;I can readily believe,&rdquo; answered he gravely, &ldquo;that reports may vary greatly with respect to me; and as she had not by any particular person, for though the uncomfortable feelings arising from all restraint, his life that, instead of a man of five-and-twenty. His air was grave and stately, and his relation of my nephew! Unfeeling, selfish girl! Do you think of themselves before anybody and everybody! If my vanity had taken on&rsquo;<!--POS-gram = 4--></p></blockquote>
+<p>9) &lsquo;the pleasantness of the park,&ldquo; he replied, &#8220;it has been my profession&mdash;I was brought up by him alone, was such as did think, than such a way.&rdquo; &ldquo;I can readily believe,&rdquo; answered he gravely, &ldquo;that reports may vary greatly with respect to me; and as she had not by any particular person, for though the uncomfortable feelings arising from all restraint, his life that, instead of a man of five-and-twenty. His air was grave and stately, and his relation of my nephew! Unfeeling, selfish girl! Do you think of themselves before anybody and everybody! If my vanity had taken on&rsquo;<!--POS-gram = 4--></p></blockquote>
 ]]></content>
   </entry>
   
@@ -231,7 +261,7 @@ else: # if config file contains at least one roster to load...
 
 <blockquote><p>&ldquo;as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine&rsquo;s being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady Catherine&rsquo;s being rather displeased by her staying at home. When they were gone, Elizabeth, as if intending to exasperate herself as much as possible prevented her husband from pressing her; but Mr. Collins could not conceal his apprehension of Lady&rdquo;</p></blockquote>
 
-<p>[^1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &ndash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
+<p>[^1] an ngram is a group of n words considered at a time, where the first n-1 words key to the last word. So for instance, if I&rsquo;m working with tri-grams (n = 3) and the phrases &ldquo;it is a,&rdquo; &ldquo;it is silly&rdquo;, and &ldquo;it is Frank&rdquo; appear in my corpus, when my corpus gets loaded into a big dictionary, <code>[('it', 'is')]</code> will key to <code>['a', 'silly', 'Frank']</code>. Then, when I&rsquo;m generating random text and I already have &ldquo;it is&rdquo;, I can look in <code>mydict[('it', 'is')]</code> for words that might possibly follow that phrase. I then pick one at random, stick it onto the end of my text (say, &ldquo;it is Frank&rdquo;) and repeat (`mydict[(&lsquo;is&rsquo;, &lsquo;Frank&rsquo;)] &mdash;> [&lsquo;sick&rsquo;, &lsquo;angry&rsquo;,&lsquo;the&rsquo;]).</p>
 ]]></content>
   </entry>
   
@@ -266,7 +296,7 @@ Making a list...
 3
 </code></pre>
 
-<p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&ndash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
+<p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&mdash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
 
 <pre><code class="python">&gt;&gt;&gt; from random import randint
 &gt;&gt;&gt; def plus_one(num=randint(1,1000)):
@@ -290,7 +320,7 @@ Making a list...
 
 <p>Hmm. It would appear that we aren&rsquo;t getting a new random number every time we run this function.</p>
 
-<p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&ndash;really, all it takes to break things is a mutable object.</p>
+<p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&mdash;really, all it takes to break things is a mutable object.</p>
 
 <pre><code class="python">&gt;&gt;&gt; def append_one(mylist = []):
 ...     mylist.append(1)
@@ -307,7 +337,7 @@ Making a list...
 [1, 1, 1, 1, 1]
 </code></pre>
 
-<p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&ndash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
+<p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&mdash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
 
 <pre><code class="python">&gt;&gt;&gt; stuff = [1,3,5,7]
 &gt;&gt;&gt; def append_one(mylist = stuff):
@@ -324,101 +354,6 @@ Making a list...
 <p>Perhaps it&rsquo;s a bit more intuitive this way, but the exact same thing is happening in the previous example; the function is modifying a distinct object in memory, whether it was named before it got passed as a default argument or not.</p>
 
 <p>Whacky fun! And a valuable lesson learned: <em>don&rsquo;t use mutable objects or functions as default values in your functions</em> unless you want a whole lot of hilarious code hijinks. (Which, hey, maybe you do, no judgments here!)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Javascript/JQuery 101]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101/"/>
-    <updated>2014-09-24T16:28:38-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101</id>
-    <content type="html"><![CDATA[<p>Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
-
-<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. <!-- more -->If it&rsquo;s avoidable, don&rsquo;t mix JS and JQuery&ndash;be consistent within one document. Usually, JQuery is more precise and prettier. Consider using dollar signs at the beginning of your variable names to indicate that they point to JQuery objects, so you don&rsquo;t get confused. Most if not all JS functions have (generally shorter, prettier) JQuery equivalents. Here are some that I replaced in my code today:</p>
-
-<table><tr><td>
-    <strong>JS</strong>
-</td><td>
-    <strong>JQuery</strong>
-</td></tr>
-<tr><td>
-<code>
-    getElementByID("foo")
-</code>
-</td><td>
-<code>
-    $('#foo')
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    getElementsByClassName("bar")
-</code>
-</td><td>
-<code>
-    $('.bar')
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    this
-</code>
-</td><td>
-<code>
-    $(this)
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .setAttribute("foo","bar")
-</code>
-</td><td>
-<code>
-    .attr("foo", "bar")
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .getAttribute("foo")
-</code>
-</td><td>
-<code>
-    .attr("foo")
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .value
-</code>
-</td><td>
-<code>
-    .val()
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .parentNode
-</code>
-</td><td>
-<code>
-    .parent()
-</code>
-</td></tr>
-</table>
-
-
-<p><p>
-JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which gets all elements matching class &ldquo;bar&rdquo; and html tag &ldquo;mytag&rdquo;, respectively) return arrays of DOM elements. If you want to get something from this array, it can be tempting to pluck it from its index, a la <code>$(".bar")[2]</code>. <em>Be warned</em>: this returns a DOM element, and therefore you can&rsquo;t do shiny JQuery stuff to it. Instead, get that same element as a JQuery object with <code>$(".bar").eq(2)</code> (where the <code>eq</code> function takes as an argument the index of the thing you want to get out of the array). I can&rsquo;t tell you how much pain this would have saved me if I had known this at the beginning of my project.</p>
-
-<p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
-
-<p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
 ]]></content>
   </entry>
   

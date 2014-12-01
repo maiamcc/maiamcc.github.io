@@ -161,7 +161,7 @@
 </span><span class='line'>31  e9  info    pack</span></code></pre></td></tr></table></div></figure>
 
 
-<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> (<code>xx/yyyyyy</code> &ndash;> the hash <code>xxyyyyyy</code>):</p>
+<p>31 and e9 are both folders, and each has only one object in it, files with big long gibberish names: <code>31/e9dce72edaeb87f2b007b09230bfd5008da63e</code> and <code>e9/1ace6ef46e2244fc3588bdead8f66b35b20d12</code>. They contain gibberish, which is fancy git compression/encoding of the contents of file a and b. The folder name and file name, taken together, make a big long hash that you can use to recover the original file contents<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> (<code>xx/yyyyyy</code> &mdash;> the hash <code>xxyyyyyy</code>):</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -273,7 +273,7 @@ author: [name]<br>
 
 <p><img src="/images/git2.png" alt="Git guts" /></p>
 
-<p>You see that the main tree, <code>tree2</code>, is pointing directly to <code>a</code> and <code>b</code> but not to <code>c</code>&ndash;rather, it points to <code>tree2.1</code>, which points to <code>c</code>. It looks this way because git uses trees to represent directories; it references files living in subdirectories via trees (representing those directories) referencing those files.</p>
+<p>You see that the main tree, <code>tree2</code>, is pointing directly to <code>a</code> and <code>b</code> but not to <code>c</code>&mdash;rather, it points to <code>tree2.1</code>, which points to <code>c</code>. It looks this way because git uses trees to represent directories; it references files living in subdirectories via trees (representing those directories) referencing those files.</p>
 
 <p>Note that git is still storing (in super-compact encoded form) all previous versions of the files, and given this network of things-that-contain-hashes-of-other-things, we know exactly where to look for any version of any file we want to find. And git only makes the necessary changes. Look what happens if we change <code>a</code> and <code>c</code> but leave <code>b</code> the same:</p>
 
@@ -359,6 +359,10 @@ author: [name]<br>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/01/design-principles-from-liz/">Design Principles From Liz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
       </li>
     
@@ -372,10 +376,6 @@ author: [name]<br>
     
       <li class="post">
         <a href="/blog/2014/10/22/reflections-on-my-first-open-source-contribution/">Reflections on My First Open-Source Contribution</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
       </li>
     
   </ul>

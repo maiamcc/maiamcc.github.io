@@ -107,7 +107,7 @@
   </header>
 
 
-<div class="entry-content"><p>I had this grand, exciting plan. A normal Markov generator trains on a corpus of text, and sees what words are likely to come after other words. So for example, given &ldquo;Happy families are all alike,&rdquo; it would say, &ldquo;Happy families&rdquo; &ndash;> &ldquo;are&rdquo;, &ldquo;families are&rdquo; &ndash;> &ldquo;all&rdquo;, &ldquo;are all&rdquo; &ndash;> &ldquo;alike&rdquo;. You can then start with any random seed and populate a whole chunk of however much text you please by going through your correspondence and picking at random: &ldquo;hmm, what words might possibly come after &lsquo;are all&rsquo;?&rdquo;</p>
+<div class="entry-content"><p>I had this grand, exciting plan. A normal Markov generator trains on a corpus of text, and sees what words are likely to come after other words. So for example, given &ldquo;Happy families are all alike,&rdquo; it would say, &ldquo;Happy families&rdquo; &mdash;> &ldquo;are&rdquo;, &ldquo;families are&rdquo; &mdash;> &ldquo;all&rdquo;, &ldquo;are all&rdquo; &mdash;> &ldquo;alike&rdquo;. You can then start with any random seed and populate a whole chunk of however much text you please by going through your correspondence and picking at random: &ldquo;hmm, what words might possibly come after &lsquo;are all&rsquo;?&rdquo;</p>
 
 <p>I was going to take it one step further and incorporate part-of-speech tagging. The above example sentence would be part-of-speech tagged, &ldquo;adjective/plural noun/verb non-3rd person singular present/determiner/adverb.&rdquo; Then I could make a correspondence: adjective + plural noun may be followed by a non-3rd person singular present verb, and so on. And when I had a whole paragraph or two worth of &ldquo;adjective noun verb&rdquo; etc. I could begin to fill that in from my word correspondence: &ldquo;What word might come after &lsquo;families are&rsquo; that is also a noun?&rdquo;</p>
 
@@ -115,7 +115,7 @@
 
 <p>So, my whole project idea is a bit shot in the foot. There&rsquo;s one more thing I can try, which is generating the parts-of-speech and actual-words versions of my text pretty much concurrently. Given Word A and Word B, what&rsquo;s a part-of-speech that might follow part-of-speech(Word A) and part-of-speech(Word B)? Now, what&rsquo;s a word that might follow Word A and Word B that is a (part of speech)? And, y&#8217;know, even as I type this I&rsquo;m not positive that it makes any sense whatsoever, and will be any better than a standard-issue Markov generator. (I&rsquo;ll need to think this through more carefully when I haven&rsquo;t had a beer.)</p>
 
-<p>This whole debacle raises the question: when is it time to give up? When do I dump this project and say, &ldquo;It&rsquo;s been fun, but that thing I wanted to do is no longer feasible, I&rsquo;m going to move on to something else&rdquo;? If my grand plan has been foiled, do I leave the project altogether? Do I struggle to implement some halfway execution of my original plan that doesn&rsquo;t quite make sense? Do I do something else vaguely useful with the project, but in another direction entirely? I&rsquo;m a little curious to, say, look at n-grams of increasing n&rsquo;s&ndash;that is, look at bigger and bigger groups of words at a time&ndash;and see where the trade-off is between intelligibility and just reproducing the original text. Another interesting path to take would be implementing a custom data structure that could weight common words, rather than having the word in question show up multiple times for a given key according to its frequency. But none of that is the stuff I came into this project excited about doing.</p>
+<p>This whole debacle raises the question: when is it time to give up? When do I dump this project and say, &ldquo;It&rsquo;s been fun, but that thing I wanted to do is no longer feasible, I&rsquo;m going to move on to something else&rdquo;? If my grand plan has been foiled, do I leave the project altogether? Do I struggle to implement some halfway execution of my original plan that doesn&rsquo;t quite make sense? Do I do something else vaguely useful with the project, but in another direction entirely? I&rsquo;m a little curious to, say, look at n-grams of increasing n&rsquo;s&mdash;that is, look at bigger and bigger groups of words at a time&mdash;and see where the trade-off is between intelligibility and just reproducing the original text. Another interesting path to take would be implementing a custom data structure that could weight common words, rather than having the word in question show up multiple times for a given key according to its frequency. But none of that is the stuff I came into this project excited about doing.</p>
 
 <p>Was this all a waste of time? No, I don&rsquo;t think so. I learned about serializers and thought a bit about program optimization for the first time (even though I figured out that all that was bloating my run-time was <a href="www.nltk.org">nltk</a>&rsquo;s incredible but super-slow part-of-speech tagger). I got yet more practice writing in Python, made my own classes, played in REPLs, made my first generator function, and learned the hard way that new instances of objects, even if they seem identical to other instances of that same object, are NOT IN FACT IDENTICAL. (I may or may not have spent my entire morning learning that one.) Plus, I learned how smoothly things can run if you map out your program beforehand (and, conversely, how borked they can get if you don&rsquo;t).</p>
 
@@ -187,6 +187,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/01/design-principles-from-liz/">Design Principles From Liz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
       </li>
     
@@ -200,10 +204,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/22/reflections-on-my-first-open-source-contribution/">Reflections on My First Open-Source Contribution</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
       </li>
     
   </ul>

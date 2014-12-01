@@ -107,7 +107,7 @@
   </header>
 
 
-<div class="entry-content"><p>The sudoku solver that I&rsquo;m working on with <a href="https://mlauter.github.io/">Miriam</a> was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written&ndash;</p>
+<div class="entry-content"><p>The sudoku solver that I&rsquo;m working on with <a href="https://mlauter.github.io/">Miriam</a> was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written&mdash;</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -369,7 +369,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>So even though we copied the board with slicing&ndash;<code>copyboard = board[:]</code>&ndash;all of the rows in <code>copyboard</code> still pointed at the rows in <code>board</code>: copyboard[i]<code>and</code>board[i] were the same thing, so modifying <code>copyboard</code> changed <code>board</code> as well, leading to the endless insertion of vertical lines observed above.</p>
+<p>So even though we copied the board with slicing&mdash;<code>copyboard = board[:]</code>&mdash;all of the rows in <code>copyboard</code> still pointed at the rows in <code>board</code>: copyboard[i]<code>and</code>board[i] were the same thing, so modifying <code>copyboard</code> changed <code>board</code> as well, leading to the endless insertion of vertical lines observed above.</p>
 
 <p>Miriam hit upon this really excellent thing called <em>deep copy</em>; as opposed to regular &lsquo;ol shallow copying like that above, deep copy would make a <em>new list</em> populated by <em>new lists</em>. And hallelujah, the problem was solved! The vertical line monsters were vanquished, and the people of Sudoku-Land could live in peace once more!</p>
 
@@ -542,6 +542,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/01/design-principles-from-liz/">Design Principles From Liz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
       </li>
     
@@ -555,10 +559,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/22/reflections-on-my-first-open-source-contribution/">Reflections on My First Open-Source Contribution</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
       </li>
     
   </ul>

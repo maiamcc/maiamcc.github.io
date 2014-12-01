@@ -112,13 +112,13 @@
 <ul>
 <li>misc. layout stuff, like putting import statements in alphabetical order</li>
 <li>avoid global vars when possible. I already knew this, but it&rsquo;s good to remember. For example, if you&rsquo;ve assuming your program will be run on the command line, you can put global vars in the <code>main()</code> function.</li>
-<li>functions that only incidentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)<!-- more --></li>
+<li>functions that only incidentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&mdash;which took a file and returned a hash&mdash;and <code>save_at_hash</code>&mdash;which took a file and a hash and saved a copy of the file at that hash.)<!-- more --></li>
 <li><p>relatedly, try/except is your friend. I suspect that if you need a function that checks something&rsquo;s validity before running another function on it, if the check is simple, that checking func is probably unnecessary and you can handle that behavior with a try/except in the function that actually does stuff. Pydocs puts it wonderfully:</p>
 
 <blockquote><p><a href="https://docs.python.org/2/glossary.html#term-eafp">EAFP</a> (Easier to Ask for Forgiveness than Permission):</p>
 
 <p>This common Python coding style assumes the existence of valid keys or attributes and catches exceptions if the assumption proves false. This clean and fast style is characterized by the presence of many <code>try</code> and <code>except</code> statements. The technique contrasts with the <a href="https://docs.python.org/2/glossary.html#term-lbyl">LBYL</a> style common to many other languages such as C.</p></blockquote></li>
-<li><p>but even though try/except is great, be wary! It can make debugging a mess&ndash;had something in here that caught TypeErrors, which exploded on Amy when she made a change that caught a type error, but my program printed &ldquo;more arguments needed&rdquo; instead of anything helpful like, y&#8217;know, a stacktrace.</p></li>
+<li><p>but even though try/except is great, be wary! It can make debugging a mess&mdash;had something in here that caught TypeErrors, which exploded on Amy when she made a change that caught a type error, but my program printed &ldquo;more arguments needed&rdquo; instead of anything helpful like, y&#8217;know, a stacktrace.</p></li>
 <li>if you&rsquo;re defining a dict., it looks prettiest to put spaces on both sides of the colon</li>
 <li>string concat. is a) ugly and b) not very efficient. Use string interpolation (or in a pinch, <code>join</code>) instead.</li>
 <li>you can search for substrings with <code>"substring" in "string"</code>! Who knew? I wrote a whole human-written-input parser using <code>if string.find(substring) &gt; -1</code>. My life has just changed.</li>
@@ -196,6 +196,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/01/design-principles-from-liz/">Design Principles From Liz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
       </li>
     
@@ -209,10 +213,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/22/reflections-on-my-first-open-source-contribution/">Reflections on My First Open-Source Contribution</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
       </li>
     
   </ul>

@@ -146,7 +146,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&ndash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
+<p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&mdash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -189,7 +189,7 @@
 
 <p>Hmm. It would appear that we aren&rsquo;t getting a new random number every time we run this function.</p>
 
-<p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&ndash;really, all it takes to break things is a mutable object.</p>
+<p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&mdash;really, all it takes to break things is a mutable object.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -220,7 +220,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&ndash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
+<p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&mdash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -315,6 +315,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/01/design-principles-from-liz/">Design Principles From Liz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
       </li>
     
@@ -328,10 +332,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/22/reflections-on-my-first-open-source-contribution/">Reflections on My First Open-Source Contribution</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
       </li>
     
   </ul>

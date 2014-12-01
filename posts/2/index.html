@@ -9,7 +9,7 @@
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="Here are some gleanings from Amy&rsquo;s code review of my phonebook applet, and some self-study. Mostly for my own records and so I actually absorb &hellip;">
+  <meta name="description" content="(Apparently some people at Hacker School think I&rsquo;m an Iron Blogger, despite me being nothing of the sort. There&rsquo;s no money riding on &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,55 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/16/asking-for-too-much-help/">Asking for TOO MUCH Help?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-16T12:47:54-04:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>(Apparently some people at Hacker School think I&rsquo;m an Iron Blogger, despite me being nothing of the sort. There&rsquo;s no money riding on whether or not I make consistent blog posts&mdash;but I figure I should do what I can to sustain this favorable impression of me!)</p>
+
+<p>Since my HS halfway check-in, I&rsquo;ve resolved to ask more questions and not let myself get stuck banging my head against problems that could be solved in a hot second by any of the three people sitting next to me. I think that I&rsquo;ve done a pretty good job with this resolution; I ask for help way more frequently, and as a result, I think I get more done. However, I feel the need to remind myself that there is such a thing as <em>asking for too much help</em>.</p>
+
+<p>Take this example: I was sitting down with Tristan, a fellow HSer, attempting to set up virtualenv and get all of my permissions and installs un-borked. I was totally in over my head, having never used virtualenv before, and he was helping me sort it out. There was some funky stuff that needed fixing having to do with my $PATH being invalid because one of the folder names contained a space. We dealt with that issue, and now most of the stuff worked, but I still couldn&rsquo;t manage to run bpython from inside my virtualenv. I showed Tristan the error message my computer was spewing, and asked him, &ldquo;What&rsquo;s going on?&rdquo;</p>
+
+<p>His response: &ldquo;What do you think is going on?&rdquo;</p>
+
+<p>Me: &ldquo;Well, it won&rsquo;t run bpython!&rdquo;</p>
+
+<p>Him: &ldquo;Come on, you can do better than that.&rdquo;</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/16/asking-for-too-much-help/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/12/observations-from-phonebook-code-review/">Observations From Phonebook Code Review</a></h1>
     
     
@@ -118,7 +167,7 @@
 <ul>
 <li>misc. layout stuff, like putting import statements in alphabetical order</li>
 <li>avoid global vars when possible. I already knew this, but it&rsquo;s good to remember. For example, if you&rsquo;ve assuming your program will be run on the command line, you can put global vars in the <code>main()</code> function.</li>
-<li>functions that only incidentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&ndash;which took a file and returned a hash&ndash;and <code>save_at_hash</code>&ndash;which took a file and a hash and saved a copy of the file at that hash.)</div>
+<li>functions that only incidentally return stuff are <em>bad news</em>. I had a function called <code>phonebook_exists</code> that checked to see if the phonebook you were trying to look up existed; if it didn&rsquo;t exist, the func. would throw an error, and if it did, it would return the data of the phonebook. Which in retrospect was super weird because nothing the function name indicated that it was what you should use to get the contents of a saved phonebook. A much more sensible way to do this is to have a function called <code>read_phonebook</code> which attempts to return the contents of the saved phonebook, but if it fails (which you figure out with a try/except), then it throws an error. (Incidentally, I had a similar confusion with when things should and shouldn&rsquo;t be returned in another project I&rsquo;m working on, my bootleg homemade git. I had a function called <code>save_at_hash</code> that would hash a file, save it at its hash, and then return the hash. Why did this function return the hash? I assumed it would be useful. Couldn&rsquo;t really tell you why. I ended up refactoring it into two functions, <code>make_hash</code>&mdash;which took a file and returned a hash&mdash;and <code>save_at_hash</code>&mdash;which took a file and a hash and saved a copy of the file at that hash.)</div>
   
   
     <footer>
@@ -282,7 +331,7 @@
   </header>
 
 
-  <div class="entry-content"><p>The sudoku solver that I&rsquo;m working on with <a href="https://mlauter.github.io/">Miriam</a> was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written&ndash;</p>
+  <div class="entry-content"><p>The sudoku solver that I&rsquo;m working on with <a href="https://mlauter.github.io/">Miriam</a> was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written&mdash;</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -401,12 +450,12 @@
   </header>
 
 
-  <div class="entry-content"><p>Oh hai there, blag! It&rsquo;s been a while. Too long. The days here blur together occasionally&ndash;hours of staring a screen working on multiple only-slightly-different problems will do that to you, and it&rsquo;s really easy to lose track of what you&rsquo;ve been working on, accomplishing, learning, and thinking about. <em>Especially</em> when those accomplishments seem really tiny and mundane. (&ldquo;Yay, I got my database search page to work! Yay, I got my database search page to work for two things in sequence! Wait, it&rsquo;s 7:00?&rdquo;)</p>
+  <div class="entry-content"><p>Oh hai there, blag! It&rsquo;s been a while. Too long. The days here blur together occasionally&mdash;hours of staring a screen working on multiple only-slightly-different problems will do that to you, and it&rsquo;s really easy to lose track of what you&rsquo;ve been working on, accomplishing, learning, and thinking about. <em>Especially</em> when those accomplishments seem really tiny and mundane. (&ldquo;Yay, I got my database search page to work! Yay, I got my database search page to work for two things in sequence! Wait, it&rsquo;s 7:00?&rdquo;)</p>
 
-<p>Had a one-on-one with Allison this afternoon about the State of the Hack so far&ndash;how HS is treating me, what I might want to do differently, what I might want to be different about the environment. Here are some thoughts prompted by that conversation.</p>
+<p>Had a one-on-one with Allison this afternoon about the State of the Hack so far&mdash;how HS is treating me, what I might want to do differently, what I might want to be different about the environment. Here are some thoughts prompted by that conversation.</p>
 
 <ul>
-<li>I want to get better at asking for help, surmounting impostor syndrome, etc. I&rsquo;m <em>pretty</em> good at this, all things considered, but I still need to do lots more work on this front. Sometimes asking a question on a Zulip thread isn&rsquo;t what I need&ndash;it happens to not get responded to, or (more often) I would benefit much more from discussing it in person.</li>
+<li>I want to get better at asking for help, surmounting impostor syndrome, etc. I&rsquo;m <em>pretty</em> good at this, all things considered, but I still need to do lots more work on this front. Sometimes asking a question on a Zulip thread isn&rsquo;t what I need&mdash;it happens to not get responded to, or (more often) I would benefit much more from discussing it in person.</li>
 <li>An interesting thing about the HS environment is how it&rsquo;s way more normal to Zulip someone from across the room than go over and tap them on the shoulder. Generally, I get way more out of an in-person conversation than an online one, so I&rsquo;d like to be better about just finding people in person to ask them questions. (Of course, the benefit of Zulip-ing is that you know who can/can&rsquo;t be interrupted. Tricky balance here. But I should feel more able to approach facilitators, at least.)</div>
   
   
@@ -446,7 +495,7 @@
   </header>
 
 
-  <div class="entry-content"><p>In response to a recent Hacker School discussion about fluffy book recommendations written by !(white &amp; cis-male), here&rsquo;s a list of some of my go-to&rsquo;s, and books I&rsquo;ve enjoyed reading lately. What defines fluff? That&rsquo;s a more complicated question for a later time. How I&rsquo;ve been thinking of it lately is as books that don&rsquo;t require much effort to read/parse&ndash;i.e., not an awful lot of subtext, relatively simple language and not too much artistry of the obfuscating variety in the text itself&ndash;that play off characters and tropes that we like to read about. They will generally have not-terribly-well-developed characters, characters that are easy to identify with, and the stories and happy endings that we want for ourselves. But, regardless of my definitional musings, here are some books! And so, in no particular order:</p>
+  <div class="entry-content"><p>In response to a recent Hacker School discussion about fluffy book recommendations written by !(white &amp; cis-male), here&rsquo;s a list of some of my go-to&rsquo;s, and books I&rsquo;ve enjoyed reading lately. What defines fluff? That&rsquo;s a more complicated question for a later time. How I&rsquo;ve been thinking of it lately is as books that don&rsquo;t require much effort to read/parse&mdash;i.e., not an awful lot of subtext, relatively simple language and not too much artistry of the obfuscating variety in the text itself&mdash;that play off characters and tropes that we like to read about. They will generally have not-terribly-well-developed characters, characters that are easy to identify with, and the stories and happy endings that we want for ourselves. But, regardless of my definitional musings, here are some books! And so, in no particular order:</p>
 
 <ul>
 <li><em>Annie on My Mind</em> by Nancy Garden: LOVE. I think it was the first bit of lesbian lit that I read, and thus holds a special place in my heart.</li>
@@ -534,7 +583,7 @@
   </header>
 
 
-  <div class="entry-content"><p>I had this grand, exciting plan. A normal Markov generator trains on a corpus of text, and sees what words are likely to come after other words. So for example, given &ldquo;Happy families are all alike,&rdquo; it would say, &ldquo;Happy families&rdquo; &ndash;> &ldquo;are&rdquo;, &ldquo;families are&rdquo; &ndash;> &ldquo;all&rdquo;, &ldquo;are all&rdquo; &ndash;> &ldquo;alike&rdquo;. You can then start with any random seed and populate a whole chunk of however much text you please by going through your correspondence and picking at random: &ldquo;hmm, what words might possibly come after &lsquo;are all&rsquo;?&rdquo;</p>
+  <div class="entry-content"><p>I had this grand, exciting plan. A normal Markov generator trains on a corpus of text, and sees what words are likely to come after other words. So for example, given &ldquo;Happy families are all alike,&rdquo; it would say, &ldquo;Happy families&rdquo; &mdash;> &ldquo;are&rdquo;, &ldquo;families are&rdquo; &mdash;> &ldquo;all&rdquo;, &ldquo;are all&rdquo; &mdash;> &ldquo;alike&rdquo;. You can then start with any random seed and populate a whole chunk of however much text you please by going through your correspondence and picking at random: &ldquo;hmm, what words might possibly come after &lsquo;are all&rsquo;?&rdquo;</p>
 
 <p>I was going to take it one step further and incorporate part-of-speech tagging. The above example sentence would be part-of-speech tagged, &ldquo;adjective/plural noun/verb non-3rd person singular present/determiner/adverb.&rdquo; Then I could make a correspondence: adjective + plural noun may be followed by a non-3rd person singular present verb, and so on. And when I had a whole paragraph or two worth of &ldquo;adjective noun verb&rdquo; etc. I could begin to fill that in from my word correspondence: &ldquo;What word might come after &lsquo;families are&rsquo; that is also a noun?&rdquo;</p>
 
@@ -594,51 +643,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/05/simple-random-texts/">Simple Random Texts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-05T15:57:11-04:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>War and Peace</strong></p>
-
-<p>&ldquo;Prince Andrew had gone about barefoot and in the streets and there out of the people is always delightful to Pierre with a painfully joyous emotion. Her favorite sonata bore her into slavery! Pull down your houses and the Cossack&rsquo;s information that the French soldiers. The company marched on gaily. The governor&rsquo;s good-natured wife came to town and was ready and a cadet to restrain a happy page who had thought and said it was merely a hindrance and obstacle to the insistence of Bennigsen, Konovnitsyn, and Ermolov received fresh appointments. Everyone spoke loudly of the possibility of active brotherly&rdquo;</p>
-
-<p><strong>Pride and Prejudice</strong></p>
-
-<p>&lsquo;impropriety of expression. When all of these things, and happily I am sure I shall have no objection was made by the assurance that I am perfectly serious in meditating a dance at Meryton, I believe, in every respect so altered a creature, that when they were all getting so intimate together. After lamenting it, however, at last very rapidly, as well inquire,&ldquo; replied she, &#8220;why with so little dignified, never had she so honestly felt that even Bingley&rsquo;s good humour itself, and many trials of other rich men; and lastly, it was not wholly without hope that the Collinses were come away, when her sisters were anxious for his intrusion by letting you see by Jane&rsquo;s letter last Wednesday, that her former friends than she expected, she soon afterwards ordered her carriage. Upon this signal, the youngest should tax Mr. Bingley on the spot. She had not been seated at table: &#8220;This is no talk of nothing but his father\&rsquo;s favourite in such matters as these; but I did not think the worse of you is, to assure him how much it must only deter him from having a companion. Lydia was too cross to write. You supposed more&rsquo;</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/08/05/simple-random-texts/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -656,6 +660,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/01/design-principles-from-liz/">Design Principles From Liz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/20/revisiting-my-first-python-program/">Revisiting My First Python Program</a>
       </li>
     
@@ -669,10 +677,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/22/reflections-on-my-first-open-source-contribution/">Reflections on My First Open-Source Contribution</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a>
       </li>
     
   </ul>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Javascript/JQuery 101 - Maia Remez McCormick</title>
+  <title>Design Principles From Liz - Maia Remez McCormick</title>
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial &hellip;">
+  <meta name="description" content="The other week, I chatted with the fabulous Liz Starin and picked her aesthetically-enabled brain about fonts and layouts for websites. Below is some &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101">
+  <link rel="canonical" href="http://maiamcc.github.io/blog/2014/12/01/design-principles-from-liz">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Maia Remez McCormick" type="application/atom+xml">
@@ -84,7 +84,7 @@
   
   <header>
     
-      <h1 class="entry-title">Javascript/JQuery 101</h1>
+      <h1 class="entry-title">Design Principles From Liz</h1>
     
     
       <p class="meta">
@@ -100,100 +100,35 @@
   
 
 
-<time datetime="2014-09-24T16:28:38-04:00" pubdate data-updated="true"></time>
+<time datetime="2014-12-01T12:17:19-05:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
+<div class="entry-content"><p>The other week, I chatted with the fabulous <a href="//lizstarin.com">Liz Starin</a> and picked her aesthetically-enabled brain about fonts and layouts for websites. Below is some stuff I learned from our design adventures, both wisdom straight from her and stuff I picked up from my experience overhauling fonts and layout: <!-- more --></p>
 
-<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. <!-- more -->If it&rsquo;s avoidable, don&rsquo;t mix JS and JQuery&mdash;be consistent within one document. Usually, JQuery is more precise and prettier. Consider using dollar signs at the beginning of your variable names to indicate that they point to JQuery objects, so you don&rsquo;t get confused. Most if not all JS functions have (generally shorter, prettier) JQuery equivalents. Here are some that I replaced in my code today:</p>
-
-<table><tr><td>
-    <strong>JS</strong>
-</td><td>
-    <strong>JQuery</strong>
-</td></tr>
-<tr><td>
-<code>
-    getElementByID("foo")
-</code>
-</td><td>
-<code>
-    $('#foo')
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    getElementsByClassName("bar")
-</code>
-</td><td>
-<code>
-    $('.bar')
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    this
-</code>
-</td><td>
-<code>
-    $(this)
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .setAttribute("foo","bar")
-</code>
-</td><td>
-<code>
-    .attr("foo", "bar")
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .getAttribute("foo")
-</code>
-</td><td>
-<code>
-    .attr("foo")
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .value
-</code>
-</td><td>
-<code>
-    .val()
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .parentNode
-</code>
-</td><td>
-<code>
-    .parent()
-</code>
-</td></tr>
-</table>
+<ul>
+<li>x-height is a unit referring to how tall the letter ‘x’ is in a given font. The larger the x-height, the easier to read on-screen. (Some fonts with small x-heights include Garamond and Futura.)</li>
+</ul>
 
 
-<p><p>
-JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which gets all elements matching class &ldquo;bar&rdquo; and html tag &ldquo;mytag&rdquo;, respectively) return arrays of DOM elements. If you want to get something from this array, it can be tempting to pluck it from its index, a la <code>$(".bar")[2]</code>. <em>Be warned</em>: this returns a DOM element, and therefore you can&rsquo;t do shiny JQuery stuff to it. Instead, get that same element as a JQuery object with <code>$(".bar").eq(2)</code> (where the <code>eq</code> function takes as an argument the index of the thing you want to get out of the array). I can&rsquo;t tell you how much pain this would have saved me if I had known this at the beginning of my project.</p>
+<p><img src="/images/xheight.gif" alt="A shiny graphic about x-height" />
+Graphic found in PAPress’s <a href="//www.papress.com/thinkingwithtype/index.htm">Thinking with Type</a> project.</p>
 
-<p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
+<ul>
+<li>serifs are generally the best choice for body text—they tend to be more readable on-screen.</li>
+<li>in CSS, you can set <code>line-height</code>, which controls the space between lines of text. Increasing line spacing just a bit can improve readability a <em>lot</em>.</li>
+<li>when picking a font, it’s helpful to have some adjectives in mind, rather than blindly scanning around for a font that you like. At the very least, it will give you a place to start.</li>
+<li><a href="//www.google.com/fonts">Google Fonts</a> is an incredible thing.</li>
+<li>a surprisingly good way to gauge whether a font has the intended effect: imagine you got a wedding invitation written in that font, and think of what that invitation would say about the people getting married. Is that the image you want your website/blog/pony-rental business to convey?</li>
+<li>rounded fonts tend to be more playful. Or is it that playful fonts tend to be more rounded? In any case, if you’re looking for something with a “playful” vibe (like I was), rounded-ness is a good feature to start looking for.</li>
+<li>you can achieve a lot of variety with the same font. (In fact, you WANT to achieve a lot of variety with the same font—if no variety, your site looks boring, and if variety achieved by different fonts, your site looks like it got sloppy-drunk and made a bunch of poor decisions at the font bar. Some ways to achieve variety within the same font: varying font weight (CSS: <code>font-weight</code>), case (upper/lower/title—CSS: <code>text-transform</code>), and letter spacing (CSS: <code>letter-spacing</code>), to name a few.</li>
+<li>I had (and still have) massive struggles with making favicons that look like anything besides a blob. A feature I hadn’t consciously thought to look at was <em>light/dark contrast</em>. As a quick way of checking, Liz suggests putting the image in grayscale and seeing if it looks decent like that.</li>
+<li>some fonting resources: <a href="//alistapart.com/">A List Apart</a> and <a href="//www.smashingmagazine.com/">Smashing Magazine</a></li>
+</ul>
 
-<p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
 </div>
 
 
@@ -216,12 +151,12 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
   
 
 
-<time datetime="2014-09-24T16:28:38-04:00" pubdate data-updated="true"></time>
+<time datetime="2014-12-01T12:17:19-05:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/hacker-school/'>hacker school</a>
+    <a class='category' href='/blog/categories/design/'>design</a>, <a class='category' href='/blog/categories/hacker-school/'>hacker school</a>
   
 </span>
 
@@ -237,10 +172,8 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/09/17/so-much-for-that-project/" title="Previous Post: So Much for That Project">&laquo; So Much for That Project</a>
+        <a class="basic-alignment left" href="/blog/2014/11/20/revisiting-my-first-python-program/" title="Previous Post: Revisiting My First Python Program">&laquo; Revisiting My First Python Program</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/09/29/lessons-in-default-function-arguments/" title="Next Post: Lessons in Default Function Arguments">Lessons in Default Function Arguments &raquo;</a>
       
     </p>
   </footer>
@@ -334,8 +267,8 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101/';
-        var disqus_url = 'http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101/';
+        var disqus_identifier = 'http://maiamcc.github.io/blog/2014/12/01/design-principles-from-liz/';
+        var disqus_url = 'http://maiamcc.github.io/blog/2014/12/01/design-principles-from-liz/';
         var disqus_script = 'embed.js';
       
     (function () {
