@@ -118,6 +118,7 @@ html {
     background-color: lighten($nav-color, 25);
   }
   &:hover:after { background-color: lighten($nav-color, 20); }
+
 }
 .maskImage {
   nav {
@@ -132,7 +133,7 @@ html {
       }
     }
   }
-  ul.subscription { position: relative; top: .2em; li, a { border: 0; padding: 0; }}
+  ul.subscription { display: none; position: relative; top: .2em; li, a { border: 0; padding: 0; }}
   a[rel=subscribe-rss]{ @include mask-subscription-nav('rss.png'); }
   a[rel=subscribe-email]{ @include mask-subscription-nav('email.png'); }
 }
@@ -162,3 +163,15 @@ form {
       }
     }
   }
+
+.red {
+  background-color: #FF0000;
+}
+
+.green {
+  background-color: #00FF00;
+}
+
+.cyan {
+  background-color: #00FFFF;
+}

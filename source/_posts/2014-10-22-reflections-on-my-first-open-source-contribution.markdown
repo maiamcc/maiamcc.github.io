@@ -3,7 +3,7 @@ layout: post
 title: "Reflections on my First Open-Source Contribution"
 date: 2014-10-22 15:52:38 -0400
 comments: true
-categories:
+categories: opw
 ---
 Having successfully submitted my [OPW](//gnome.org/opw/) application, and in the process submitting my first open-source contribution, I have lots of thoughts and feelings.
 
