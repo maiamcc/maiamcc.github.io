@@ -5,7 +5,7 @@ date: 2015-03-04 11:44:36 -0500
 comments: true
 categories: [OPW, SPARQL]
 ---
-I've been working with SPARQL a bunch for [my OPW project](//git.gnome.org/browse/gnome-music), and found it very slow going at first. SPARQL is apparently one of those little-loved languages that doesn't have much in the way of tutorials or lay-speak-explanations online---pretty much all I could find were the language's official docs, where were super technical and near-impossible for a beginner to slog through. Hell, I didn't even understand what the language *did*---how could I read the technical specs?
+I've been working with SPARQL a bunch for [my OPW project](//git.gnome.org/browse/gnome-music), and found it very slow going at first. SPARQL is apparently one of those little-loved languages that doesn't have much in the way of tutorials or lay-speak-explanations online---pretty much all I could find were the language's official docs, where were super technical and near-impossible for a beginner to slog through. Hell, I didn't even understand what the language *did*---how could I read the technical specs?<!--more-->
 
 So, I decided to take a step towards remedying this problem. This post won't actually teach you how to *use* SPARQL---others do that better than I, and I provide some links at the bottom of the post---but it's intended to be a primer on how SPARQL works, and what the data you might use it on looks like. (This is a blog-ified version of a Hacker School Thursday Talk presentation given on 2/5/15.)
 
