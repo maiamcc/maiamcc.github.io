@@ -64,10 +64,6 @@ sidebar: false
         <li id="large">
           <a href="#large" onclick="loadBio(this.hash.slice(1))">Large Bio</a>
         </li>
-        <li class="resume">
-          <a class="fancybox" href="/about/resume.pdf">Resume</a>
-        </li>
-
     </ul>
 
     <div id="biotext"></div>

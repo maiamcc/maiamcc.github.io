@@ -57,10 +57,6 @@
       float: left;
     }
 
-      .resume {
-        float: right;
-      }
-
     li:hover {
         background-color: #cccccc;
         @include rounded(top, right);
