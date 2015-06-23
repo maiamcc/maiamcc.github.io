@@ -7,7 +7,7 @@ sharing: false
 footer: false
 sidebar: false
 ---
-Here are some of my past and current projects. Want to know more about any of these? Click through to the code!
+This page is woefully out of date; I'm busy with exciting problems at work and exciting things in life, and if I've got spare time for coding I want to be hacking on stuff, not writing descriptions of the stuff I'm hacking on. So until I get a chance to overhaul this properly, this page will remain basically an archive of the stuff I worked on at [the Recurse Center](//www.recurse.com/). If you're curious about what I've been up to more recently, go poke around on [my Github](//github.com/maiamcc). Enjoy!
 
 <div class="project">
     <p>
