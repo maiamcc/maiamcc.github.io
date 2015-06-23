@@ -10,7 +10,7 @@ Here are the fruits of a mini-seminar on git from the inimitable [Mary](http://m
 ### Git: The Bestest Version Control System with the Worstest UI
 
 #### All of your Git-age lives in the .git folder
-When you run `git init`, all it does is create a `.git` folder. That's it! Your machine knows what folders are and aren't by the presence or absence of a `.git` directory. `.git` is a hidden folder, so to see it, type `ls -a`. Whenever you add or commit things to your git repo, they'll get stored in here.<!-- more -->
+When you run `git init`, all it does is create a `.git` folder. That's it! Your machine knows what folders are and aren't git repos by the presence or absence of a `.git` directory. `.git` is a hidden folder, so to see it, type `ls -a`. Whenever you add or commit things to your git repo, they'll get stored in here.<!-- more -->
 
 I'm now in the directory of my new project, `gittest`. It contains two files, `a` and `b`, and isn't yet a git repo. When I look at what's inside it, it looks like this:
 
