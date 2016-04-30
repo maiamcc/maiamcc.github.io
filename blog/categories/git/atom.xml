@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2016-04-29T23:45:42-04:00</updated>
+  <updated>2016-04-29T23:54:23-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -47,7 +47,7 @@ d77508c HEAD@{6}: checkout: moving from fdaec86d18b70bf8b9f87e74b473dcdb53d5b814
 fdaec86 HEAD@{7}: checkout: moving from master to fdaec86d18b70bf8b9f87e74b473dcdb53d5b814
 d77508c HEAD@{8}: commit (amend): totally innocuous change
 fdaec86 HEAD@{9}: commit: totally innocuous change
-5a90f86 HEAD@{10}: commit (initial): add a file with some stuff```</p>
+5a90f86 HEAD@{10}: commit (initial): add a file with some stuff&#8220;`</p>
 
 <p>So I had always thought that <code>git commit --amend</code> <em>amended your current commit</em>&ndash;wrote all of your changes onto the same commit and called it a day. But it turns out that it doesn’t; rather, it creates a <em>whole new commit</em> in which to store your amended changes. Like, look, you can see it right there in the reflog: the same commit message, before and after amend, with two different hashes, whoadamn! So Whatever my commit looked liked before I mistakenly amended is still out there somewhere in the void, and with reflog, I can get that hash! From here, getting back your lost work is simple: <code>git checkout [lost-commit-hash]</code>, <code>git reset --hard [lost-commit-hash]</code>, what have you.</p>
 

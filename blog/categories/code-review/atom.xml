@@ -4,7 +4,7 @@
   <title><![CDATA[Category: code review | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/code-review/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2016-04-29T23:45:42-04:00</updated>
+  <updated>2016-04-29T23:54:23-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -158,7 +158,7 @@ else: # if config file contains at least one roster to load...
 <blockquote><p><a href="https://docs.python.org/2/glossary.html#term-eafp">EAFP</a> (Easier to Ask for Forgiveness than Permission):</p>
 
 <p>This common Python coding style assumes the existence of valid keys or attributes and catches exceptions if the assumption proves false. This clean and fast style is characterized by the presence of many <code>try</code> and <code>except</code> statements. The technique contrasts with the <a href="https://docs.python.org/2/glossary.html#term-lbyl">LBYL</a> style common to many other languages such as C.</p></blockquote></li>
-<li><p>but even though try/except is great, be wary! It can make debugging a mess&mdash;had something in here that caught TypeErrors, which exploded on Amy when she made a change that caught a type error, but my program printed &ldquo;more arguments needed&rdquo; instead of anything helpful like, y'know, a stacktrace.</p></li>
+<li><p>but even though try/except is great, be wary! It can make debugging a mess&mdash;had something in here that caught TypeErrors, which exploded on Amy when she made a change that caught a type error, but my program printed &ldquo;more arguments needed&rdquo; instead of anything helpful like, y&#8217;know, a stacktrace.</p></li>
 <li>if you&rsquo;re defining a dict., it looks prettiest to put spaces on both sides of the colon</li>
 <li>string concat. is a) ugly and b) not very efficient. Use string interpolation (or in a pinch, <code>join</code>) instead.</li>
 <li>you can search for substrings with <code>"substring" in "string"</code>! Who knew? I wrote a whole human-written-input parser using <code>if string.find(substring) &gt; -1</code>. My life has just changed.</li>
