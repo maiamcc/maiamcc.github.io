@@ -1,9 +1,0 @@
----
-layout: post
-title: "foobar"
-date: 2016-04-29 23:41:42 -0400
-comments: true
-published: true
-categories:
----
-Testing! Lorem ipsum and stuff.
