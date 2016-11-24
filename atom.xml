@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2015-10-06T19:18:08-04:00</updated>
+  <updated>2016-11-24T16:02:59-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Foobar]]></title>
+    <link href="http://maiamcc.github.io/blog/2016/04/29/foobar/"/>
+    <updated>2016-04-29T23:41:42-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2016/04/29/foobar</id>
+    <content type="html"><![CDATA[<p>Testing! Lorem ipsum and stuff.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dig Yourself Out of a 'Git Commit Amend' Hole With Reflog]]></title>
+    <link href="http://maiamcc.github.io/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/"/>
+    <updated>2016-04-29T22:59:25-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole</id>
+    <content type="html"><![CDATA[<p>Raise your hand if you’ve ever <code>git commit</code>’d something you shouldn’t have. (It’s okay, this is a judgement-free space.)</p>
+
+<p>And raise your hand if you’ve ever used <code>git commit --amend --no-edit</code><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> to try and hide your terrible, terrible shame. (We’re not even gonna <em>talk</em> about <code>git push -f origin master</code>. Don’t do it, kids.)</p>
+
+<p>And raise your hand one last time if you’ve ever <code>git commit --amend --no-edit</code>’d and then paused and looked at your computer and were suddenly struck by the realization that you’d ruined everything.</p>
+
+<p>That last one might be just me, but I’m going to pretend it happens to other people to make myself feel better. (Like all of those times I thought I was fixing a slightly incorrect commit, only to realize I had instead wiped out all of my latest work. Whoooops.) <!-- more --></p>
+
+<p>Well, I put in an appearance at <a href="http://git-merge.com">Git Merge 2017</a> (an all-around delightful event), and this gem was among the many things I learned there. This gem, friends, is the <code>reflog</code> and <code>HEAD@{x}</code>.</p>
+
+<p>The reflog is… well, it’s a log of your refs. Refs being references to commits, which might be things like branch names (because recall that branch names are just human-readable references to commits) or this <code>HEAD</code> thing, which is a pointer to <em>the commit you’re on right now</em>. In fact, if you went into a folder that was a git repo and looked at <code>.git/refs/heads/master</code>, you’d see a file with a single commit hash in it&ndash;that’s the current tip of <code>master</code>, i.e. <em>the commit that your “master” ref is pointing to</em>.</p>
+
+<p>Now, refs in and of themselves aren’t gonna solve your <code>git commit --amend</code> debacle, but it turns out that git is really smart sometimes. In this particular case, the smart thing that git does is keep track of everywhere your <code>HEAD</code> has been pointing. This info is stored in <code>.git/logs/HEAD</code>, and looks something like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0000000000000000000000000000000000000000 5a90f86dbb681f914790fbe494cbc5680ce372cc Maia &lt;maia.mcc@gmail.com&gt; 1461979447 -0400 commit (initial): add a file with some stuff
+</span><span class='line'>5a90f86dbb681f914790fbe494cbc5680ce372cc fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 Maia &lt;maia.mcc@gmail.com&gt; 1461979493 -0400    commit: totally innocuous change
+</span><span class='line'>fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 d77508cfe5df412158ad8a19540aca0ba195348f Maia &lt;maia.mcc@gmail.com&gt; 1461979518 -0400    commit (amend): totally innocuous change
+</span><span class='line'>d77508cfe5df412158ad8a19540aca0ba195348f fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 Maia &lt;maia.mcc@gmail.com&gt; 1461979572 -0400    reset: moving to HEAD@{1}
+</span><span class='line'>fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 514dd505826ddc1276823506e7682b33b64547b6 Maia &lt;maia.mcc@gmail.com&gt; 1461980303 -0400    commit (merge): Merge commit 'd77508c'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you find that a little hard to parse (and you probably do), you can (and should) get at it in a more human-readable form with the command <code>git reflog show</code>:
+&#8220;`
+fdaec86 HEAD@{2}: commit (merge): Merge commit &lsquo;d77508c&#8217;514dd505826ddc1276823506e7682b33b64547b6 fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 Maia <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#58;&#109;&#x61;&#105;&#x61;&#46;&#x6d;&#99;&#x63;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#109;">&#109;&#97;&#105;&#x61;&#46;&#x6d;&#99;&#99;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a> 1461982854 -0400    checkout: moving from master to head^
+fdaec86 HEAD@{3}: checkout: moving from d77508cfe5df412158ad8a19540aca0ba195348f to master
+d77508c HEAD@{4}: checkout: moving from master to HEAD@{3}
+fdaec86 HEAD@{5}: reset: moving to HEAD@{1}
+d77508c HEAD@{6}: checkout: moving from fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 to master
+fdaec86 HEAD@{7}: checkout: moving from master to fdaec86d18b70bf8b9f87e74b473dcdb53d5b814
+d77508c HEAD@{8}: commit (amend): totally innocuous change
+fdaec86 HEAD@{9}: commit: totally innocuous change
+5a90f86 HEAD@{10}: commit (initial): add a file with some stuff</p>
+
+<p>So I had always thought that <code>git commit --amend</code> <em>amended your current commit</em>&ndash;wrote all of your changes onto the same commit and called it a day. But it turns out that it doesn’t; rather, it creates a <em>whole new commit</em> in which to store your amended changes. Like, look, you can see it right there in the reflog: the same commit message, before and after amend, with two different hashes, whoadamn! So Whatever my commit looked liked before I mistakenly amended is still out there somewhere in the void, and with reflog, I can get that hash! From here, getting back your lost work is simple: <code>git checkout [lost-commit-hash]</code>, <code>git reset --hard [lost-commit-hash]</code>, what have you.</p>
+
+<p>But there’s one more nifty thing here: all the <code>HEAD@{x}</code> numbers in the reflog are shortcuts to those commits. Much the same way that you can use <code>HEAD^^^</code> to point to the commit three generations up from your current head, you can use <code>HEAD@{3}</code> to point to the commit <em>from three movements of <code>HEAD</code> ago</em>. That makes “oh crap, I need  to get back to the last commit I was on before I did [stupid thing]” even easier&ndash;instead of having to go to the reflog and find the commit, you can just <code>git checkout HEAD@{1}</code> to get to whatever commit your head was previously on. (The commit your head is currently on, of course, being <code>HEAD@{0}</code>.)</p>
+
+<p>So, there you go: a cool git thing I learned recently. Nothing earth-shattering, but hopefully a useful tip for someone out there. Happy gitting!</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>For those of you who don’t know, this is <code>git commit --amend</code>’s older and better-looking cousin&ndash;it’s <code>git commit --amend</code> except that it automatically reuses the commit message of the commit you’re amending, rather than prompting you for a new one.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[28 Days Later: My First Four Weeks as a Junior Engineer at Spring]]></title>
@@ -1007,63 +1075,6 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 <p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
 
 <p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[So Much for That Project]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project/"/>
-    <updated>2014-09-17T12:22:01-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project</id>
-    <content type="html"><![CDATA[<p>Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on <a href="https://code.google.com/p/mingus/">mingus</a>, a midi/music theory Python library. Unfortunately, it seems like no one&rsquo;s addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:</p>
-
-<p><img src="http://maiamcc.github.io/images/mingusbug_input.png" alt="Input file" /></p>
-
-<p>It returned this mess here:</p>
-
-<p><img src="http://maiamcc.github.io/images/mingusbug_output.png" alt="Output file" /></p>
-
-<!-- more -->
-
-
-<p>For the record, what seems to be going on here, as far as we can tell, is that while the notes have been preserved, the rhythms have all shifted over by one. The first note has been magically converted into a quarter note, and each note after that has the duration that ought to have belonged to the note before it. (To explain it another way: assume that we have a list of original notes and we&rsquo;re making a list of new notes, where each new note OUGHT to be identical to its corresponding original note. Instead, we get <code>newnote[0].duration == quarter</code>, <code>newnote[1].duration == orignote[0].duration</code>, <code>newnote[2].duration == orignote[1].duration</code>, etc.)</p>
-
-<p>So, <a href="https://code.google.com/p/mingus/issues/detail?id=125">we&rsquo;ve submitted a bug report</a> but we&rsquo;re not optimistic since, like I mentioned, the last answered bug is from 2011. But one day, when my heart has healed, I&rsquo;ll go off looking for ways to fix this or for other Python midi libraries that are suitable for this project, and then I&rsquo;ll take another swing at the choral generator! (Any suggestions? Send them my way! I&rsquo;m looking for a lib that can read, inspect, write, and output midi.)</p>
-
-<p>Until then, as I near the end of HS, it&rsquo;s actually surprisingly freeing to have one less thing to worry about getting done. Obviously I&rsquo;m not going to finish all of this stuff before HS ends, but here&rsquo;s what&rsquo;s on my docket at the moment:</p>
-
-<ul>
-<li>contradance database (search logic, and eventually expanding and populating database)</li>
-<li>sudoku solver (so close&hellip;!)</li>
-<li>more work on the fabulous <a href="http://hypatia.ca/">Leigh Honeywell</a>&rsquo;s <a href="https://github.com/hypatia/virtuoso">Virtuoso Project</a>, which will soon be a web app that doles out writing exercises to fight imposter syndrome, and is also a fabulous excuse for me to learn Bootstrap and play with design.</li>
-<li>goob.py, a fake git</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Asking for TOO MUCH Help?]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/16/asking-for-too-much-help/"/>
-    <updated>2014-09-16T12:47:54-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/16/asking-for-too-much-help</id>
-    <content type="html"><![CDATA[<p>(Apparently some people at Hacker School think I&rsquo;m an Iron Blogger, despite me being nothing of the sort. There&rsquo;s no money riding on whether or not I make consistent blog posts&mdash;but I figure I should do what I can to sustain this favorable impression of me!)</p>
-
-<p>Since my HS halfway check-in, I&rsquo;ve resolved to ask more questions and not let myself get stuck banging my head against problems that could be solved in a hot second by any of the three people sitting next to me. I think that I&rsquo;ve done a pretty good job with this resolution; I ask for help way more frequently, and as a result, I think I get more done. However, I feel the need to remind myself that there is such a thing as <em>asking for too much help</em>.</p>
-
-<p>Take this example: I was sitting down with Tristan, a fellow HSer, attempting to set up virtualenv and get all of my permissions and installs un-borked. I was totally in over my head, having never used virtualenv before, and he was helping me sort it out. There was some funky stuff that needed fixing having to do with my $PATH being invalid because one of the folder names contained a space. We dealt with that issue, and now most of the stuff worked, but I still couldn&rsquo;t manage to run bpython from inside my virtualenv. I showed Tristan the error message my computer was spewing, and asked him, &ldquo;What&rsquo;s going on?&rdquo;</p>
-
-<p>His response: &ldquo;What do you think is going on?&rdquo;</p>
-
-<p>Me: &ldquo;Well, it won&rsquo;t run bpython!&rdquo;</p>
-
-<p>Him: &ldquo;Come on, you can do better than that.&rdquo;<!-- more --></p>
-
-<p>When he said this, I was somewhat shocked to realize that I hadn&rsquo;t even fully read the text of the error message&mdash;I assumed that it would be gibberish to me, as such messages often are, and that I would need to find someone with greater terminal-fu to help me decipher it.</p>
-
-<p>I can&rsquo;t remember now what exactly the problem was, but it was something having to do with the fact that my shiny new un-borked $PATH wasn&rsquo;t finding bpython because I had sudo installed it somewhere outside the virtualenv&hellip; (That sounds kind of illogical now that I write it, but I promise it was a real problem.) Regardless, by carefully reading the error message and talking it through with Tristan, I was able to figure out what had to be done pretty much on my own. It was super exciting, of course, because for most of Hacker School the terminal has remained an almost entirely opaque black box of sorcery (and possibly gnomes), but more than that, it made me sit up and realize that it <em>is</em> within my power to solve a lot of the problems that I come across.</p>
-
-<p>Now I have two things to balance. Obviously, I want to keep asking questions, learning new things, keeping myself from getting stuck in ruts. But there&rsquo;s also something to be said for that fifteen-minute window to work on a problem before I turn to Zulip or the person next to me. I tend to assume that anything I don&rsquo;t know is a result of my limited programming background, and is something that I can learn <em>massively</em> faster from a person than from hunting around on StackOverflow. And yes, this is often the case, but when it&rsquo;s not&mdash;or even when it is&mdash;the trouble-shooting and debugging and StackOverflow-ing and playing around in the REPL are all supremely valuable skills. I can solve my own problems more often than I expect, and should remember that!</p>
 ]]></content>
   </entry>
   
