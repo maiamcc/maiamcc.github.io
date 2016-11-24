@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://maiamcc.github.io/blog/2016/04/29/foobar/</loc>
-<lastmod>2016-04-29T23:41:42-04:00</lastmod>
-</url>
-<url>
 <loc>http://maiamcc.github.io/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/</loc>
 <lastmod>2016-04-29T22:59:25-04:00</lastmod>
 </url>
@@ -184,15 +180,6 @@
 </url>
 <url>
 <loc>http://maiamcc.github.io/blog/categories/spring/</loc>
-</url>
-<url>
-<loc>http://maiamcc.github.io/2/</loc>
-</url>
-<url>
-<loc>http://maiamcc.github.io/3/</loc>
-</url>
-<url>
-<loc>http://maiamcc.github.io/4/</loc>
 </url>
 <url>
 <loc>http://maiamcc.github.io/fancybox/demo/iframe.html</loc>

@@ -9,7 +9,7 @@
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been &hellip;">
+  <meta name="description" content="(Apparently some people at Hacker School think I&rsquo;m an Iron Blogger, despite me being nothing of the sort. There&rsquo;s no money riding on &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,53 +84,6 @@
     My name is Maia. I&#8217;m a programmer based in New York City, currently working as a software engineer at <a href="//www.shopspring.com/">Spring</a>. This is where I (somewhat infrequently) chronicle my journeys through code, as well as other vaguely related adventures.
   </article>
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/17/so-much-for-that-project/">So Much for That Project</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-17T12:22:01-04:00" pubdate data-updated="true">17 Sep 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on <a href="https://code.google.com/p/mingus/">mingus</a>, a midi/music theory Python library. Unfortunately, it seems like no one&rsquo;s addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:</p>
-
-<p><img src="/images/mingusbug_input.png" alt="Input file" /></p>
-
-<p>It returned this mess here:</p>
-
-<p><img src="/images/mingusbug_output.png" alt="Output file" /></p>
-
-<p></div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/17/so-much-for-that-project/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
   
   
     <article>
@@ -637,6 +590,49 @@
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/07/when-is-it-time-to-give-up/">When Is It Time to Give Up?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-07T18:24:25-04:00" pubdate data-updated="true">07 Aug 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had this grand, exciting plan. A normal Markov generator trains on a corpus of text, and sees what words are likely to come after other words. So for example, given &ldquo;Happy families are all alike,&rdquo; it would say, &ldquo;Happy families&rdquo; &mdash;> &ldquo;are&rdquo;, &ldquo;families are&rdquo; &mdash;> &ldquo;all&rdquo;, &ldquo;are all&rdquo; &mdash;> &ldquo;alike&rdquo;. You can then start with any random seed and populate a whole chunk of however much text you please by going through your correspondence and picking at random: &ldquo;hmm, what words might possibly come after &lsquo;are all&rsquo;?&rdquo;</p>
+
+<p>I was going to take it one step further and incorporate part-of-speech tagging. The above example sentence would be part-of-speech tagged, &ldquo;adjective/plural noun/verb non-3rd person singular present/determiner/adverb.&rdquo; Then I could make a correspondence: adjective + plural noun may be followed by a non-3rd person singular present verb, and so on. And when I had a whole paragraph or two worth of &ldquo;adjective noun verb&rdquo; etc. I could begin to fill that in from my word correspondence: &ldquo;What word might come after &lsquo;families are&rsquo; that is also a noun?&rdquo;</p>
+
+<p>It was brilliant! I was excited! And, as you&rsquo;ve probably guessed, things didn&rsquo;t turn out the way I had planned. I didn&rsquo;t quite consider that one of my correspondences was much more general than the other, so is I generated my parts-of-speech beforehand and then went looking for a word that can follow words a + b and is also a (fill in part of speech here), I wouldn&rsquo;t necessarily find anything! And then I&rsquo;m reduced to filling in a random (part of speech), which leaves me no better off than a normal Markov generator, and perhaps even worse (see my last two posts for comparison).</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/08/07/when-is-it-time-to-give-up/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="4">&larr; Older</a>
@@ -667,10 +663,6 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/04/29/foobar/">Foobar</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/">Dig Yourself Out of a &#8216;Git Commit Amend&#8217; Hole With Reflog</a>
       </li>
     
@@ -684,6 +676,10 @@
     
       <li class="post">
         <a href="/blog/2015/03/09/opw-retrospective/">OPW Retrospective</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/04/the-joys-of-sparql/">The Joys of SPARQL: An RDF Query Language</a>
       </li>
     
   </ul>

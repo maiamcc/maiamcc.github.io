@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2016-11-24T16:02:59-05:00</updated>
+  <updated>2016-11-24T16:04:20-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Foobar]]></title>
-    <link href="http://maiamcc.github.io/blog/2016/04/29/foobar/"/>
-    <updated>2016-04-29T23:41:42-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2016/04/29/foobar</id>
-    <content type="html"><![CDATA[<p>Testing! Lorem ipsum and stuff.</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dig Yourself Out of a 'Git Commit Amend' Hole With Reflog]]></title>
@@ -55,7 +46,7 @@
 
 <p>If you find that a little hard to parse (and you probably do), you can (and should) get at it in a more human-readable form with the command <code>git reflog show</code>:
 &#8220;`
-fdaec86 HEAD@{2}: commit (merge): Merge commit &lsquo;d77508c&#8217;514dd505826ddc1276823506e7682b33b64547b6 fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 Maia <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#58;&#109;&#x61;&#105;&#x61;&#46;&#x6d;&#99;&#x63;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#109;">&#109;&#97;&#105;&#x61;&#46;&#x6d;&#99;&#99;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a> 1461982854 -0400    checkout: moving from master to head^
+fdaec86 HEAD@{2}: commit (merge): Merge commit &lsquo;d77508c&#8217;514dd505826ddc1276823506e7682b33b64547b6 fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 Maia <a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#109;&#97;&#105;&#x61;&#46;&#x6d;&#99;&#x63;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">&#109;&#x61;&#x69;&#97;&#46;&#x6d;&#x63;&#99;&#x40;&#x67;&#109;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;</a> 1461982854 -0400    checkout: moving from master to head^
 fdaec86 HEAD@{3}: checkout: moving from d77508cfe5df412158ad8a19540aca0ba195348f to master
 d77508c HEAD@{4}: checkout: moving from master to HEAD@{3}
 fdaec86 HEAD@{5}: reset: moving to HEAD@{1}
@@ -1075,6 +1066,35 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 <p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
 
 <p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[So Much for That Project]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project/"/>
+    <updated>2014-09-17T12:22:01-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project</id>
+    <content type="html"><![CDATA[<p>Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on <a href="https://code.google.com/p/mingus/">mingus</a>, a midi/music theory Python library. Unfortunately, it seems like no one&rsquo;s addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:</p>
+
+<p><img src="http://maiamcc.github.io/images/mingusbug_input.png" alt="Input file" /></p>
+
+<p>It returned this mess here:</p>
+
+<p><img src="http://maiamcc.github.io/images/mingusbug_output.png" alt="Output file" /></p>
+
+<p><!-- more -->For the record, what seems to be going on here, as far as we can tell, is that while the notes have been preserved, the rhythms have all shifted over by one. The first note has been magically converted into a quarter note, and each note after that has the duration that ought to have belonged to the note before it. (To explain it another way: assume that we have a list of original notes and we&rsquo;re making a list of new notes, where each new note OUGHT to be identical to its corresponding original note. Instead, we get <code>newnote[0].duration == quarter</code>, <code>newnote[1].duration == orignote[0].duration</code>, <code>newnote[2].duration == orignote[1].duration</code>, etc.)</p>
+
+<p>So, <a href="https://code.google.com/p/mingus/issues/detail?id=125">we&rsquo;ve submitted a bug report</a> but we&rsquo;re not optimistic since, like I mentioned, the last answered bug is from 2011. But one day, when my heart has healed, I&rsquo;ll go off looking for ways to fix this or for other Python midi libraries that are suitable for this project, and then I&rsquo;ll take another swing at the choral generator! (Any suggestions? Send them my way! I&rsquo;m looking for a lib that can read, inspect, write, and output midi.)</p>
+
+<p>Until then, as I near the end of HS, it&rsquo;s actually surprisingly freeing to have one less thing to worry about getting done. Obviously I&rsquo;m not going to finish all of this stuff before HS ends, but here&rsquo;s what&rsquo;s on my docket at the moment:</p>
+
+<ul>
+<li>contradance database (search logic, and eventually expanding and populating database)</li>
+<li>sudoku solver (so close&hellip;!)</li>
+<li>more work on the fabulous <a href="http://hypatia.ca/">Leigh Honeywell</a>&rsquo;s <a href="https://github.com/hypatia/virtuoso">Virtuoso Project</a>, which will soon be a web app that doles out writing exercises to fight imposter syndrome, and is also a fabulous excuse for me to learn Bootstrap and play with design.</li>
+<li>goob.py, a fake git</li>
+</ul>
+
 ]]></content>
   </entry>
   
