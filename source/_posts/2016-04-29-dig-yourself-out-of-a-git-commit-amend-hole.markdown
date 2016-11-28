@@ -13,7 +13,7 @@ And raise your hand one last time if you’ve ever `git commit --amend --no-edit
 
 That last one might be just me, but I’m going to pretend it happens to other people to make myself feel better. (Like all of those times I thought I was fixing a slightly incorrect commit, only to realize I had instead wiped out all of my latest work. Whoooops.) <!-- more -->
 
-Well, I put in an appearance at [Git Merge 2017](http://git-merge.com) (an all-around delightful event), and this gem was among the many things I learned there. This gem, friends, is the `reflog` and `HEAD@{x}`.
+Well, I put in an appearance at [Git Merge 2016](http://git-merge.com) (an all-around delightful event), and this gem was among the many things I learned there. This gem, friends, is the `reflog` and `HEAD@{x}`.
 
 The reflog is… well, it’s a log of your refs. Refs being references to commits, which might be things like branch names (because recall that branch names are just human-readable references to commits) or this `HEAD` thing, which is a pointer to _the commit you’re on right now_. In fact, if you went into a folder that was a git repo and looked at `.git/refs/heads/master`, you’d see a file with a single commit hash in it--that’s the current tip of `master`, i.e. _the commit that your “master” ref is pointing to_.
 
