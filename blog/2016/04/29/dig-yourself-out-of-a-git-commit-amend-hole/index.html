@@ -115,7 +115,7 @@
 
 <p>That last one might be just me, but I’m going to pretend it happens to other people to make myself feel better. (Like all of those times I thought I was fixing a slightly incorrect commit, only to realize I had instead wiped out all of my latest work. Whoooops.) <!-- more --></p>
 
-<p>Well, I put in an appearance at <a href="http://git-merge.com">Git Merge 2017</a> (an all-around delightful event), and this gem was among the many things I learned there. This gem, friends, is the <code>reflog</code> and <code>HEAD@{x}</code>.</p>
+<p>Well, I put in an appearance at <a href="http://git-merge.com">Git Merge 2016</a> (an all-around delightful event), and this gem was among the many things I learned there. This gem, friends, is the <code>reflog</code> and <code>HEAD@{x}</code>.</p>
 
 <p>The reflog is… well, it’s a log of your refs. Refs being references to commits, which might be things like branch names (because recall that branch names are just human-readable references to commits) or this <code>HEAD</code> thing, which is a pointer to <em>the commit you’re on right now</em>. In fact, if you went into a folder that was a git repo and looked at <code>.git/refs/heads/master</code>, you’d see a file with a single commit hash in it&ndash;that’s the current tip of <code>master</code>, i.e. <em>the commit that your “master” ref is pointing to</em>.</p>
 
