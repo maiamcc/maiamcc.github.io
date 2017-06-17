@@ -7,7 +7,7 @@ categories: Go, tech
 ---
 This is a blog post about interfaces in Go. I wanted to write about a headscratcher that cost me several hours of work when I first started learning Go, and I figured I might as well start from the beginning and write the article on interfaces that I wish I had read back then. The story of my encounter with nil interfaces is coming soon, but for now, here's a brief and hopefully accessible piece on interfaces in Go.[^1] So, without further ado, I give you...
 
-## What Is an Interface?
+### What Is an Interface?
 
 Coming from the dynamically-typed wild west of Python, one of the bits of Go that took the most getting used to was the idea of *interfaces*. An interface is a way of typing things according to their methods. If I want a function that can take any number of different types, so long as they have a given method (or two, or five) in common, I’ll want to use an interface to accomplish this (since I can’t pass in any old thing because of Go’s type safety rules). To give a concrete example, say I’ve got these classes: <!--more-->
 
@@ -67,7 +67,7 @@ func oozeAttack(o oozer) string {
 If an object has all of the methods required for an interface, we say that that object *implements* (or satisfies) that interface. In this case, both `octopus` and `slug` implement `oozer` because they both have `ooze()` methods. The compiler can check this for us, so we know that anything we pass into `oozeAttack` has an `ooze()` method and won’t break out code—in stark contrast to the example above, where we could pass in *literally anything* and just had to pray that it wouldn’t cause a panic.
 
 
-## Okay, But What Is an `interface{}`?
+### Okay, But What Is an `interface{}`?
 
 If you’ve been using Go for more than a couple of days, you’ve probably stumbled across `interface{}`, the mythical and mysterious empty interface ([click here for dramatic effect](https://www.youtube.com/watch?v=bW7Op86ox9g)). (I even used it in the example above.) The empty interface baffled me for a long time. I understood that practically, it was a type wildcard—you used it anywhere you weren’t sure of the type of a thing. If I have a function that’s going to get passed *some thing* but I don’t know what the type of that thing is, I’ll use `interface{}` so nothing breaks:
 
