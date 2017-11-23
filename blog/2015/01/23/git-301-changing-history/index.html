@@ -119,9 +119,9 @@
 
 <p>Remember when you learned that you could revise the commit you’d just made with <code>git commit --amend</code> (as long as you hadn’t pushed anything to your remote repo yet cuz then stuff would get borked and you’d probably have to force push), and it was super cool? Rebase is like that, but 50x cooler.</p>
 
-<p>Rebase is the git tool that allows you to rewrite the past. You can use it to pull together commits from different branches, change commit orders, keep some and ignore others, modify messages, modify content… it’s crazy! I won’t bore you here with the plain ‘ol <code>rebase</code> command and how you might use it to smoothly interweave multiple branches’ worth of commits into a single branch of commit history. I totally could if I wanted to because I totally know that stuff off the top of my head and remember which hashes go in which spot when you type that command in. For sure.</p>
+<p>Rebase is the git tool that allows you to rewrite the past. You can use it to pull together commits from different branches, change commit orders, keep some and ignore others, modify messages, modify content… it’s crazy! I won’t bore you here with the plain ‘ol <code>rebase</code> command and how you might use it to smoothly interweave multiple branches’ worth of commits into a single branch of commit history. I totally could if I wanted to because I totally know the details of how rebasing works off the top of my head and don&rsquo;t just blindly run commands whenever I need to rebase stuff. Totally for sure.</p>
 
-<p>But even better than <code>rebase</code> is this excellent new thing I learned about today, <code>git rebase -i</code> (for <code>--interactive</code>)! (Actually, I did learn about plain <code>rebase</code> the first time I learned what rebasing was, but I’m not convinced that anyone actually uses it because interactive rebase is so awesome.) <code>git rebase -i [hash]</code> will pop up your text editor with a bunch<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> of your commits in it, all preceded by the word <code>pick</code>. And… y’know, it’s actually pretty pointless for me to explain this here, because interactive rebase explains it all to you in the text file! (Yay easy-to-read documentation! Unlike most of the git man pages, but oh well…) Here you can change the order of the commits if you want, delete commits you want to get rid of, and do a couple of other neat things.</p>
+<p>But even better than <code>rebase</code> is this excellent new thing I learned about today, <code>git rebase -i</code> (for <code>--interactive</code>)! <code>git rebase -i [hash]</code> will pop up your text editor with a bunch<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> of your commits in it, all preceded by the word <code>pick</code>. And… y’know, it’s actually pretty pointless for me to explain this here, because interactive rebase explains it all to you in the text file! (Yay easy-to-read documentation! Unlike most of the git man pages, but oh well…) Here you can change the order of the commits if you want, delete commits you want to get rid of, and do a couple of other neat things.</p>
 
 <p>In particular, the feature that I’ve found to be a lifesaver is the ability to revise a past commit (not just the message, but the content as well).<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> Change <code>pick</code> to <code>edit</code> next to the commit(s) you want to revise, then save and close the text file. Git will drop you in your project directory just after the time of the first commit marked with <code>edit</code>. Make any changes you want to make, commit them with <code>git commit --amend</code>, and then go ahead with your rebase with <code>git rebase —continue</code>. Magically, the commit has been revised to include any changes you just made! Huzzah!</p>
 
@@ -226,6 +226,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/">Dig Yourself Out of a &#8216;Git Commit Amend&#8217; Hole With Reflog</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/11/28-days-later/">28 Days Later: My First Four Weeks as a Junior Engineer at Spring</a>
       </li>
     
@@ -235,14 +243,6 @@
     
       <li class="post">
         <a href="/blog/2015/03/09/opw-retrospective/">OPW Retrospective</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/04/the-joys-of-sparql/">The Joys of SPARQL: An RDF Query Language</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/25/the-best-thing-ive-done-for-my-productivity-lately/">The Best Thing I&#8217;ve Done for My Productivity Lately</a>
       </li>
     
   </ul>
@@ -285,7 +285,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+  Copyright &copy; 2017 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
 </p>
 
 <p>

@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2015-10-06T19:18:08-04:00</updated>
+  <updated>2017-11-22T22:41:39-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,6 +12,217 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[What Are Interfaces?]]></title>
+    <link href="http://maiamcc.github.io/blog/2017/06/17/what-are-interfaces/"/>
+    <updated>2017-06-17T13:04:02-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2017/06/17/what-are-interfaces</id>
+    <content type="html"><![CDATA[<p>This is a blog post about interfaces in Go. I wanted to write about a headscratcher that cost me several hours of work when I first started learning Go, and I figured I might as well start from the beginning and write the article on interfaces that I wish I had read back then. The story of my encounter with nil interfaces is coming soon, but for now, here&rsquo;s a brief and hopefully accessible piece on interfaces in Go.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> So, without further ado, I give you&hellip;</p>
+
+<h3>What Is an Interface?</h3>
+
+<p>Coming from the dynamically-typed wild west of Python, one of the bits of Go that took the most getting used to was the idea of <em>interfaces</em>. An interface is a way of typing things according to their methods. If I want a function that can take any number of different types, so long as they have a given method (or two, or five) in common, I’ll want to use an interface to accomplish this (since I can’t pass in any old thing because of Go’s type safety rules). To give a concrete example, say I’ve got these classes: <!--more--></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">octopus</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">numTentacles</span> <span class="kt">int</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">octopus</span><span class="p">)</span> <span class="nx">ooze</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;ink&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">slug</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">salted</span> <span class="kt">bool</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">slug</span><span class="p">)</span> <span class="nx">ooze</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;slime&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>slug</code> and <code>octopus</code> are their own types, but both have <code>ooze()</code> methods. If I wanted a function to make use of the <code>ooze</code> method, and didn’t know how to make effective use of interfaces, I might write something like this. Note that <code>interface{}</code> is a wild card and I&rsquo;ll explain why in a minute&hellip; but for now, just accept that this is the way we can allow this function to take either a slug OR an octopus (&hellip;or anything else, unfortunately) without Go complaining at us.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">oozeAttack</span><span class="p">(</span><span class="nx">slugOrOctopus</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="nx">oozingThing</span> <span class="o">:=</span> <span class="nx">slugOrOctopus</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nx">slug</span><span class="p">:</span>
+</span><span class='line'>            <span class="c1">// cast oozingThing as a slug</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;You got %s’d!&quot;</span><span class="p">,</span> <span class="nx">oozingThing</span><span class="p">.</span><span class="nx">ooze</span><span class="p">())</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nx">octopus</span><span class="p">:</span>
+</span><span class='line'>            <span class="c1">// cast oozingThing as an octopus</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;You got %s’d!&quot;</span><span class="p">,</span> <span class="nx">oozingThing</span><span class="p">.</span><span class="nx">ooze</span><span class="p">())</span>
+</span><span class='line'>        <span class="k">default</span><span class="p">:</span>
+</span><span class='line'>            <span class="nb">panic</span><span class="p">(</span><span class="s">```This thing doesn&#39;t know how to ooze!</span>
+</span><span class='line'><span class="s">            ...It sucks that you were able to pass this in</span>
+</span><span class='line'><span class="s">            without the compiler complaining at you, but</span>
+</span><span class='line'><span class="s">            here we are.```</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ugh. Awkward, right? And it has repeated code, and it can potentially panic b/c we have no guarantees of the type of the thing we passed, and… ugh. No good. But luckily, I can use interfaces as they were meant to be used, and suddenly my code is a lot prettier:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">oozer</span> <span class="kd">interface</span><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// the signature of a function called &quot;ooze&quot;,</span>
+</span><span class='line'>    <span class="c1">// which takes no args and returns a string</span>
+</span><span class='line'>    <span class="nx">ooze</span><span class="p">()</span> <span class="kt">string</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">oozeAttack</span><span class="p">(</span><span class="nx">o</span> <span class="nx">oozer</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;You got %s’d!&quot;</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ooze</span><span class="p">())</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If an object has all of the methods required for an interface, we say that that object <em>implements</em> (or satisfies) that interface. In this case, both <code>octopus</code> and <code>slug</code> implement <code>oozer</code> because they both have <code>ooze()</code> methods. The compiler can check this for us, so we know that anything we pass into <code>oozeAttack</code> has an <code>ooze()</code> method and won’t break out code—in stark contrast to the example above, where we could pass in <em>literally anything</em> and just had to pray that it wouldn’t cause a panic.</p>
+
+<h3>Okay, But What Is an <code>interface{}</code>?</h3>
+
+<p>If you’ve been using Go for more than a couple of days, you’ve probably stumbled across <code>interface{}</code>, the mythical and mysterious empty interface (<a href="https://www.youtube.com/watch?v=bW7Op86ox9g">click here for dramatic effect</a>). (I even used it in the example above.) The empty interface baffled me for a long time. I understood that practically, it was a type wildcard—you used it anywhere you weren’t sure of the type of a thing. If I have a function that’s going to get passed <em>some thing</em> but I don’t know what the type of that thing is, I’ll use <code>interface{}</code> so nothing breaks:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">printMysteryObject</span><span class="p">(</span><span class="nx">thing</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Your mystery thing is: %v&quot;</span><span class="p">,</span> <span class="nx">thing</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But it was only after I started thinking about what interfaces actually are, and reading some blog posts, that I figured out why this works. <code>interface{}</code> is this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">BoringInterface</span> <span class="kd">interface</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// … nothing to see here …</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It’s an interface that requires no methods! And so any object at all will satisfy this interface, because any object in Go has 0+ methods. I finally understand what the flip this thing is. So exciting.</p>
+
+<p>Stay tuned for part 2 in this series, &ldquo;When Interfaces Go Nil (dun dun dunnn)&rdquo;.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>I need to make the disclaimer that lots of other folks have written about this, and the <a href="https://blog.golang.org/laws-of-reflection">Go blogpost on <em>The Laws of Reflection</em></a> probably explains this stuff better than I do. That said, I hope this blog post is more to the point, and perhaps more entertaining. (Mad props to <a href="http://aoeu.github.io/">Travis McDemus</a> for inspiration for this excellent example of how interfaces work, which I find 100% more accessible than the <code>io.Reader/Writer</code> examples that get used in all the canonical Go blogposts about interfaces.)<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dig Yourself Out of a 'Git Commit Amend' Hole With Reflog]]></title>
+    <link href="http://maiamcc.github.io/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/"/>
+    <updated>2016-04-29T22:59:25-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole</id>
+    <content type="html"><![CDATA[<p>Raise your hand if you’ve ever <code>git commit</code>’d something you shouldn’t have. (It’s okay, this is a judgement-free space.)</p>
+
+<p>And raise your hand if you’ve ever used <code>git commit --amend --no-edit</code><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> to try and hide your terrible, terrible shame. (We’re not even gonna <em>talk</em> about <code>git push -f origin master</code>. Don’t do it, kids.)</p>
+
+<p>And raise your hand one last time if you’ve ever <code>git commit --amend --no-edit</code>’d and then paused and looked at your computer and were suddenly struck by the realization that you’d ruined everything.</p>
+
+<p>That last one might be just me, but I’m going to pretend it happens to other people to make myself feel better. (Like all of those times I thought I was fixing a slightly incorrect commit, only to realize I had instead wiped out all of my latest work. Whoooops.) <!-- more --></p>
+
+<p>Well, I put in an appearance at <a href="http://git-merge.com">Git Merge 2016</a> (an all-around delightful event), and this gem was among the many things I learned there. This gem, friends, is the <code>reflog</code> and <code>HEAD@{x}</code>.</p>
+
+<p>The reflog is… well, it’s a log of your refs. Refs being references to commits, which might be things like branch names (because recall that branch names are just human-readable references to commits) or this <code>HEAD</code> thing, which is a pointer to <em>the commit you’re on right now</em>. In fact, if you went into a folder that was a git repo and looked at <code>.git/refs/heads/master</code>, you’d see a file with a single commit hash in it&ndash;that’s the current tip of <code>master</code>, i.e. <em>the commit that your “master” ref is pointing to</em>.</p>
+
+<p>Now, refs in and of themselves aren’t gonna solve your <code>git commit --amend</code> debacle, but it turns out that git is really smart sometimes. In this particular case, the smart thing that git does is keep track of everywhere your <code>HEAD</code> has been pointing. This info is stored in <code>.git/logs/HEAD</code>, and looks something like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0000000000000000000000000000000000000000 5a90f86dbb681f914790fbe494cbc5680ce372cc Maia &lt;maia.mcc@gmail.com&gt; 1461979447 -0400    commit (initial): add a file with some stuff
+</span><span class='line'>5a90f86dbb681f914790fbe494cbc5680ce372cc fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 Maia &lt;maia.mcc@gmail.com&gt; 1461979493 -0400    commit: totally innocuous change
+</span><span class='line'>fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 d77508cfe5df412158ad8a19540aca0ba195348f Maia &lt;maia.mcc@gmail.com&gt; 1461979518 -0400    commit (amend): totally innocuous change
+</span><span class='line'>d77508cfe5df412158ad8a19540aca0ba195348f fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 Maia &lt;maia.mcc@gmail.com&gt; 1461979572 -0400    reset: moving to HEAD@{1}
+</span><span class='line'>fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 514dd505826ddc1276823506e7682b33b64547b6 Maia &lt;maia.mcc@gmail.com&gt; 1461980303 -0400    commit (merge): Merge commit 'd77508c'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you find that a little hard to parse (and you probably do), you can (and should) get at it in a more human-readable form with the command <code>git reflog show</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>fdaec86 HEAD@{2}: commit (merge): Merge commit 'd77508c'514dd505826ddc1276823506e7682b33b64547b6 fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 Maia &lt;maia.mcc@gmail.com&gt; 1461982854 -0400    checkout: moving from master to head^
+</span><span class='line'>fdaec86 HEAD@{3}: checkout: moving from d77508cfe5df412158ad8a19540aca0ba195348f to master
+</span><span class='line'>d77508c HEAD@{4}: checkout: moving from master to HEAD@{3}
+</span><span class='line'>fdaec86 HEAD@{5}: reset: moving to HEAD@{1}
+</span><span class='line'>d77508c HEAD@{6}: checkout: moving from fdaec86d18b70bf8b9f87e74b473dcdb53d5b814 to master
+</span><span class='line'>fdaec86 HEAD@{7}: checkout: moving from master to fdaec86d18b70bf8b9f87e74b473dcdb53d5b814
+</span><span class='line'>d77508c HEAD@{8}: commit (amend): totally innocuous change
+</span><span class='line'>fdaec86 HEAD@{9}: commit: totally innocuous change
+</span><span class='line'>5a90f86 HEAD@{10}: commit (initial): add a file with some stuff</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So I had always thought that <code>git commit --amend</code> <em>amended your current commit</em>&ndash;wrote all of your changes onto the same commit and called it a day. But it turns out that it doesn’t; rather, it creates a <em>whole new commit</em> in which to store your amended changes. Like, look, you can see it right there in the reflog: the same commit message, before and after amend, with two different hashes, whoadamn! So Whatever my commit looked liked before I mistakenly amended is still out there somewhere in the void, and with reflog, I can get that hash! From here, getting back your lost work is simple: <code>git checkout [lost-commit-hash]</code>, <code>git reset --hard [lost-commit-hash]</code>, what have you.</p>
+
+<p>But there’s one more nifty thing here: all the <code>HEAD@{x}</code> numbers in the reflog are shortcuts to those commits. Much the same way that you can use <code>HEAD^^^</code> to point to the commit three generations up from your current head, you can use <code>HEAD@{3}</code> to point to the commit <em>from three movements of <code>HEAD</code> ago</em>. That makes “oh crap, I need  to get back to the last commit I was on before I did [stupid thing]” even easier&ndash;instead of having to go to the reflog and find the commit, you can just <code>git checkout HEAD@{1}</code> to get to whatever commit your head was previously on. (The commit your head is currently on, of course, being <code>HEAD@{0}</code>.)</p>
+
+<p>So, there you go: a cool git thing I learned recently. Nothing earth-shattering, but hopefully a useful tip for someone out there. Happy gitting!</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>For those of you who don’t know, this is <code>git commit --amend</code>’s older and better-looking cousin: it’s <code>git commit --amend</code> except that it automatically reuses the commit message of the commit you’re amending, rather than prompting you for a new one.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[28 Days Later: My First Four Weeks as a Junior Engineer at Spring]]></title>
@@ -266,9 +477,9 @@ LIMIT X
 
 <p>Remember when you learned that you could revise the commit you’d just made with <code>git commit --amend</code> (as long as you hadn’t pushed anything to your remote repo yet cuz then stuff would get borked and you’d probably have to force push), and it was super cool? Rebase is like that, but 50x cooler.</p>
 
-<p>Rebase is the git tool that allows you to rewrite the past. You can use it to pull together commits from different branches, change commit orders, keep some and ignore others, modify messages, modify content… it’s crazy! I won’t bore you here with the plain ‘ol <code>rebase</code> command and how you might use it to smoothly interweave multiple branches’ worth of commits into a single branch of commit history. I totally could if I wanted to because I totally know that stuff off the top of my head and remember which hashes go in which spot when you type that command in. For sure.</p>
+<p>Rebase is the git tool that allows you to rewrite the past. You can use it to pull together commits from different branches, change commit orders, keep some and ignore others, modify messages, modify content… it’s crazy! I won’t bore you here with the plain ‘ol <code>rebase</code> command and how you might use it to smoothly interweave multiple branches’ worth of commits into a single branch of commit history. I totally could if I wanted to because I totally know the details of how rebasing works off the top of my head and don&rsquo;t just blindly run commands whenever I need to rebase stuff. Totally for sure.</p>
 
-<p>But even better than <code>rebase</code> is this excellent new thing I learned about today, <code>git rebase -i</code> (for <code>--interactive</code>)! (Actually, I did learn about plain <code>rebase</code> the first time I learned what rebasing was, but I’m not convinced that anyone actually uses it because interactive rebase is so awesome.) <code>git rebase -i [hash]</code> will pop up your text editor with a bunch<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> of your commits in it, all preceded by the word <code>pick</code>. And… y’know, it’s actually pretty pointless for me to explain this here, because interactive rebase explains it all to you in the text file! (Yay easy-to-read documentation! Unlike most of the git man pages, but oh well…) Here you can change the order of the commits if you want, delete commits you want to get rid of, and do a couple of other neat things.</p>
+<p>But even better than <code>rebase</code> is this excellent new thing I learned about today, <code>git rebase -i</code> (for <code>--interactive</code>)! <code>git rebase -i [hash]</code> will pop up your text editor with a bunch<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> of your commits in it, all preceded by the word <code>pick</code>. And… y’know, it’s actually pretty pointless for me to explain this here, because interactive rebase explains it all to you in the text file! (Yay easy-to-read documentation! Unlike most of the git man pages, but oh well…) Here you can change the order of the commits if you want, delete commits you want to get rid of, and do a couple of other neat things.</p>
 
 <p>In particular, the feature that I’ve found to be a lifesaver is the ability to revise a past commit (not just the message, but the content as well).<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> Change <code>pick</code> to <code>edit</code> next to the commit(s) you want to revise, then save and close the text file. Git will drop you in your project directory just after the time of the first commit marked with <code>edit</code>. Make any changes you want to make, commit them with <code>git commit --amend</code>, and then go ahead with your rebase with <code>git rebase —continue</code>. Magically, the commit has been revised to include any changes you just made! Huzzah!</p>
 
@@ -1007,63 +1218,6 @@ JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which 
 <p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
 
 <p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[So Much for That Project]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project/"/>
-    <updated>2014-09-17T12:22:01-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/17/so-much-for-that-project</id>
-    <content type="html"><![CDATA[<p>Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on <a href="https://code.google.com/p/mingus/">mingus</a>, a midi/music theory Python library. Unfortunately, it seems like no one&rsquo;s addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:</p>
-
-<p><img src="http://maiamcc.github.io/images/mingusbug_input.png" alt="Input file" /></p>
-
-<p>It returned this mess here:</p>
-
-<p><img src="http://maiamcc.github.io/images/mingusbug_output.png" alt="Output file" /></p>
-
-<!-- more -->
-
-
-<p>For the record, what seems to be going on here, as far as we can tell, is that while the notes have been preserved, the rhythms have all shifted over by one. The first note has been magically converted into a quarter note, and each note after that has the duration that ought to have belonged to the note before it. (To explain it another way: assume that we have a list of original notes and we&rsquo;re making a list of new notes, where each new note OUGHT to be identical to its corresponding original note. Instead, we get <code>newnote[0].duration == quarter</code>, <code>newnote[1].duration == orignote[0].duration</code>, <code>newnote[2].duration == orignote[1].duration</code>, etc.)</p>
-
-<p>So, <a href="https://code.google.com/p/mingus/issues/detail?id=125">we&rsquo;ve submitted a bug report</a> but we&rsquo;re not optimistic since, like I mentioned, the last answered bug is from 2011. But one day, when my heart has healed, I&rsquo;ll go off looking for ways to fix this or for other Python midi libraries that are suitable for this project, and then I&rsquo;ll take another swing at the choral generator! (Any suggestions? Send them my way! I&rsquo;m looking for a lib that can read, inspect, write, and output midi.)</p>
-
-<p>Until then, as I near the end of HS, it&rsquo;s actually surprisingly freeing to have one less thing to worry about getting done. Obviously I&rsquo;m not going to finish all of this stuff before HS ends, but here&rsquo;s what&rsquo;s on my docket at the moment:</p>
-
-<ul>
-<li>contradance database (search logic, and eventually expanding and populating database)</li>
-<li>sudoku solver (so close&hellip;!)</li>
-<li>more work on the fabulous <a href="http://hypatia.ca/">Leigh Honeywell</a>&rsquo;s <a href="https://github.com/hypatia/virtuoso">Virtuoso Project</a>, which will soon be a web app that doles out writing exercises to fight imposter syndrome, and is also a fabulous excuse for me to learn Bootstrap and play with design.</li>
-<li>goob.py, a fake git</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Asking for TOO MUCH Help?]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/16/asking-for-too-much-help/"/>
-    <updated>2014-09-16T12:47:54-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/16/asking-for-too-much-help</id>
-    <content type="html"><![CDATA[<p>(Apparently some people at Hacker School think I&rsquo;m an Iron Blogger, despite me being nothing of the sort. There&rsquo;s no money riding on whether or not I make consistent blog posts&mdash;but I figure I should do what I can to sustain this favorable impression of me!)</p>
-
-<p>Since my HS halfway check-in, I&rsquo;ve resolved to ask more questions and not let myself get stuck banging my head against problems that could be solved in a hot second by any of the three people sitting next to me. I think that I&rsquo;ve done a pretty good job with this resolution; I ask for help way more frequently, and as a result, I think I get more done. However, I feel the need to remind myself that there is such a thing as <em>asking for too much help</em>.</p>
-
-<p>Take this example: I was sitting down with Tristan, a fellow HSer, attempting to set up virtualenv and get all of my permissions and installs un-borked. I was totally in over my head, having never used virtualenv before, and he was helping me sort it out. There was some funky stuff that needed fixing having to do with my $PATH being invalid because one of the folder names contained a space. We dealt with that issue, and now most of the stuff worked, but I still couldn&rsquo;t manage to run bpython from inside my virtualenv. I showed Tristan the error message my computer was spewing, and asked him, &ldquo;What&rsquo;s going on?&rdquo;</p>
-
-<p>His response: &ldquo;What do you think is going on?&rdquo;</p>
-
-<p>Me: &ldquo;Well, it won&rsquo;t run bpython!&rdquo;</p>
-
-<p>Him: &ldquo;Come on, you can do better than that.&rdquo;<!-- more --></p>
-
-<p>When he said this, I was somewhat shocked to realize that I hadn&rsquo;t even fully read the text of the error message&mdash;I assumed that it would be gibberish to me, as such messages often are, and that I would need to find someone with greater terminal-fu to help me decipher it.</p>
-
-<p>I can&rsquo;t remember now what exactly the problem was, but it was something having to do with the fact that my shiny new un-borked $PATH wasn&rsquo;t finding bpython because I had sudo installed it somewhere outside the virtualenv&hellip; (That sounds kind of illogical now that I write it, but I promise it was a real problem.) Regardless, by carefully reading the error message and talking it through with Tristan, I was able to figure out what had to be done pretty much on my own. It was super exciting, of course, because for most of Hacker School the terminal has remained an almost entirely opaque black box of sorcery (and possibly gnomes), but more than that, it made me sit up and realize that it <em>is</em> within my power to solve a lot of the problems that I come across.</p>
-
-<p>Now I have two things to balance. Obviously, I want to keep asking questions, learning new things, keeping myself from getting stuck in ruts. But there&rsquo;s also something to be said for that fifteen-minute window to work on a problem before I turn to Zulip or the person next to me. I tend to assume that anything I don&rsquo;t know is a result of my limited programming background, and is something that I can learn <em>massively</em> faster from a person than from hunting around on StackOverflow. And yes, this is often the case, but when it&rsquo;s not&mdash;or even when it is&mdash;the trouble-shooting and debugging and StackOverflow-ing and playing around in the REPL are all supremely valuable skills. I can solve my own problems more often than I expect, and should remember that!</p>
 ]]></content>
   </entry>
   

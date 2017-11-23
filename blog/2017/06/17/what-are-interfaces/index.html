@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>What Are Interfaces? - Maia McCormick</title>
+  <meta name="author" content="Maia Remez McCormick">
+
+  
+  <meta name="description" content="This is a blog post about interfaces in Go. I wanted to write about a headscratcher that cost me several hours of work when I first started learning &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://maiamcc.github.io/blog/2017/06/17/what-are-interfaces">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Maia McCormick" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Overlock+SC|Overlock:400,700|Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fancybox").fancybox();
+        $(".fancybox").fancybox({
+    width  : 600,
+    height : 300,
+    type   :'iframe'
+    });
+
+});
+</script>
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Maia McCormick</a></h1>
+  
+  <div class="subtitle">
+    <h2>Programmer, writer, nerd</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div class="selected"> 
+  <li><a href="/">blog</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/projects">projects</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div id="thepost">
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">What Are Interfaces?</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-06-17T13:04:02-04:00" pubdate data-updated="true">17 Jun 2017</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This is a blog post about interfaces in Go. I wanted to write about a headscratcher that cost me several hours of work when I first started learning Go, and I figured I might as well start from the beginning and write the article on interfaces that I wish I had read back then. The story of my encounter with nil interfaces is coming soon, but for now, here&rsquo;s a brief and hopefully accessible piece on interfaces in Go.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> So, without further ado, I give you&hellip;</p>
+
+<h3>What Is an Interface?</h3>
+
+<p>Coming from the dynamically-typed wild west of Python, one of the bits of Go that took the most getting used to was the idea of <em>interfaces</em>. An interface is a way of typing things according to their methods. If I want a function that can take any number of different types, so long as they have a given method (or two, or five) in common, I’ll want to use an interface to accomplish this (since I can’t pass in any old thing because of Go’s type safety rules). To give a concrete example, say I’ve got these classes: <!--more--></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">octopus</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">numTentacles</span> <span class="kt">int</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">octopus</span><span class="p">)</span> <span class="nx">ooze</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;ink&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">slug</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">salted</span> <span class="kt">bool</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">slug</span><span class="p">)</span> <span class="nx">ooze</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;slime&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>slug</code> and <code>octopus</code> are their own types, but both have <code>ooze()</code> methods. If I wanted a function to make use of the <code>ooze</code> method, and didn’t know how to make effective use of interfaces, I might write something like this. Note that <code>interface{}</code> is a wild card and I&rsquo;ll explain why in a minute&hellip; but for now, just accept that this is the way we can allow this function to take either a slug OR an octopus (&hellip;or anything else, unfortunately) without Go complaining at us.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">oozeAttack</span><span class="p">(</span><span class="nx">slugOrOctopus</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="nx">oozingThing</span> <span class="o">:=</span> <span class="nx">slugOrOctopus</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nx">slug</span><span class="p">:</span>
+</span><span class='line'>            <span class="c1">// cast oozingThing as a slug</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;You got %s’d!&quot;</span><span class="p">,</span> <span class="nx">oozingThing</span><span class="p">.</span><span class="nx">ooze</span><span class="p">())</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nx">octopus</span><span class="p">:</span>
+</span><span class='line'>            <span class="c1">// cast oozingThing as an octopus</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;You got %s’d!&quot;</span><span class="p">,</span> <span class="nx">oozingThing</span><span class="p">.</span><span class="nx">ooze</span><span class="p">())</span>
+</span><span class='line'>        <span class="k">default</span><span class="p">:</span>
+</span><span class='line'>            <span class="nb">panic</span><span class="p">(</span><span class="s">```This thing doesn&#39;t know how to ooze!</span>
+</span><span class='line'><span class="s">            ...It sucks that you were able to pass this in</span>
+</span><span class='line'><span class="s">            without the compiler complaining at you, but</span>
+</span><span class='line'><span class="s">            here we are.```</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ugh. Awkward, right? And it has repeated code, and it can potentially panic b/c we have no guarantees of the type of the thing we passed, and… ugh. No good. But luckily, I can use interfaces as they were meant to be used, and suddenly my code is a lot prettier:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">oozer</span> <span class="kd">interface</span><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// the signature of a function called &quot;ooze&quot;,</span>
+</span><span class='line'>    <span class="c1">// which takes no args and returns a string</span>
+</span><span class='line'>    <span class="nx">ooze</span><span class="p">()</span> <span class="kt">string</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">oozeAttack</span><span class="p">(</span><span class="nx">o</span> <span class="nx">oozer</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;You got %s’d!&quot;</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ooze</span><span class="p">())</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If an object has all of the methods required for an interface, we say that that object <em>implements</em> (or satisfies) that interface. In this case, both <code>octopus</code> and <code>slug</code> implement <code>oozer</code> because they both have <code>ooze()</code> methods. The compiler can check this for us, so we know that anything we pass into <code>oozeAttack</code> has an <code>ooze()</code> method and won’t break out code—in stark contrast to the example above, where we could pass in <em>literally anything</em> and just had to pray that it wouldn’t cause a panic.</p>
+
+<h3>Okay, But What Is an <code>interface{}</code>?</h3>
+
+<p>If you’ve been using Go for more than a couple of days, you’ve probably stumbled across <code>interface{}</code>, the mythical and mysterious empty interface (<a href="https://www.youtube.com/watch?v=bW7Op86ox9g">click here for dramatic effect</a>). (I even used it in the example above.) The empty interface baffled me for a long time. I understood that practically, it was a type wildcard—you used it anywhere you weren’t sure of the type of a thing. If I have a function that’s going to get passed <em>some thing</em> but I don’t know what the type of that thing is, I’ll use <code>interface{}</code> so nothing breaks:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">printMysteryObject</span><span class="p">(</span><span class="nx">thing</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Your mystery thing is: %v&quot;</span><span class="p">,</span> <span class="nx">thing</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But it was only after I started thinking about what interfaces actually are, and reading some blog posts, that I figured out why this works. <code>interface{}</code> is this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">BoringInterface</span> <span class="kd">interface</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// … nothing to see here …</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It’s an interface that requires no methods! And so any object at all will satisfy this interface, because any object in Go has 0+ methods. I finally understand what the flip this thing is. So exciting.</p>
+
+<p>Stay tuned for part 2 in this series, &ldquo;When Interfaces Go Nil (dun dun dunnn)&rdquo;.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>I need to make the disclaimer that lots of other folks have written about this, and the <a href="https://blog.golang.org/laws-of-reflection">Go blogpost on <em>The Laws of Reflection</em></a> probably explains this stuff better than I do. That said, I hope this blog post is more to the point, and perhaps more entertaining. (Mad props to <a href="http://aoeu.github.io/">Travis McDemus</a> for inspiration for this excellent example of how interfaces work, which I find 100% more accessible than the <code>io.Reader/Writer</code> examples that get used in all the canonical Go blogposts about interfaces.)<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Maia Remez McCormick</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-06-17T13:04:02-04:00" pubdate data-updated="true">17 Jun 2017</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/go/'>go,</a>, <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/" title="Previous Post: Dig Yourself Out of a 'Git Commit Amend' Hole With Reflog">&laquo; Dig Yourself Out of a &#8216;Git Commit Amend&#8217; Hole With Reflog</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  </section>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" title="subscribe via RSS"><img src="/images/rss.png"></a></li>
+  </ul>
+    
+  <form action="https://www.google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:maiamcc.github.io" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+    
+</section>
+<img src = "/images/headshot.jpg">
+<section>
+  <a href="blog/archives/"><h1>Posts</h1></a>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/">Dig Yourself Out of a &#8216;Git Commit Amend&#8217; Hole With Reflog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/06/11/28-days-later/">28 Days Later: My First Four Weeks as a Junior Engineer at Spring</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/16/truthiness/">Truthiness</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/09/opw-retrospective/">OPW Retrospective</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/maiamcc">@maiamcc</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'maiamcc',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+</p>
+
+<p>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'maia-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://maiamcc.github.io/blog/2017/06/17/what-are-interfaces/';
+        var disqus_url = 'http://maiamcc.github.io/blog/2017/06/17/what-are-interfaces/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
