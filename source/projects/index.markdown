@@ -28,6 +28,23 @@ I tend not to code an awful lot outside of work, because in my free time I recha
 
 <div class="project">
     <p>
+        <h3><a href="//github.com/maiamcc/carols" target="_blank">Carol Collection</a></h3><h4>(Python, Lilypond, LaTeX)</h4>
+    </p>
+        <strong>What</strong>: I wanted a book of all of my favorite Christmas carols to sing with friends. I ended up with this project, which takes a number of Lilypond files and build them into sheet music, then compiles them into a LaTeX pdf for easy printing and sharing. 
+    </p>
+    <p>
+        <strong>When</strong>: December 2017 
+    </p>
+    <p>
+        <strong>Why</strong>: because I have a deep and undying love of Christmas carols 
+    </p>
+    <p>
+        <strong>Status</strong>: the framework for generating the booklet is complete, and now the music files can be edited/updated/added to at will for future generations of caroling gatherings.
+    </p>
+</div>
+
+<div class="project">
+    <p>
         <h3><a href="//github.com/maiamcc/not-my-locker-room/tree/generalizedContentScript" target="_blank">Not My Locker Room</a></h3><h4>(Python)</h4>
     </p>
         <strong>What</strong>: I wrote tooling to help maintain the <a href="//notmylockerroom.com" target="_blank">Not My Locker Room</a> website, built and run by <a href="https://devprogress.us" target="_blank">DevProgress</a>. In particular, I wrote template-filling script to take content elements from a csv, hit the appropriate API to get oEmbed code, and insert into an html template.
@@ -42,7 +59,6 @@ I tend not to code an awful lot outside of work, because in my free time I recha
         <strong>Status</strong>: my code was in use generating the website before we stopped maintaining it. I may someday generalize this code for wider use.
     </p>
 </div>
-
 
 <div class="project">
     <p>
