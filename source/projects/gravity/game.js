@@ -367,28 +367,28 @@ var allMaps = [ level0, level1, level2, level3, level4, level5, level6, level7,
                 level8, level9, level10, level11, level12, level13, victory ];
 
 // IMAGES
-var SOUND_ON_ICON = loadImage( "soundOn.png" );
-var SOUND_OFF_ICON = loadImage( "soundOff.png" );
-var NSPIKES = loadImage( "nSpikes.png");
-var ESPIKES = loadImage( "eSpikes.png");
-var SSPIKES = loadImage( "sSpikes.png");
-var WSPIKES = loadImage( "wSpikes.png");
-var UPARROW = loadImage( "upArrow.png");
-var DOWNARROW = loadImage( "downArrow.png");
-var KEY = loadImage( "key.png" )
-var LOCK = loadImage( "lock.png" );
-var OPENLOCKTRANS = loadImage( "openLockTrans.png" );
-var VICTORY = loadImage( "balloonsConfetti.png" );
-var PLAY_AGAIN = loadImage( "playagain.png" );
+var SOUND_ON_ICON = loadImage( "images/soundOn.png" );
+var SOUND_OFF_ICON = loadImage( "images/soundOff.png" );
+var NSPIKES = loadImage( "images/nSpikes.png" );
+var ESPIKES = loadImage( "images/eSpikes.png" );
+var SSPIKES = loadImage( "images/sSpikes.png" );
+var WSPIKES = loadImage( "images/wSpikes.png" );
+var UPARROW = loadImage( "images/upArrow.png" );
+var DOWNARROW = loadImage( "images/downArrow.png" );
+var KEY = loadImage( "images/key.png" );
+var LOCK = loadImage( "images/lock.png" );
+var OPENLOCKTRANS = loadImage( "images/openLockTrans.png" );
+var VICTORY = loadImage( "images/balloonsConfetti.png" );
+var PLAY_AGAIN = loadImage( "images/playagain.png" );
 
 // SOUNDS
-var UNLOCK_SOUND = loadSound( "unlock.mp3" );
-var YAY_SOUND = loadSound( "yay.mp3" );
-var SPIKE_SOUND = loadSound( "squish.mp3" );
-var UP_SOUND = loadSound( "alarmup.wav" );
-var DOWN_SOUND = loadSound( "alarmdown.wav" );
-var NOSHIFT_SOUND = loadSound( " noShift.mp3 ");
-var CHEERING_SOUND = loadSound( "cheering.mp3" );
+var UNLOCK_SOUND = loadSound( "sounds/unlock.mp3" );
+var YAY_SOUND = loadSound( "sounds/yay.mp3" );
+var SPIKE_SOUND = loadSound( "sounds/squish.mp3" );
+var UP_SOUND = loadSound( "sounds/alarmup.wav" );
+var DOWN_SOUND = loadSound( "sounds/alarmdown.wav" );
+var NOSHIFT_SOUND = loadSound( "sounds/noShift.mp3 ");
+var CHEERING_SOUND = loadSound( "sounds/cheering.mp3" );
 var soundOn = true;
 
 ///////////////////////////////////////////////////////////////
