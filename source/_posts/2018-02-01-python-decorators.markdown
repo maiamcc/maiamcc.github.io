@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "F*****' Decorators, How Do THEY Work?!"
+title: "F***in' Decorators, How Do THEY Work?!"
 date: 2018-02-01 13:16:46 -0500
 comments: true
 categories: [tech, python]
