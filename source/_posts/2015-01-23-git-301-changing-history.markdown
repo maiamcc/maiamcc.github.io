@@ -3,7 +3,7 @@ layout: post
 title: "Git 301: Changing History"
 date: 2015-01-23 23:53:50 -0500
 comments: true
-categories: git
+categories: [tech, git]
 ---
 Congratulations, you've made it through Git 101 (`init`, `add`, `commit`, `log`, `status`) and its slightly more difficult companion course, Git 201 (`branch`, `checkout`, `pull`).[^1] Are you ready to pull out the big guns? Here are a handful of commands I've been using lately, which I will now write about on the off-chance that they're useful to someone else. Welcome to Git 301.
 

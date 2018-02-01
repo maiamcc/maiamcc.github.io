@@ -3,7 +3,7 @@ layout: post
 title: "Revisiting My First Python Program"
 date: 2014-11-20 20:36:26 -0500
 comments: true
-categories: [Hacker School, code review]
+categories: [recurse center, code review]
 ---
 Back in mid-July, I started at Hacker School, wide-eyed and green and totally freaked out. With only a little bit of Javascript under my belt (and a basically negligible amount of Java, so we're not even counting that), I decided to teach myself Python, slogged halfway through Zed Shaw's _Learn Python the Hard Way_, then went off to go build something, because I work best by getting my hands dirty. For my first Python project, I wrote [studentchooser](//github.com/maiamcc/studentchooser), a little command-line app requested by a teacher friend of mine, who wanted a fair way to call on her students at random (for putting homework problems on the board, etc.). The idea was that, once a student had been selected, it was _less_ likely that they would be selected again, but not impossible---the chance of them being picked subsequently would go down, but they would still be in the running.
 

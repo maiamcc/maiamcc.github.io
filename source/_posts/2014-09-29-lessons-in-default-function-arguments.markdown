@@ -3,7 +3,7 @@ layout: post
 title: "Lessons in Default Function Arguments"
 date: 2014-09-29 18:16:56 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center, tech, python]
 ---
 Today on "Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway", we're going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia's contradance database and the letter Y.)
 

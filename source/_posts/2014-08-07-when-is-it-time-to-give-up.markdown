@@ -3,7 +3,7 @@ layout: post
 title: "When Is it Time to Give Up?"
 date: 2014-08-07 18:24:25 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center]
 ---
 I had this grand, exciting plan. A normal Markov generator trains on a corpus of text, and sees what words are likely to come after other words. So for example, given "Happy families are all alike," it would say, "Happy families" ---> "are", "families are" ---> "all", "are all" ---> "alike". You can then start with any random seed and populate a whole chunk of however much text you please by going through your correspondence and picking at random: "hmm, what words might possibly come after 'are all'?"
 

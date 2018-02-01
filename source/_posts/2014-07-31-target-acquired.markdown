@@ -3,7 +3,7 @@ layout: post
 title: "Target: Acquired"
 date: 2014-07-31 18:42:31 -0400
 comments: true
-categories: [Hacker School, code review]
+categories: [recurse center, code review]
 ---
 At the end of Week 2, I'm still overwhelmed, but a bit less, and with a bit more conviction that I can in fact write code. I finished my first project in Python yesterday, and spent this morning implementing some code review I got. Here are some things I learned, mainly for my own reference but perhaps other beginning Python folks will find it useful as well:<!-- more -->
 

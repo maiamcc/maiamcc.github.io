@@ -3,7 +3,7 @@ layout: post
 title: "What Are Interfaces?"
 date: 2017-06-17 13:04:02 -0400
 comments: true
-categories: Go, tech
+categories: [tech, go]
 ---
 This is a blog post about interfaces in Go. I wanted to write about a headscratcher that cost me several hours of work when I first started learning Go, and I figured I might as well start from the beginning and write the article on interfaces that I wish I had read back then. The story of my encounter with nil interfaces is coming soon, but for now, here's a brief and hopefully accessible piece on interfaces in Go.[^1] So, without further ado, I give you...
 

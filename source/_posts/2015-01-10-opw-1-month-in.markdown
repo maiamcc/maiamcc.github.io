@@ -3,7 +3,7 @@ layout: post
 title: "OPW: 1 Month In"
 date: 2015-01-10 11:01:33 -0500
 comments: true
-categories: OPW
+categories: opw
 ---
 For anyone who doesn't know, this past December I started an internship with [GNOME](//www.gnome.org/) as part of OPW, the [Outreach Program for Women](//wiki.gnome.org/OutreachProgramForWomen). The point of this program is to get more women (by which they really mean cis woman *and* trans folks *and* genderqueer/genderfluid/agender folks... so basically, people who aren't cis **[MEN](//www.mandleco.com/Default.asp)**) involved in the FOSS world. In my particular case, it certainly succeeded! I'd been meaning to do some open source contributing for a while, but had always been too intimidated and overwhelmed to start.<!--more--> When it came time for OPW applications, however, I *had* to: had to pick a project, delve into the codebase, and submit a preliminary bugfix for my *application*. Which, at least for me, was fabulous, because my very application process convinced me that FOSS contribution was something that I could do, and even something that I enjoyed!
 

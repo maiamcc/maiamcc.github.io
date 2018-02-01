@@ -3,7 +3,7 @@ layout: post
 title: "Slicing is Not Enough (or, Adventures in Deep Copy)"
 date: 2014-08-26 11:56:57 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center, tech, python]
 ---
 The sudoku solver that I'm working on with [Miriam](https://mlauter.github.io/) was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written---
 

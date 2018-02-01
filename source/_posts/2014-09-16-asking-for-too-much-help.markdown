@@ -3,7 +3,7 @@ layout: post
 title: "Asking for TOO MUCH Help?"
 date: 2014-09-16 12:47:54 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center, writing about coding]
 ---
 (Apparently some people at Hacker School think I'm an Iron Blogger, despite me being nothing of the sort. There's no money riding on whether or not I make consistent blog posts---but I figure I should do what I can to sustain this favorable impression of me!)
 

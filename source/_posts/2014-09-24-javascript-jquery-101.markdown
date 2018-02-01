@@ -3,7 +3,7 @@ layout: post
 title: "Javascript/JQuery 101"
 date: 2014-09-24 16:28:38 -0400
 comments: true
-categories: [Hacker School]
+categories: [Recuse Center, javascript, tech]
 ---
 Funnily enough, when you're teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:
 

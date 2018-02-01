@@ -3,7 +3,7 @@ layout: post
 title: "Markov Madness, part 1"
 date: 2014-10-23 15:52:47 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center]
 ---
 Man, I've hardly written code in _three whole weeks!_ Such a strange feelings, after 3 solid months of coding. Anyway, back at Hacker School for the day, and with my OPW application in, I've been itching to actually _write some code_, so I revisited my old [Markov generator](https://github.com/maiamcc/markovgen) project, which takes a training corpus and generates psuedo-random texts in the style of that corpus.<!--more-->
 

@@ -3,7 +3,7 @@ layout: post
 title: "Design Principles from Liz"
 date: 2014-12-01 12:17:19 -0500
 comments: true
-categories: [Hacker School, design]
+categories: [recurse center, design]
 ---
 The other week, I chatted with the fabulous [Liz Starin](//lizstarin.com) and picked her aesthetically-enabled brain about fonts and layouts for websites. Below is some stuff I learned from our design adventures, both wisdom straight from her and stuff I picked up from my experience overhauling fonts and layout: <!-- more -->
 

@@ -3,7 +3,7 @@ layout: post
 title: "Not Sure if my Smarter Markov Generator Is Better or Worse..."
 date: 2014-08-06 17:07:06 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center]
 ---
 Some samples from a theoretically more intelligent Markov gen (which uses part-of-speech patterns randomly filled in from the text, rather than word patterns). Though honestly, this one seems a fair bit worse than the "dumb" one. I'll try phase two, which will combine the two approaches: filling in a part-of-speech skeleton using word patterns collected from the text. Anyway, here's some gobbledygook!
 

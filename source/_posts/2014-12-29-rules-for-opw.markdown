@@ -3,7 +3,7 @@ layout: post
 title: "Rules for OPW"
 date: 2014-12-29 14:29:39 -0500
 comments: true
-categories: OPW
+categories: opw
 ---
 Rules and resolutions for myself during OPW:
 

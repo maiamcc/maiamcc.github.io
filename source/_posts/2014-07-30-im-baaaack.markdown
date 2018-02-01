@@ -3,7 +3,7 @@ layout: post
 title: "I'm Baaaack!"
 date: 2014-07-30 17:40:18 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center]
 ---
 I'm baaaack! Miss me? Well, if you didn't, that's okay, because I'm not even sure who you are or why you're reading this. But if you are reading this and you did miss me, well, then, great!
 

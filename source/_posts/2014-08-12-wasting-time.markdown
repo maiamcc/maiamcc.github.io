@@ -3,7 +3,7 @@ layout: post
 title: "'Wasting' Time?"
 date: 2014-08-12 19:22:19 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center, writing about coding]
 ---
 At Hacker School today, I didn't get all that much done, and in my day's worth of non-progress I brushed up against two distinct kinds of "wasted" time.
 

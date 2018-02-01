@@ -3,7 +3,7 @@ layout: post
 title: "Markov Madness, part 2"
 date: 2014-10-23 16:13:34 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center]
 ---
 (If you're confused, see [my previous post on my Markov generator adventures](/blog/2014/10/23/markov-madness/).)
 

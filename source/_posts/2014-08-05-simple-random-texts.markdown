@@ -3,7 +3,7 @@ layout: post
 title: "Simple Random Texts"
 date: 2014-08-05 15:57:11 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center]
 ---
 **War and Peace**
 

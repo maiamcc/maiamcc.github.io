@@ -3,9 +3,9 @@ layout: post
 title: "So Much for That Project"
 date: 2014-09-17 12:22:01 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center]
 ---
-Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on [mingus](https://code.google.com/p/mingus/), a midi/music theory Python library. Unfortunately, it seems like no one's addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:
+Alas, it seems that my dreams of writing a chorale harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on [mingus](https://code.google.com/p/mingus/), a midi/music theory Python library. Unfortunately, it seems like no one's addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:
 
 ![Input file](/images/mingusbug_input.png)
 

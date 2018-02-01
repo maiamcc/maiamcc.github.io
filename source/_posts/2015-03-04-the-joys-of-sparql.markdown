@@ -3,7 +3,7 @@ layout: post
 title: "The Joys of SPARQL: An RDF Query Language"
 date: 2015-03-04 11:44:36 -0500
 comments: true
-categories: [OPW, SPARQL]
+categories: [opw, tech, sparql]
 ---
 I've been working with SPARQL a bunch for [my OPW project](//git.gnome.org/browse/gnome-music), and found it very slow going at first. SPARQL is apparently one of those little-loved languages that doesn't have much in the way of tutorials or lay-speak-explanations online---pretty much all I could find were the language's official docs, where were super technical and near-impossible for a beginner to slog through. Hell, I didn't even understand what the language *did*---how could I read the technical specs?<!--more-->
 

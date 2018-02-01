@@ -3,7 +3,7 @@ layout: post
 title: "Dig Yourself Out of a 'Git Commit Amend' Hole With Reflog"
 date: 2016-04-29 22:59:25 -0400
 comments: true
-categories: git
+categories: [tech, git]
 ---
 Raise your hand if you’ve ever `git commit`’d something you shouldn’t have. (It’s okay, this is a judgement-free space.)
 

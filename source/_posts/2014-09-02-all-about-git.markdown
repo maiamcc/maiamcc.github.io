@@ -3,7 +3,7 @@ layout: post
 title: "All About Git"
 date: 2014-09-02 17:59:40 -0400
 comments: true
-categories: [Hacker School, git]
+categories: [recurse center, tech, git]
 ---
 Here are the fruits of a mini-seminar on git from the inimitable [Mary](http://maryrosecook.com/)---a sketchy portrait of the inner workings of git.
 

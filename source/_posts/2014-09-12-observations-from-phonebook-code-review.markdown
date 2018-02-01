@@ -3,7 +3,7 @@ layout: post
 title: "Observations from Phonebook Code Review"
 date: 2014-09-12 15:38:52 -0400
 comments: true
-categories: [Hacker School, code review]
+categories: [recurse center, code review]
 ---
 Here are some gleanings from Amy's code review of [my phonebook applet](https://github.com/maiamcc/phonebook), and some self-study. Mostly for my own records and so I actually absorb all of this by writing out, but if anyone has comments, additions, disagreements with anything I've written here, fire away!
 

@@ -3,7 +3,7 @@ layout: post
 title: "28 Days Later: My First Four Weeks as a Junior Engineer at Spring"
 date: 2015-06-11 22:47:20 -0400
 comments: true
-categories: Spring
+categories: [spring]
 ---
 I came out of school with a BA in music, tripped and fell, and landed in the tech world. The folks at Spring took a chance on me as an extremely junior developer and offered me a job. I’ve been here now for a little more than two months, and I couldn’t be happier. Going into my first day at Spring (which also happened to be my first day as a software engineer, full stop), I was understandably pretty nervous. But I was also excited for what lay ahead, and Spring has done a fabulous job of easing me into my new life here. Here are some reflections on that first month (posted, er, somewhat belatedly), to give you an idea of what it’s like to be a new junior engineer at Spring.
 

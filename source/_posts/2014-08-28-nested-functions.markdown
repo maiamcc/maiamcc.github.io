@@ -3,7 +3,7 @@ layout: post
 title: "Nested Functions"
 date: 2014-08-28 11:20:16 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center, tech, python]
 ---
 Know what's cool? Nested functions.
 

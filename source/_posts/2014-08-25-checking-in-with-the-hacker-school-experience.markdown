@@ -3,7 +3,7 @@ layout: post
 title: "Checking In with the Hacker School Experience"
 date: 2014-08-25 18:17:48 -0400
 comments: true
-categories: [Hacker School]
+categories: [recurse center]
 ---
 Oh hai there, blag! It's been a while. Too long. The days here blur together occasionally---hours of staring a screen working on multiple only-slightly-different problems will do that to you, and it's really easy to lose track of what you've been working on, accomplishing, learning, and thinking about. _Especially_ when those accomplishments seem really tiny and mundane. ("Yay, I got my database search page to work! Yay, I got my database search page to work for two things in sequence! Wait, it's 7:00?")
 
