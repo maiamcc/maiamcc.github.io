@@ -111,7 +111,7 @@ def times_two(x):
     return 2*x
 ```
 
-The `@decorator` syntax means basically what we said above: "define this function, but then run it through this other `decorator` function, and assign the result of that call (which, again, ought to be a function) back to the function I just defined. This way, you can easily modify multiple functions in predictable[^1] ways, and moreover, modify them *in place*; no need to keep track of `times_two` and `times_two_with_alarm`, just update `times_two` to do the new thing.
+The `@decorator` syntax means basically what we said above: "define this function, but then run it through this other `decorator` function, and assign the result of that call (which, again, ought to be a function) back to the function I just defined." This way, you can easily modify multiple functions in predictable[^1] ways, and moreover, modify them *in place*; no need to keep track of both `times_two` and `times_two_with_alarm`, just update `times_two` to do the new thing.
 
 # Back to “Callables”
 
