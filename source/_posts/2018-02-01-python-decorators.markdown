@@ -295,7 +295,7 @@ The above example looks a little gnarly, but remember that `cls` here is `MyClas
 Yeah, I know, a lot of things just went down. To summarize:
 
 1. you can *decorate* any callable—be it a function, a class, or any callable object.
-2. a *decorator*—the `@something` thing—is a callable (function, class, etc.) that takes as an argument the thing you’re decorating and returns another callable that preserves the original functionality but add something new
+2. a *decorator*—the `@something` thing—is a callable (function, class, etc.) that takes as an argument the thing you’re decorating and returns another callable that preserves the original functionality but adding something new
 3. the type of callable is irrelevant. Functions can decorate functions, or classes, or objects. Classes can decorate functions, or classes, or objects. Basically, anything goes.
 
 There are lots of other resources on the interwebs about what sort of stuff you might want to use decorators for—and heck, I might write a blogpost about some of them in future—but I hope this is an illuminating overview of just what the heck decorators *are* and how they work. As always, feel free to reach out with any questions! A big thank you to all the excellent folks who beta-read/edited this post: [Ben Anderman](http://happyspork.com/), [Codanda Appachu](https://github.com/cappachu), [Sam Auciello](http://antha.site/), and [Alex Burka](https://alexburka.com/).
