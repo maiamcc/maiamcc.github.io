@@ -318,7 +318,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/code-review/'>code review</a>, <a class='category' href='/blog/categories/hacker-school/'>hacker school</a>
+    <a class='category' href='/blog/categories/code-review/'>code review</a>, <a class='category' href='/blog/categories/recurse-center/'>recurse center</a>
   
 </span>
 
@@ -365,10 +365,19 @@
   </form>
     
 </section>
+
 <img src = "/images/headshot.jpg">
 <section>
-  <a href="blog/archives/"><h1>Posts</h1></a>
+  <a href="/blog/archives/"><h1>Posts</h1></a>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/03/25/interview-prep/">Preparing for Technical Interviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/02/01/python-decorators/">F***in&#8217; Decorators, How Do THEY Work?!</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
@@ -380,14 +389,6 @@
     
       <li class="post">
         <a href="/blog/2015/06/11/28-days-later/">28 Days Later: My First Four Weeks as a Junior Engineer at Spring</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/16/truthiness/">Truthiness</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/09/opw-retrospective/">OPW Retrospective</a>
       </li>
     
   </ul>
@@ -414,8 +415,8 @@
 
         github.showRepos({
             user: 'maiamcc',
-            count: 0,
-            skip_forks: true,
+            count: 10,
+            skip_forks: false,
             target: '#gh_repos'
         });
     });
@@ -424,13 +425,17 @@
 </section>
 
 
+
 </aside>
 
 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2017 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+	<div class="rc-scout"></div>
+</p>
+<p>
+  Copyright &copy; 2018 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
 </p>
 
 <p>
@@ -464,6 +469,7 @@
 
 
 
+<script async defer src="https://www.recurse-scout.com/loader.js?t=909b1e858cb2f5a7df2312d2f522aabf"></script>
 
 </body>
 </html>

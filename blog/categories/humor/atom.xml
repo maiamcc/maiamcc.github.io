@@ -4,7 +4,7 @@
   <title><![CDATA[Category: humor | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/humor/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2017-11-22T22:49:10-05:00</updated>
+  <updated>2018-05-07T19:48:05-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -22,7 +22,7 @@
 
 <p><code>None</code> is always false&ndash;though this doesn&rsquo;t mean that <code>False == None</code>, which is a mistake I made early in my Python career. I was confused by how a nonexistant list and an empty list were both falsey, and somewhere in my mind I thought that they were both <code>None</code> as well. Not so much.<!--more--></p>
 
-<pre><code>&gt;&gt;&gt; a = None
+<pre><code class="python">&gt;&gt;&gt; a = None
 &gt;&gt;&gt; bool(a)
 False
 &gt;&gt;&gt; b = []
@@ -38,7 +38,7 @@ False
 
 <p>The empty values of data structures are always falsey. Hence:</p>
 
-<pre><code>&gt;&gt;&gt; bool([])
+<pre><code class="python">&gt;&gt;&gt; bool([])
 False
 &gt;&gt;&gt; bool("")
 False
@@ -48,7 +48,7 @@ False
 
 <p>And perhaps most confusingly:</p>
 
-<pre><code>&gt;&gt;&gt; bool(0)
+<pre><code class="python">&gt;&gt;&gt; bool(0)
 False
 &gt;&gt;&gt; bool(1)
 True
@@ -62,7 +62,7 @@ True
 
 <p>Conversely, every non-zero value of a data structure is true. That means that a string with stuff in it, a dict. with stuff in it, a list with stuff in it, etc. is true no matter what the stuff is. And so:</p>
 
-<pre><code>&gt;&gt;&gt; hip = False
+<pre><code class="python">&gt;&gt;&gt; hip = False
 &gt;&gt;&gt; bool(hip)
 False
 &gt;&gt;&gt; bool([hip, hip])

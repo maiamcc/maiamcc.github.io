@@ -9,7 +9,7 @@
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been &hellip;">
+  <meta name="description" content="Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,9 +81,91 @@
     <div id="content">
       <div class="blog-index">
   <article>
-    My name is Maia. I&#8217;m a programmer based in New York City, currently working as a software engineer at <a href="//www.shopspring.com/">Spring</a>. This is where I (somewhat infrequently) chronicle my journeys through code, as well as other vaguely related adventures.
+    My name is Maia. I&#8217;m a programmer based in New York City, currently working as a software engineer at <a href="//www.windmill.engineering/" class="windmill">/windmill</a>. This is where I (somewhat infrequently) chronicle my journeys through code, as well as other vaguely related adventures.
   </article>
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/29/lessons-in-default-function-arguments/">Lessons in Default Function Arguments</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-29T18:16:56-04:00" pubdate data-updated="true">29 Sep 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia&rsquo;s contradance database and the letter Y.)</p>
+
+<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reviewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/29/lessons-in-default-function-arguments/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/24/javascript-jquery-101/">Javascript/JQuery 101</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-24T16:28:38-04:00" pubdate data-updated="true">24 Sep 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
+
+<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/24/javascript-jquery-101/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -113,7 +195,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Alas, it seems that my dreams of writing a choral harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on <a href="https://code.google.com/p/mingus/">mingus</a>, a midi/music theory Python library. Unfortunately, it seems like no one&rsquo;s addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:</p>
+  <div class="entry-content"><p>Alas, it seems that my dreams of writing a chorale harmonizer in the style of J.S. Bach have to be put to bed until another day. Susan and I have been taking various stabs at this, trying out a few ineffective Python midi programs (one of these, incidentally, had ZERO documentation and was THE MOST FRUSTRATING THING EVER) before settling on <a href="https://code.google.com/p/mingus/">mingus</a>, a midi/music theory Python library. Unfortunately, it seems like no one&rsquo;s addressed any bug reports since 2011, so when we realized that midi read-in was totally borked, we were a little stymied. Specifically, if we gave it this file as input:</p>
 
 <p><img src="/images/mingusbug_input.png" alt="Input file" /></p>
 
@@ -549,101 +631,13 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/16/fluffy-and-often-queer-slash-ya-slash-both-book-recs/">Fluffy (and Often Queer/YA/Both) Book Recs</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-16T22:55:44-04:00" pubdate data-updated="true">16 Aug 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In response to a recent Hacker School discussion about fluffy book recommendations written by !(white &amp; cis-male), here&rsquo;s a list of some of my go-to&rsquo;s, and books I&rsquo;ve enjoyed reading lately. What defines fluff? That&rsquo;s a more complicated question for a later time. How I&rsquo;ve been thinking of it lately is as books that don&rsquo;t require much effort to read/parse&mdash;i.e., not an awful lot of subtext, relatively simple language and not too much artistry of the obfuscating variety in the text itself&mdash;that play off characters and tropes that we like to read about. They will generally have not-terribly-well-developed characters, characters that are easy to identify with, and the stories and happy endings that we want for ourselves. But, regardless of my definitional musings, here are some books! And so, in no particular order:</p>
-
-<ul>
-<li><em>Annie on My Mind</em> by Nancy Garden: LOVE. I think it was the first bit of lesbian lit that I read, and thus holds a special place in my heart.</li>
-<li><em>The Miseducation of Cameron Post</em>, by Emily M. Danforth: follows a young girl&rsquo;s sexual self-discovery, first love(s), and her time at a homosexual rehabilitation program.</li>
-<li><em>Beautiful Game</em> and <em>Solstice</em> by Kate Christie: fluff in the highest degree, but well-written, engaging, hold-your-attention-till-the-very-end fluff. (I also think it&rsquo;s worth noting that I typed the title to the first as &ldquo;Beautiful Gayme&rdquo; the first time through. Oops&hellip;)</li>
-<li>Anything by Tamora Pierce, but especially the <em>Song of the Lioness</em> quartet: because Tamora Pierce is the bomb, and has an incredible gift for plots, and has been the beginning of more girls&#8217; feminism than can be counted. Feminist, sex-positive, swords-and-sorcery high fantasy at its best!</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/08/16/fluffy-and-often-queer-slash-ya-slash-both-book-recs/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/12/wasting-time/">&#8216;Wasting&#8217; Time?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-12T19:22:19-04:00" pubdate data-updated="true">12 Aug 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>At Hacker School today, I didn&rsquo;t get all that much done, and in my day&rsquo;s worth of non-progress I brushed up against two distinct kinds of &ldquo;wasted&rdquo; time.</p>
-
-<p>The first is somewhat productive, as wasted time goes. I spent most of the afternoon barking up various wrong trees as I tried to figure out how to structure the next step of my current project (a contradance database, which I&rsquo;m sure I&rsquo;ll blog about for real soon). Kind of like a real-life breadth-first search where every node takes several hours.</p>
-
-<p>I&rsquo;ve got a way to structure my data, and now I want to be able to search and sort and filter a bunch of these data-bundles. First I assumed I&rsquo;d write the search code in Python and worry about making it web-app-y later. I started brainstorming and had <em>no idea</em> how I would optimize my code, and then someone suggested I use <a href="datatables.net">Data Tables</a> a JQuery plug-in which will search and sort data super fast. So I spent a while reading up on Data Tables, looking through FAQs and add-ons and trying to figure out if it would give me some of the more advanced searching functionality I wanted. Someone else then suggested that if I ultimately wanted to search by a giant table of data invisible to the user, why don&rsquo;t I just use mySQL and go right to the database end of things? So I talked to Andrew and hashed out a vague plan and set up mySQL on my machine and found some nice-looking tutorials&hellip; only to have someone <em>else</em> point out that hey, you don&rsquo;t need to worry about learning SQL, <a href="https://www.djangoproject.com">Django</a> can do all of that for you and you still get to write in Python. I gave Django a quick look, got excited, and then whoops it was 5:00.</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/08/12/wasting-time/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
-      <a class="prev" href="4">&larr; Older</a>
+      <a class="prev" href="/4">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
-    <a class="next" href="2">Newer &rarr;</a>
+    <a class="next" href="/2">Newer &rarr;</a>
     
   </div>
 </div>
@@ -661,10 +655,19 @@
   </form>
     
 </section>
+
 <img src = "/images/headshot.jpg">
 <section>
-  <a href="blog/archives/"><h1>Posts</h1></a>
+  <a href="/blog/archives/"><h1>Posts</h1></a>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/03/25/interview-prep/">Preparing for Technical Interviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/02/01/python-decorators/">F***in&#8217; Decorators, How Do THEY Work?!</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
@@ -676,14 +679,6 @@
     
       <li class="post">
         <a href="/blog/2015/06/11/28-days-later/">28 Days Later: My First Four Weeks as a Junior Engineer at Spring</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/16/truthiness/">Truthiness</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/09/opw-retrospective/">OPW Retrospective</a>
       </li>
     
   </ul>
@@ -710,8 +705,8 @@
 
         github.showRepos({
             user: 'maiamcc',
-            count: 0,
-            skip_forks: true,
+            count: 10,
+            skip_forks: false,
             target: '#gh_repos'
         });
     });
@@ -720,11 +715,16 @@
 </section>
 
 
+
 </aside>
+
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2017 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+	<div class="rc-scout"></div>
+</p>
+<p>
+  Copyright &copy; 2018 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
 </p>
 
 <p>
@@ -755,6 +755,7 @@
 
 
 
+<script async defer src="https://www.recurse-scout.com/loader.js?t=909b1e858cb2f5a7df2312d2f522aabf"></script>
 
 </body>
 </html>

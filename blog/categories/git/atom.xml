@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2017-11-22T22:49:10-05:00</updated>
+  <updated>2018-05-07T19:48:05-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -109,6 +109,25 @@ fdaec86 HEAD@{9}: commit: totally innocuous change
 <p>(There are whispered rumors that you can achieve the same thing even more fastly by making the changes in HEAD that you wanted to have made a few commits ago, adding them and committing with <code>git commit --fixup [hash of commit these changes should have belonged to]</code> and then running <code>git rebase -i [starting hash]</code> (or possibly <code>git rebase -i --autosquash [starting hash]</code>&mdash;<a href="//fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html">see this post</a>, for instance, for details). But I’ve been playing with this and am finding it more complicated than I’d hoped. Everything goes to pot, for instance, if the edits you wanted to make to a previous commit happen within a line, instead of being a clean line addition or subtraction… So, I’ll figure that one out on a later date and report back!)<a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
 <li id="fn:4">
 <p>Mixed metaphor alert! Danger, Will Robinson! Abort, abort!!<a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Taming the Octopress]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress/"/>
+    <updated>2014-09-02T17:59:40-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/02/taming-the-octopress</id>
+    <content type="html"><![CDATA[<p>I was messing around with my website yesterday, and trying to make two sub-websites for my &lsquo;Music&rsquo; and &lsquo;Programming&rsquo; hats in a single Octopress install, and I <em>really was going to be on time to my dinner plans</em> except once my website experiment was borked and I tried to restore my previous site&hellip; well, long story short, it was the borked-est, and I spent an hour then and an hour today hunting around with <a href="http://akaptur.github.io/">Allison</a> trying to fix the problem. Turns out that in trying to roll back my changes, I&rsquo;d introduced some discrepancy between my <code>master</code> and <code>gh-pages</code> branches, and I could get around all of this on github with force pushes (<code>-f</code>), but not so easily with actually deploying my site (<code>rake deploy</code>). In the end, I had to go into my Rakefile and add a plus sign somewhere that tells Octopress not to worry whether it&rsquo;s doing fast-forward commits<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and just commit anyway.<!--more--></p>
+
+<p>So, my website is alive, I have lost hours of my life to the jaws of the Octopress, and I may be switching to Jekyll or Pelican soon. But in the meantime, all of this made me intensely curious about git! I hit up <a href="http://maryrosecook.com/">Mary</a> for a mini-seminar, and I wrote it all out on my blog to make sure I understood it. See: <a href="/blog/2014/09/02/all-about-git/">my post on the inner workings of git</a>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>To quote from the Git docs: &ldquo;When you try to merge one commit with a commit that can be reached by following the first commit’s history, Git simplifies things by moving the pointer forward because there is no divergent work to merge together — this is called a &lsquo;fast forward&rsquo;.&rdquo; Or, look at this <a href="https://sandofsky.com/images/fast_forward.pdf">explanation in pretty pictures</a>. By default, Octopress will only deploy (which includes a commit) on a fast-forward, to avoid accidentally messing up any intermediate branched stuff.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
 </ol>
 </div>
 

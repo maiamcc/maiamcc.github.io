@@ -111,52 +111,85 @@
 
 <p><code>None</code> is always false&ndash;though this doesn&rsquo;t mean that <code>False == None</code>, which is a mistake I made early in my Python career. I was confused by how a nonexistant list and an empty list were both falsey, and somewhere in my mind I thought that they were both <code>None</code> as well. Not so much.<!--more--></p>
 
-<pre><code>&gt;&gt;&gt; a = None
-&gt;&gt;&gt; bool(a)
-False
-&gt;&gt;&gt; b = []
-&gt;&gt;&gt; bool(b)
-False
-&gt;&gt;&gt; bool(a is None)
-True
-&gt;&gt;&gt; bool(b is None)
-False
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+</span><span class='line'><span class="bp">True</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>A stylistic note here: since <code>None</code> is a singleton (i.e. there exists only one instance of it), the proper syntax is <code>foo is None</code>, rather than <code>foo == None</code>. But I digress.</p>
 
 <p>The empty values of data structures are always falsey. Hence:</p>
 
-<pre><code>&gt;&gt;&gt; bool([])
-False
-&gt;&gt;&gt; bool("")
-False
-&gt;&gt;&gt; bool({})
-False
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">([])</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">({})</span>
+</span><span class='line'><span class="bp">False</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>And perhaps most confusingly:</p>
 
-<pre><code>&gt;&gt;&gt; bool(0)
-False
-&gt;&gt;&gt; bool(1)
-True
-&gt;&gt;&gt; bool(2)
-True
-&gt;&gt;&gt; bool(-31.4)
-True
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="bp">True</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="bp">True</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="o">-</span><span class="mf">31.4</span><span class="p">)</span>
+</span><span class='line'><span class="bp">True</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>I mean, this makes sense because we know that 0 is false and 1 is true&hellip; but if you think about it, this also means that <code>0</code> is the empty value of an <code>int</code> (which means that <code>0</code> is false, but every other value of <code>int</code> or <code>float</code> is true) This doesn&rsquo;t mean much in Python, of course, but I&rsquo;ve been playing with Go lately, in which you have to initialize your variables before you can do anything with them, and suddenly the idea of an empty value makes a lot more sense (and the empty value for an int is indeed zero).</p>
 
 <p>Conversely, every non-zero value of a data structure is true. That means that a string with stuff in it, a dict. with stuff in it, a list with stuff in it, etc. is true no matter what the stuff is. And so:</p>
 
-<pre><code>&gt;&gt;&gt; hip = False
-&gt;&gt;&gt; bool(hip)
-False
-&gt;&gt;&gt; bool([hip, hip])
-True
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">hip</span> <span class="o">=</span> <span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">hip</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">([</span><span class="n">hip</span><span class="p">,</span> <span class="n">hip</span><span class="p">])</span>
+</span><span class='line'><span class="bp">True</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Proving conclusively, as we all knew, that <em>hips don&rsquo;t lie</em>.</p>
 
@@ -196,7 +229,7 @@ True
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/humor/'>humor</a>, <a class='category' href='/blog/categories/python/'>python</a>
+    <a class='category' href='/blog/categories/humor/'>humor</a>, <a class='category' href='/blog/categories/python/'>python</a>, <a class='category' href='/blog/categories/tech/'>tech</a>
   
 </span>
 
@@ -243,10 +276,19 @@ True
   </form>
     
 </section>
+
 <img src = "/images/headshot.jpg">
 <section>
-  <a href="blog/archives/"><h1>Posts</h1></a>
+  <a href="/blog/archives/"><h1>Posts</h1></a>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/03/25/interview-prep/">Preparing for Technical Interviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/02/01/python-decorators/">F***in&#8217; Decorators, How Do THEY Work?!</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
@@ -258,14 +300,6 @@ True
     
       <li class="post">
         <a href="/blog/2015/06/11/28-days-later/">28 Days Later: My First Four Weeks as a Junior Engineer at Spring</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/16/truthiness/">Truthiness</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/09/opw-retrospective/">OPW Retrospective</a>
       </li>
     
   </ul>
@@ -292,8 +326,8 @@ True
 
         github.showRepos({
             user: 'maiamcc',
-            count: 0,
-            skip_forks: true,
+            count: 10,
+            skip_forks: false,
             target: '#gh_repos'
         });
     });
@@ -302,13 +336,17 @@ True
 </section>
 
 
+
 </aside>
 
 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2017 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+	<div class="rc-scout"></div>
+</p>
+<p>
+  Copyright &copy; 2018 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
 </p>
 
 <p>
@@ -342,6 +380,7 @@ True
 
 
 
+<script async defer src="https://www.recurse-scout.com/loader.js?t=909b1e858cb2f5a7df2312d2f522aabf"></script>
 
 </body>
 </html>

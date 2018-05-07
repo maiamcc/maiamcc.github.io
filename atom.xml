@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2017-11-22T22:49:10-05:00</updated>
+  <updated>2018-05-07T19:48:05-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,6 +12,545 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Preparing for Technical Interviews]]></title>
+    <link href="http://maiamcc.github.io/blog/2018/03/25/interview-prep/"/>
+    <updated>2018-03-25T15:17:41-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2018/03/25/interview-prep</id>
+    <content type="html"><![CDATA[<p>Life update time! After three great years at <a href="https://engineering.shopspring.com/">Spring</a>, I&rsquo;m moving on to my next adventure; in April, I&rsquo;ll be joining <a href="https://windmill.engineering/">Windmill</a> as their fifth engineer, where I&rsquo;ll be building cloud-based developer tools, as well as company culture.</p>
+
+<p>The most frequent question I&rsquo;ve got from people upon telling them this news (after &ldquo;what the heck is Windmill?!&rdquo;) is, &ldquo;How did you prepare for your interviews?&rdquo; (And all the related questions: &ldquo;How long did you prep for?&rdquo;, &ldquo;What were your on-sites like?&rdquo;, etc.)</p>
+
+<p>This post aims to answer those questions. Here&rsquo;s some detail on my own personal interview prep and interview process. Of course, everything here should be taken with a grain of salt, as all of this will vary widely based on you and your skills, the sorts of companies you&rsquo;re interviewing for, etc.</p>
+
+<!-- more -->
+
+
+<h1>How did you prep?</h1>
+
+<h2>Resume/Soft Skills</h2>
+
+<p>The first thing I did (because it felt like the least intimidating way to ease into the job search process) was to update my resume. I made a big list of all the things I&rsquo;d done at work since I last updated my resume, then went back over that list, pulled out the most compelling and impressive items, and wrote bullets for them. I also got several rounds of feedback from friends and collegues in the tech industry. You can never have too many eyes on your resume.</p>
+
+<p>I also practiced talking about my work and my projects, and answering so-called &ldquo;soft skills&rdquo; questions. Cracking the Coding Interview has a handy grid to help you organize your thoughts about your projects:</p>
+
+<p><img src="http://maiamcc.github.io/images/ctci-interview-prep-matrix.png" alt="From Cracking the Coding Interview (4th ed.), p. 23" /></p>
+
+<p>I <em>didn&rsquo;t</em> physically fill this out, because I&rsquo;m lazy&mdash;but I <em>did</em> go over all of this in my head, making sure I had an idea of the interesting, challenging, and conversation-worthy bits of the major bullet points on my resume.</p>
+
+<p>I&rsquo;ve been interviewing candidates at work for 2ish years now, so I have some idea of the questions that get asked in interviews and could think ahead about my answers to those<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>: but by far the most useful prep I did here was to have people mock-interview me. Having to answer these questions <em>out loud</em> forced me to think about them more concretely, and I could also get feedback on the things that I was saying that were more or less impressive, red-flag-y, etc. (&ldquo;If they ask you about conflicts with coworkers, tell story A, not story B, cuz in story A you resolved your disagreement, and in story B you were right and your coworker wrong and the system broke because of it, but even though you were right, it still resulted in the system breaking.&rdquo;)</p>
+
+<h3>Preparing YOUR Interview Qs</h3>
+
+<p>Another thing worth doing is preparing a list of questions that <em>you</em> want to ask <em>of your interviewers</em> to get a better idea about the company you may possibly work for. The better your questions for them, the more insight you can get into their workplace&mdash;and the more prepared you are with these questions, the less dumb you look in front of your interviewer.</p>
+
+<p>I read a bunch of &ldquo;questions to ask in job interviews&rdquo; articles, grilled my friends, and put together a big doc of the questions I thought were the most informative. Some useful blog posts on the topic:
+* <a href="https://jvns.ca/blog/2013/12/30/questions-im-asking-in-interviews/">https://jvns.ca/blog/2013/12/30/questions-im-asking-in-interviews/</a>
+* <a href="http://juliepagano.com/blog/2015/08/15/job-search-retrospective/#interview-questions">http://juliepagano.com/blog/2015/08/15/job-search-retrospective/#interview-questions</a>
+* <a href="http://lizabinante.com/blog/getting-hired-without-getting-burned/">http://lizabinante.com/blog/getting-hired-without-getting-burned/</a></p>
+
+<h2>Algorithms</h2>
+
+<p>To brush up on my algos, I worked through <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Problem Solving with Algorithms and Data Structures using Python</a>, making sure to ask questions about/dig deeper into anything I didn&rsquo;t understand. Most of this I skimmed b/c I was already familiar with it, but I made sure to note the architypal problems for each data type (&ldquo;oh, it&rsquo;s an X problem? You should use data structure Y!&rdquo;), and paid special attention to trees and graphs cuz they&rsquo;re my weak spot.</p>
+
+<p>And then it was just looots of practice problems. Some from Cracking the Coding Interview, some from <a href="https://leetcode.com/">LeetCode</a>, and as much practicing with friends as I could get. The best is to get friends who actually interview developers, because they know the ins and outs of their questions better, but even just having a friend mock-interview you with CtCI or LeetCode questions will do.</p>
+
+<p>Practicing algos Qs on your own just thinking through the solution, or writing the solution on a computer, is good. Writing it out on paper/a whiteboard is better. Practicing with a person (in a mock interview sort of capacity, where you&rsquo;re timed, they&rsquo;re giving you hints where necessary but pushing you to explain yourself) is best.</p>
+
+<h2>System Design</h2>
+
+<p>Like with algos, mostly this was a matter of practice&mdash;getting friends to mock interview me with system design quesitons. I also went over some of the systems I built at work and made sure that I understood the technical choices and trade-offs there, so I could talk intelligently about it in interviews.</p>
+
+<p>A piece of advice I got here (which I didn&rsquo;t end up taking, and it all turned out okay, but I probably should have done this anyway) was to talk to folks at other companies about their system architecture. My Achilles&#8217; heel in system design interviews has always been that I&rsquo;m only really familiar with the one or two paradigms I&rsquo;ve worked in&mdash;talking to others&#8217; about <em>their</em> paradigms would have been super useful, and given me a lot more ideas to draw on.</p>
+
+<h1>How long did you prep for?</h1>
+
+<p>I took two weeks off of work around Christmas/New Years, and was doing a bit of prep work every day&mdash;sometimes several hours of reading or practice interviews, sometimes 15 minutes researching a company or brushing up my resume, but I tried to do <em>something</em> every day. After that, I went back to my day job and I did a bit whenever I could&mdash;some problems on LeetCode in the evening, or a practice problem coffee date with a friend over the weekend. After a few weeks of occasional practice interviews, I felt pretty prepped. My process was pretty drawn out cuz I took my time to find companies I wanted to interview for, set up those interviews, etc., so I would keep doing the occasional practice problem during that to keep in shape, but mostly I felt pretty well prepared.</p>
+
+<h1>What was your interview schedule like?</h1>
+
+<p>Like I said, I took a while at the beginning of this process to get my resume in order, do some research on companies and write up a big list, brush up on algos, etc.</p>
+
+<p>I lined up a couple of phone screens early to get them out of the way (staggering them so that I wasn&rsquo;t too absent at work), and punted on the on-sites so I could cluster those around the same time.</p>
+
+<p>I highly recommend having your first on-site (or two) be a &ldquo;warm-up&rdquo;: <em>not</em> your dream job, but either one you don&rsquo;t feel too strongly about, or one that is a real long shot and you&rsquo;re not really banking on. The idea is to have your first interview or two be a little lower stress and lower stakes. Best case scenario, you get an offer and have more leverage or a fab opportunity you didn&rsquo;t count on; worst case, you get to ease yourself back into the sometimes-grueling world of on-site technical interviews.</p>
+
+<h1>How did you decide where to interview?</h1>
+
+<p>The way I decide many other things: I made a big ol&#8217; doc where I kept track of recommendations from friends, collegues, the Internet, etc. I brainstormed products I&rsquo;d be interested to work on, and places friends had worked or places I&rsquo;d seen on the internet with cultures that I liked. I looked up the companies of people I enjoy on Twitter and elsewhere on the interwebs. I took suggestions from the amaaazing jobs team at <a href="https://www.recurse.com/">RC</a>.</p>
+
+<p>And then I dug into those companies. Looked for articles on company culture, their approach to tech problems, their thoughts on diversity and whether they had women and PoC on their engineering team/in management, how many blog posts they had by women/PoC, etc. I looked on Glassdoor. If I had friends there, or friends of friends, I reached out to them to ask them if they liked it there. I hit up people in my network (esp. women) for word-on-the-street. And from all that, sortakinda got a picture of these companies and which I was or wasn&rsquo;t interested in moving forward with.</p>
+
+<p>(I should note that an important part of this process was being clear on what I wanted out of my next company. Having a concrete idea of my own values helped me know what things to look for, which questions to ask, and which things were dealbreakers. It&rsquo;s worth spending a good chunk of time on this step, as it will inform the rest of your search. In particular, I found Key Values&#8217; <a href="https://www.keyvalues.com/culture-queries/">Culture Queries</a> a useful place to start.)</p>
+
+<h1>Then what?</h1>
+
+<p>Well hopefully, the offers start rolling in! Be transparent with everyone in your interview process about where you&rsquo;re at (esp. with other companies), what your concerns are, and what you need from them. Stating your needs going in sets a good precedent!</p>
+
+<p>When you start thinking about switching jobs, be prepared for lots of last minute insurance submissions and affair-getting-in-order, and remember to take any relevant documents off your computer/email/google drive, any relevant passwords off your password manager, etc. (Pro tip: if you know you&rsquo;ll be leaving early-ish in the year, max out your Flex Spending Account and you&rsquo;ll end up with free money! It&rsquo;s a good time to buy those prescription sunglasses you don&rsquo;t reaaally need, but heck, they&rsquo;re free!)</p>
+
+<p>As for me, I&rsquo;m taking a month off and chilling, and so very excited about it. And thennnnn&hellip; I start my new job!</p>
+
+<p>I&rsquo;m pretty psyched about this next chapter in my life, and I hope that some of the thoughts above are of use to someone. Best of luck, y&#8217;all!</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>Things like: &ldquo;How do you learn a new language or framework?&rdquo;; &ldquo;Tell me about a time that you failed&rdquo;; etc.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[F***in' Decorators, How Do THEY Work?!]]></title>
+    <link href="http://maiamcc.github.io/blog/2018/02/01/python-decorators/"/>
+    <updated>2018-02-01T13:16:46-05:00</updated>
+    <id>http://maiamcc.github.io/blog/2018/02/01/python-decorators</id>
+    <content type="html"><![CDATA[<p>If you&rsquo;ve been in Python-land for long, you&rsquo;ve probably seen some <code>@</code>-sign thingies hovering (often mysteriously) above functions and class definitions, saying things like <code>@patch</code> or <code>@classmethod</code> or perhaps something even more obscure. Maybe you already know that these are called &ldquo;decorators&rdquo;. Maybe you&rsquo;ve even used them, or written your own!</p>
+
+<p>Even if you&rsquo;ve done all that and still don&rsquo;t quiiiite get what&rsquo;s going on under the hood with decorators&hellip; don&rsquo;t worry, my friend, you are not alone. Heck, <em>I&rsquo;m</em> still not quite sure what goes on under the hood with decorators, but after a very productive afternoon of fiddling, I have a much better idea, and I&rsquo;m here to share the fruits of that fiddling with you. Ready? Here we go:</p>
+
+<p><strong>Decorators are callables called on callables that return a callable which then replaces the original callable.</strong></p>
+
+<p>Got it?</p>
+
+<p>&hellip;No?</p>
+
+<p>&hellip;Yeah, okay, that&rsquo;s fair. Let me try that again.</p>
+
+<!--more-->
+
+
+<h1>A Temporary Oversimplification</h1>
+
+<p>I know I said “callable” up there before, but just for now, I’m going to simplify and instead of talking about “callables”, I’ll talk about “functions”. All functions are callables&mdash;i.e. “functions” are a subset of “callables”&mdash;and they tend to be the easiest case for people to wrap their heads around.</p>
+
+<p><img src="http://maiamcc.github.io/images/callables_venn_diagram.png" alt="Functions are a subset of callables" /></p>
+
+<p>“Callables” can also be classes, or heck, most any object, if it’s got the appropriate set of behaviors. We’ll dig into that in a bit, but for now, let’s talk about decorators in terms of “functions”. With this simplification in mind, let me amend my definition above to make it maaarginally less confusing:</p>
+
+<p><strong>A decorator is a function (<code>dec(…)</code>) called on a function (<code>fn(…)</code>) returning a function (<code>fn_decorated(…)</code>) which then replaces the original function:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@dec</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">fn</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Is approximately equal to:</span>
+</span><span class='line'><span class="n">fn</span> <span class="o">=</span> <span class="n">dec</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://maiamcc.github.io/images/decorators_flow_function.png" alt="Decorators are functions that modify functions" /></p>
+
+<h1>How Decorators are Applied</h1>
+
+<p>Say we&rsquo;ve got this function. It doesn&rsquo;t do much, but it&rsquo;s a nice little function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But say that we&rsquo;re so excited about that function that we want everyone to know when we call it, so we&rsquo;re gonna sound a klaxon every time we do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">times_two_with_alarm</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;WOOP! WOOP! WOOP!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sure, that works. But what if we&rsquo;ve got a BUNCH of functions that we&rsquo;re really excited about, and we want to add this big &lsquo;ol alarm (by which I mean &ldquo;print statement&rdquo;) to all of them? It&rsquo;ll get repetitive to add that code everywhere; what if we just wrote a function to stick that print statement into our functions for us?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">add_alarm</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">fn_with_alarm</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;WOOP! WOOP! WOOP!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">fn_with_alarm</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>add_alarm</code> is a function that takes an argument <code>fn</code>, the function we want to add an alarm to: it then returns us a NEW function which does the following:
+a) sound the alarm
+b) invoke the original function we passed to it</p>
+
+<p>In practice, then, we can achieve the same thing we achieved above like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">times_two_with_alarm</span> <span class="o">=</span> <span class="n">add_alarm</span><span class="p">(</span><span class="n">times_two</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because, remember, in Python, functions are first class objects; they can be passed around, passed as arguments, assigned, etc. In this case, <code>add_alarm</code> takes a function as an argument, and it <em>returns</em> a function (one that does whatever the original func. does, but this time with an alarm). We can then assign the output of <code>add_alarm</code>; so now, <code>times_two_with_alarm</code> is that new, modified function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;</span> <span class="n">times_two_with_alarm</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="n">WOOP</span><span class="err">!</span> <span class="n">WOOP</span><span class="err">!</span> <span class="n">WOOP</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="mi">10</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Heck, maybe we don&rsquo;t want to keep track of a whole different function name, we just want that alarm to be baked into our <code>times_two</code> function. Well, we can do that too:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># In case you forgot, here&#39;s how we defined this function...</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Add the alarm to it!</span>
+</span><span class='line'><span class="n">times_two</span> <span class="o">=</span> <span class="n">add_alarm</span><span class="p">(</span><span class="n">times_two</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">times_two</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'><span class="n">WOOP</span><span class="err">!</span> <span class="n">WOOP</span><span class="err">!</span> <span class="n">WOOP</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="mi">8</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Okay, But Like… You Haven’t Used a Decorator Yet…?</h2>
+
+<p>Geez, I’m getting there! In fact, THIS is where decorators come in! If the above seems a little tiresome, we can use this shortcut:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@add_alarm</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>@decorator</code> syntax means basically what we said above: &ldquo;define this function, but then run it through this other <code>decorator</code> function, and assign the result of that call (which, again, ought to be a function) back to the function I just defined.&rdquo; This way, you can easily modify multiple functions in predictable<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> ways, and moreover, modify them <em>in place</em>; no need to keep track of both <code>times_two</code> and <code>times_two_with_alarm</code>, just update <code>times_two</code> to do the new thing.</p>
+
+<h1>Back to “Callables”</h1>
+
+<p>So remember earlier when I waved a hand and said that we’d talk about decorators as “functions that manipulate functions”? Well it’s actually a bit gnarlier than that. Properly speaking, decorators are <strong>callables that manipulate callables</strong>, and as such, both decorators and the things they decorate <em>may</em> be functions, or they may be <em>random other stuff.</em></p>
+
+<h2>What&rsquo;s a &ldquo;Callable&rdquo;?</h2>
+
+<p>A <strong>callable</strong> is <strong>anything that you can</strong> <strong><em>call</em></strong>&mdash;i.e. anything that you can stick a <code>()</code> after (with maybe some arguments inside) and have something happen. A callable may be a <strong>function</strong> (<code>my_func(...)</code>) or a <strong>class</strong> (<code>MyClass(...)</code><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>), or (as helpful as this definition is) any <strong>object</strong>, as long as it can be… well, called. Some things that are NOT callable include strings, ints, lists, etc.:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;</span> <span class="s">&quot;hello&quot;</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="ne">TypeError</span><span class="p">:</span> <span class="s">&#39;str&#39;</span> <span class="nb">object</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">callable</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So then, to re-visit our original definition of a decorator, taking away our initial oversimplification: <strong>decorators are callables that manipulate callables (and then replace the original thing with the modified thing).</strong></p>
+
+<p><img src="http://maiamcc.github.io/images/decorators_flow_callable.png" alt="Decorators are callables that modify callables" /></p>
+
+<p>We’ve already talked about decorators as functions being used to modify functions. But since callables can be either functions or classes (…or objects, but we’ll ignore that for now), let’s talk about some other cases.</p>
+
+<h2>Decorating a Class with a Function</h2>
+
+<p>What if we just got really excited about a bunch of classes, and wanted to announce to the world whenever we made a new instance of one? It might look something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">announce_new_instance</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">make_new_instance_with_announcement</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Making a thing!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">make_new_instance_with_announcement</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@announce_new_instance</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">MyClass</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">foo</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="n">foo</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">MyClass</span><span class="p">(</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">Making</span> <span class="n">a</span> <span class="n">thing</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">MyClass</span> <span class="n">at</span> <span class="mh">0x10fd84b70</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Recall that <code>MyClass</code> is a <em>callable</em>&mdash;<code>MyClass()</code> means, &ldquo;make me a new MyClass instance!&rdquo;&mdash;and so we can treat it just like any other thing that can be called, and even treat it like the function from our first example. In this case, under the hood, we&rsquo;re replacing <code>MyClass</code> (the function-like thing that, when called, makes a new instance) with <code>make_new_instance_with_announcement</code>, which makes its announcement and <em>then</em> kicks off making a new instance. (In the context of the decorator above, <code>cls</code> represents the class you passed in, i.e. the class you&rsquo;re decorating; so here, it&rsquo;s <code>MyClass</code>, thus <code>cls()</code> is the same as <code>MyClass()</code>.<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup></p>
+
+<h2>Classes as Decorators</h2>
+
+<p>This one bends my brain, but you can totally use a class as a decorator! Because as we discusssed (say it with me), <em>classes are callables too</em>. A call to <code>MyClass(*args, **kwargs)</code> eventually calls out to <code>MyClass.__init__(self, *args, **kwargs)</code> (and does some other magic such that at the end of it all, an instance is returned back). There are probably other rad things you can do with classes-as-decorators, but the pattern I&rsquo;ve seen most often (in all three hours of looking into this) is this one:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">DecoratorClass</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Look how decorated!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@DecoratorClass</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">times_two</span><span class="p">(</span><span class="mi">41</span><span class="p">)</span>
+</span><span class='line'><span class="n">Look</span> <span class="n">how</span> <span class="n">decorated</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="mi">82</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Oh man, weird, right? <code>DecoratorClass</code> is a class that takes a function (<code>fn</code>) as an initialization argument and hangs onto it. And recall that we replace the function-to-be-decorated with the result of a call to <code>decorator</code>, thus the above is equivalent to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">times_two</span> <span class="o">=</span> <span class="n">DecoratorClass</span><span class="p">(</span><span class="n">times_two</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That is, the new <code>times_two</code> is an <em>instance</em> of <code>DecoratorClass</code>?! What?!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;</span> <span class="n">times_two</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">DecoratorClass</span> <span class="n">at</span> <span class="mh">0x109b867b8</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But the point of decorators is that we don’t really <em>care</em> what <code>times_two</code> is, we just want it to do what we expect when we call it. Thus, we need an instance of <code>DecoratorClass</code> to actually DO stuff when you stick <code>(…)</code> at the end. That’s where the <code>__call__</code> method we defined earlier comes in.</p>
+
+<h3>Tangent: <code>__call__</code></h3>
+
+<p>We can make an object (i.e. an instance of a class) callable using the magic <code>__call__</code> method, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">Callable</span><span class="p">():</span>
+</span><span class='line'>    <span class="c"># defining the __call__ method on an INSTANCE of this class</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;you called me!&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">c</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="s">&quot;you called me!&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Contrast with...</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">NotCallable</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">pass</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">NotCallable</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">nc</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="ne">TypeError</span><span class="p">:</span> <span class="s">&#39;NotCallable&#39;</span> <span class="nb">object</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">callable</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Back to <code>DecoratorClass</code></h3>
+
+<p>So we&rsquo;ve got a <code>DecoratorClass</code> that takes in a function and hangs onto it, and when we define the magic method  <code>__call__</code>, we&rsquo;re defining what happens when we stick <code>(...)</code> on the end of an instance of this class&mdash;we call the function that we passed in in the first place:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">DecoratorClass</span><span class="p">(</span><span class="n">times_two</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">instance</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># i.e. DecoratorClass.__call__(5)</span>
+</span><span class='line'><span class="n">Look</span> <span class="n">how</span> <span class="n">decorated</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="mi">10</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So after all that decorator magic, we’ve replaced <code>times_two</code> with an instance of <code>DecoratorClass</code>, right? But as we just saw above, we can call that instance like we would call any other function; thus <code>times_two</code> can still be called like normal, and in all respects treated as a normal function—but now it has some shiny extra functionality added via our decorator.</p>
+
+<h2>Okay, But Why Would You WANT to Use a Class as a Decorator?</h2>
+
+<p>That&rsquo;s a great question. There are probably lots of fascinating answers. At this present moment, I only have two: &ldquo;to store state&rdquo; and &ldquo;because you can&rdquo;. Since I&rsquo;ve already covered the latter in quite a bit of detail, let&rsquo;s turn to the former, i.e., a halfway plausible case in which you might want to use a class as a decorator. (I’m sure there are other reasonable ways to store state on a function, as well as other compelling reasons to use classes as decorators, but let’s just go with this for now.)</p>
+
+<p>Unlike functions, which are (generally) one-and-done, classes allow you to store state. You can store state on an <em>instance</em> of a class, but in this case we&rsquo;re interested in something that&rsquo;s more widely accessible, i.e. <em>storing state on the class itself</em>.</p>
+
+<p>How might you use this in a decorator context? Consider something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">countcalls</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">CALLS</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">CALLS</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;This func. has been called {} time(s)&quot;</span><span class="o">.</span>
+</span><span class='line'>            <span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CALLS</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@countcalls</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;hello world&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">foo</span><span class="p">()</span>
+</span><span class='line'><span class="n">This</span> <span class="n">func</span><span class="o">.</span> <span class="n">has</span> <span class="n">been</span> <span class="n">called</span> <span class="mi">1</span> <span class="n">time</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="s">&quot;hello world&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">foo</span><span class="p">()</span>
+</span><span class='line'><span class="n">This</span> <span class="n">func</span><span class="o">.</span> <span class="n">has</span> <span class="n">been</span> <span class="n">called</span> <span class="mi">2</span> <span class="n">time</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="s">&quot;hello world&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can apply the above principle (storing state on the decorator class itself) in a wide and whacky variety of ways. Automatic memoization, perhaps?</p>
+
+<p>And heck, why not go for broke and use a class to decorate a class?!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">countinits</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">cls</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">INITS</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">INITS</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;You&#39;ve made {} of this class&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">INITS</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@countinits</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">MyClass</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">pass</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">inst1</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+</span><span class='line'><span class="n">You</span><span class="s">&#39;ve made 1 of this class</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">inst2</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+</span><span class='line'><span class="n">You</span><span class="s">&#39;ve made 2 of this class</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above example looks a little gnarly, but remember that <code>cls</code> here is <code>MyClass</code> which is a callable (that makes and returns a new <code>MyClass</code> instance), and remember how the <code>@decorator</code> syntax is applied, and you can piece together precisely what dark magic is happening here.</p>
+
+<h1>Awesome! …Wait, What?</h1>
+
+<p>Yeah, I know, a lot of things just went down. To summarize:</p>
+
+<ol>
+<li>you can <em>decorate</em> any callable—be it a function, a class, or any callable object.</li>
+<li>a <em>decorator</em>—the <code>@something</code> thing—is a callable (function, class, etc.) that takes as an argument the thing you’re decorating and returns another callable that preserves the original functionality but adding something new</li>
+<li>the type of callable is irrelevant. Functions can decorate functions, or classes, or objects. Classes can decorate functions, or classes, or objects. Basically, anything goes.</li>
+</ol>
+
+
+<p>There are lots of other resources on the interwebs about what sort of stuff you might want to use decorators for—and heck, I might write a blogpost about some of them in future—but I hope this is an illuminating overview of just what the heck decorators <em>are</em> and how they work. As always, feel free to reach out with any questions! A big thank you to all the excellent folks who beta-read/edited this post: <a href="http://happyspork.com/">Ben Anderman</a>, <a href="https://github.com/cappachu">Codanda Appachu</a>, <a href="http://antha.site/">Sam Auciello</a>, and <a href="https://alexburka.com/">Alex Burka</a>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>…except that decorators as described here can potentially do weird things to doc strings and other function attributes. This is one of the reasons that many folks use <a href="https://docs.python.org/3/library/functools.html#functools.wraps"><code>functools.wraps</code></a> when decorating things: it copies over most (though not all 😞) of the original functions&#8217;     hidden attributes to the new, wrapped function. Hat tip to <a href="https://github.com/cappachu">Codanda Appachu</a> for reminding me of this.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><code>MyClass(...)</code>, of course, being shorthand for <code>MyClass.__init__(...)</code>. (That&rsquo;s totally an oversimplification; <code>MyClass(...)</code> is <em>actually</em> shorthand for <code>MyClass.__new__(cls)</code>, which does a bunch of stuff, including call <code>__init__</code> on the newly made <code>MyClass</code> instance&hellip; but sufice it to say that when I call <code>MyClass(...)</code> I expect some stuff to happen, including a call to <code>MyClass.__init__</code>, and to eventually get back a new instance of that class.)<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p>Note that since <code>MyClass(...)</code> is baaasically shorthand for <code>MyClass.__init__(...)</code> (see above), and so you can achieve a pretty similar effect by decorating the <code>__init__</code>  method. The thing passed into <code>announce_new_instance</code> to be transformed will be different, but the new function will execute in just about the same way.<a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[What Are Interfaces?]]></title>
@@ -293,52 +832,85 @@
 
 <p><code>None</code> is always false&ndash;though this doesn&rsquo;t mean that <code>False == None</code>, which is a mistake I made early in my Python career. I was confused by how a nonexistant list and an empty list were both falsey, and somewhere in my mind I thought that they were both <code>None</code> as well. Not so much.<!--more--></p>
 
-<pre><code>&gt;&gt;&gt; a = None
-&gt;&gt;&gt; bool(a)
-False
-&gt;&gt;&gt; b = []
-&gt;&gt;&gt; bool(b)
-False
-&gt;&gt;&gt; bool(a is None)
-True
-&gt;&gt;&gt; bool(b is None)
-False
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+</span><span class='line'><span class="bp">True</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>A stylistic note here: since <code>None</code> is a singleton (i.e. there exists only one instance of it), the proper syntax is <code>foo is None</code>, rather than <code>foo == None</code>. But I digress.</p>
 
 <p>The empty values of data structures are always falsey. Hence:</p>
 
-<pre><code>&gt;&gt;&gt; bool([])
-False
-&gt;&gt;&gt; bool("")
-False
-&gt;&gt;&gt; bool({})
-False
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">([])</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">({})</span>
+</span><span class='line'><span class="bp">False</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>And perhaps most confusingly:</p>
 
-<pre><code>&gt;&gt;&gt; bool(0)
-False
-&gt;&gt;&gt; bool(1)
-True
-&gt;&gt;&gt; bool(2)
-True
-&gt;&gt;&gt; bool(-31.4)
-True
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="bp">True</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="bp">True</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="o">-</span><span class="mf">31.4</span><span class="p">)</span>
+</span><span class='line'><span class="bp">True</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>I mean, this makes sense because we know that 0 is false and 1 is true&hellip; but if you think about it, this also means that <code>0</code> is the empty value of an <code>int</code> (which means that <code>0</code> is false, but every other value of <code>int</code> or <code>float</code> is true) This doesn&rsquo;t mean much in Python, of course, but I&rsquo;ve been playing with Go lately, in which you have to initialize your variables before you can do anything with them, and suddenly the idea of an empty value makes a lot more sense (and the empty value for an int is indeed zero).</p>
 
 <p>Conversely, every non-zero value of a data structure is true. That means that a string with stuff in it, a dict. with stuff in it, a list with stuff in it, etc. is true no matter what the stuff is. And so:</p>
 
-<pre><code>&gt;&gt;&gt; hip = False
-&gt;&gt;&gt; bool(hip)
-False
-&gt;&gt;&gt; bool([hip, hip])
-True
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">hip</span> <span class="o">=</span> <span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">(</span><span class="n">hip</span><span class="p">)</span>
+</span><span class='line'><span class="bp">False</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">bool</span><span class="p">([</span><span class="n">hip</span><span class="p">,</span> <span class="n">hip</span><span class="p">])</span>
+</span><span class='line'><span class="bp">True</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Proving conclusively, as we all knew, that <em>hips don&rsquo;t lie</em>.</p>
 
@@ -974,250 +1546,6 @@ Graphic found in PAPress’s <a href="//www.papress.com/thinkingwithtype/index.h
 <p>Then I realized that I was being silly.</p>
 
 <p>I&rsquo;m off to spend an hour on Interactive Python, and if it isn&rsquo;t working for me, I&rsquo;ll reevaluate. At worst, I&rsquo;ll work through it in a few weeks, learn some stuff, and try another course!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Lessons in Default Function Arguments]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/29/lessons-in-default-function-arguments/"/>
-    <updated>2014-09-29T18:16:56-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/29/lessons-in-default-function-arguments</id>
-    <content type="html"><![CDATA[<p>Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia&rsquo;s contradance database and the letter Y.)</p>
-
-<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reviewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.<!-- more --></p>
-
-<p>Let&rsquo;s define a helper function:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">make_a_list</span><span class="p">():</span>
-</span><span class='line'>    <span class="o">...</span> <span class="k">print</span> <span class="s">&quot;Making a list...&quot;</span>
-</span><span class='line'>    <span class="o">...</span> <span class="k">return</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and then some random function that takes a (called) function as a default value:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">list_length</span><span class="p">(</span><span class="n">mylist</span> <span class="o">=</span> <span class="n">make_a_list</span><span class="p">()):</span>
-</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">mylist</span><span class="p">)</span>
-</span><span class='line'><span class="n">Making</span> <span class="n">a</span> <span class="nb">list</span><span class="o">...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The thing that&rsquo;s odd about the code that we just ran is that it printed &ldquo;Making a list&hellip;&rdquo;, which implies that the <code>make_a_list</code> function got <em>called</em>, even though all we did was assign it as a default variable. Interesting. Now what happens if we run <code>list_length</code>?</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">list_length</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
-</span><span class='line'><span class="mi">5</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">list_length</span><span class="p">()</span>
-</span><span class='line'><span class="mi">3</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&mdash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)):</span>
-</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="n">num</span><span class="o">+</span><span class="mi">1</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'><span class="mi">6</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="c"># that worked as we expected it to</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
-</span><span class='line'><span class="mi">42</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
-</span><span class='line'><span class="mi">42</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
-</span><span class='line'><span class="mi">42</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
-</span><span class='line'><span class="mi">42</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
-</span><span class='line'><span class="mi">42</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">plus_one</span><span class="p">()</span>
-</span><span class='line'><span class="mi">42</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Hmm. It would appear that we aren&rsquo;t getting a new random number every time we run this function.</p>
-
-<p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&mdash;really, all it takes to break things is a mutable object.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">append_one</span><span class="p">(</span><span class="n">mylist</span> <span class="o">=</span> <span class="p">[]):</span>
-</span><span class='line'><span class="o">...</span>     <span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="n">mylist</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&mdash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">stuff</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">append_one</span><span class="p">(</span><span class="n">mylist</span> <span class="o">=</span> <span class="n">stuff</span><span class="p">):</span>
-</span><span class='line'><span class="o">...</span>     <span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="n">mylist</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">append_one</span><span class="p">()</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Perhaps it&rsquo;s a bit more intuitive this way, but the exact same thing is happening in the previous example; the function is modifying a distinct object in memory, whether it was named before it got passed as a default argument or not.</p>
-
-<p>Whacky fun! And a valuable lesson learned: <em>don&rsquo;t use mutable objects or functions as default values in your functions</em> unless you want a whole lot of hilarious code hijinks. (Which, hey, maybe you do, no judgments here!)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Javascript/JQuery 101]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101/"/>
-    <updated>2014-09-24T16:28:38-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/09/24/javascript-jquery-101</id>
-    <content type="html"><![CDATA[<p>Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
-
-<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. <!-- more -->If it&rsquo;s avoidable, don&rsquo;t mix JS and JQuery&mdash;be consistent within one document. Usually, JQuery is more precise and prettier. Consider using dollar signs at the beginning of your variable names to indicate that they point to JQuery objects, so you don&rsquo;t get confused. Most if not all JS functions have (generally shorter, prettier) JQuery equivalents. Here are some that I replaced in my code today:</p>
-
-<table><tr><td>
-    <strong>JS</strong>
-</td><td>
-    <strong>JQuery</strong>
-</td></tr>
-<tr><td>
-<code>
-    getElementByID("foo")
-</code>
-</td><td>
-<code>
-    $('#foo')
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    getElementsByClassName("bar")
-</code>
-</td><td>
-<code>
-    $('.bar')
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    this
-</code>
-</td><td>
-<code>
-    $(this)
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .setAttribute("foo","bar")
-</code>
-</td><td>
-<code>
-    .attr("foo", "bar")
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .getAttribute("foo")
-</code>
-</td><td>
-<code>
-    .attr("foo")
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .value
-</code>
-</td><td>
-<code>
-    .val()
-</code>
-</td></tr>
-
-<tr><td>
-<code>
-    .parentNode
-</code>
-</td><td>
-<code>
-    .parent()
-</code>
-</td></tr>
-</table>
-
-
-<p><p>
-JQuery functions like <code>$(".bar")</code> or <code>$(".mytag")</code> (which gets all elements matching class &ldquo;bar&rdquo; and html tag &ldquo;mytag&rdquo;, respectively) return arrays of DOM elements. If you want to get something from this array, it can be tempting to pluck it from its index, a la <code>$(".bar")[2]</code>. <em>Be warned</em>: this returns a DOM element, and therefore you can&rsquo;t do shiny JQuery stuff to it. Instead, get that same element as a JQuery object with <code>$(".bar").eq(2)</code> (where the <code>eq</code> function takes as an argument the index of the thing you want to get out of the array). I can&rsquo;t tell you how much pain this would have saved me if I had known this at the beginning of my project.</p>
-
-<p>On the &ldquo;pesky formatting details&rdquo; front, JS indents with only two spaces, and puts semicolons after every line that doesn&rsquo;t end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.</p>
-
-<p>Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!</p>
 ]]></content>
   </entry>
   

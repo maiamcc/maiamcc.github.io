@@ -9,7 +9,7 @@
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="Achievement unlocked: accessing a USB disk via terminal! Accessing a flash drive from terminal seems like it ought to be simple, but it&rsquo;s &hellip;">
+  <meta name="description" content="For anyone who doesn&rsquo;t know, this past December I started an internship with GNOME as part of OPW, the Outreach Program for Women. The point of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,9 +81,92 @@
     <div id="content">
       <div class="blog-index">
   <article>
-    My name is Maia. I&#8217;m a programmer based in New York City, currently working as a software engineer at <a href="//www.shopspring.com/">Spring</a>. This is where I (somewhat infrequently) chronicle my journeys through code, as well as other vaguely related adventures.
+    My name is Maia. I&#8217;m a programmer based in New York City, currently working as a software engineer at <a href="//www.windmill.engineering/" class="windmill">/windmill</a>. This is where I (somewhat infrequently) chronicle my journeys through code, as well as other vaguely related adventures.
   </article>
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/opw-1-month-in/">OPW: 1 Month In</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-10T11:01:33-05:00" pubdate data-updated="true">10 Jan 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For anyone who doesn&rsquo;t know, this past December I started an internship with <a href="//www.gnome.org/">GNOME</a> as part of OPW, the <a href="//wiki.gnome.org/OutreachProgramForWomen">Outreach Program for Women</a>. The point of this program is to get more women (by which they really mean cis woman <em>and</em> trans folks <em>and</em> genderqueer/genderfluid/agender folks&hellip; so basically, people who aren&rsquo;t cis <strong><a href="//www.mandleco.com/Default.asp">MEN</a></strong>) involved in the FOSS world. In my particular case, it certainly succeeded! I&rsquo;d been meaning to do some open source contributing for a while, but had always been too intimidated and overwhelmed to start.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/01/10/opw-1-month-in/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/29/rules-for-opw/">Rules for OPW</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-29T14:29:39-05:00" pubdate data-updated="true">29 Dec 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Rules and resolutions for myself during OPW:</p>
+
+<ul>
+<li>wake up at the same time every day.</li>
+<li>eat breakfast every day.</li>
+<li>eat lunch. Seriously, eat lunch. </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/12/29/rules-for-opw/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -424,95 +507,13 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/29/lessons-in-default-function-arguments/">Lessons in Default Function Arguments</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-29T18:16:56-04:00" pubdate data-updated="true">29 Sep 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia&rsquo;s contradance database and the letter Y.)</p>
-
-<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reviewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/29/lessons-in-default-function-arguments/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/24/javascript-jquery-101/">Javascript/JQuery 101</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-24T16:28:38-04:00" pubdate data-updated="true">24 Sep 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Funnily enough, when you&rsquo;re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
-
-<p>JS != JQuery!!! They&rsquo;re different things! They each have different sets of methods, and you need to keep track of whether any given thing you&rsquo;re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/24/javascript-jquery-101/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
-      <a class="prev" href="3">&larr; Older</a>
+      <a class="prev" href="/3">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
-    <a class="next" href="1">Newer &rarr;</a>
+    <a class="next" href="/1">Newer &rarr;</a>
     
   </div>
 </div>
@@ -530,10 +531,19 @@
   </form>
     
 </section>
+
 <img src = "/images/headshot.jpg">
 <section>
-  <a href="blog/archives/"><h1>Posts</h1></a>
+  <a href="/blog/archives/"><h1>Posts</h1></a>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/03/25/interview-prep/">Preparing for Technical Interviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/02/01/python-decorators/">F***in&#8217; Decorators, How Do THEY Work?!</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
@@ -545,14 +555,6 @@
     
       <li class="post">
         <a href="/blog/2015/06/11/28-days-later/">28 Days Later: My First Four Weeks as a Junior Engineer at Spring</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/16/truthiness/">Truthiness</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/09/opw-retrospective/">OPW Retrospective</a>
       </li>
     
   </ul>
@@ -579,8 +581,8 @@
 
         github.showRepos({
             user: 'maiamcc',
-            count: 0,
-            skip_forks: true,
+            count: 10,
+            skip_forks: false,
             target: '#gh_repos'
         });
     });
@@ -589,11 +591,16 @@
 </section>
 
 
+
 </aside>
+
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2017 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+	<div class="rc-scout"></div>
+</p>
+<p>
+  Copyright &copy; 2018 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
 </p>
 
 <p>
@@ -624,6 +631,7 @@
 
 
 
+<script async defer src="https://www.recurse-scout.com/loader.js?t=909b1e858cb2f5a7df2312d2f522aabf"></script>
 
 </body>
 </html>
