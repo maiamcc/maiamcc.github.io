@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: python | Maia McCormick]]></title>
+  <link href="http://maiamcc.github.io/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://maiamcc.github.io/"/>
+  <updated>2018-05-26T16:13:02-04:00</updated>
+  <id>http://maiamcc.github.io/</id>
+  <author>
+    <name><![CDATA[Maia Remez McCormick]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[F***in' Decorators, How Do THEY Work?!]]></title>
+    <link href="http://maiamcc.github.io/blog/2018/02/01/python-decorators/"/>
+    <updated>2018-02-01T13:16:46-05:00</updated>
+    <id>http://maiamcc.github.io/blog/2018/02/01/python-decorators</id>
+    <content type="html"><![CDATA[<p>If you&rsquo;ve been in Python-land for long, you&rsquo;ve probably seen some <code>@</code>-sign thingies hovering (often mysteriously) above functions and class definitions, saying things like <code>@patch</code> or <code>@classmethod</code> or perhaps something even more obscure. Maybe you already know that these are called &ldquo;decorators&rdquo;. Maybe you&rsquo;ve even used them, or written your own!</p>
+
+<p>Even if you&rsquo;ve done all that and still don&rsquo;t quiiiite get what&rsquo;s going on under the hood with decorators&hellip; don&rsquo;t worry, my friend, you are not alone. Heck, <em>I&rsquo;m</em> still not quite sure what goes on under the hood with decorators, but after a very productive afternoon of fiddling, I have a much better idea, and I&rsquo;m here to share the fruits of that fiddling with you. Ready? Here we go:</p>
+
+<p><strong>Decorators are callables called on callables that return a callable which then replaces the original callable.</strong></p>
+
+<p>Got it?</p>
+
+<p>&hellip;No?</p>
+
+<p>&hellip;Yeah, okay, that&rsquo;s fair. Let me try that again.</p>
+
+<!--more-->
+
+
+<h1>A Temporary Oversimplification</h1>
+
+<p>I know I said “callable” up there before, but just for now, I’m going to simplify and instead of talking about “callables”, I’ll talk about “functions”. All functions are callables&mdash;i.e. “functions” are a subset of “callables”&mdash;and they tend to be the easiest case for people to wrap their heads around.</p>
+
+<p><img src="/images/callables_venn_diagram.png" alt="Functions are a subset of callables" /></p>
+
+<p>“Callables” can also be classes, or heck, most any object, if it’s got the appropriate set of behaviors. We’ll dig into that in a bit, but for now, let’s talk about decorators in terms of “functions”. With this simplification in mind, let me amend my definition above to make it maaarginally less confusing:</p>
+
+<p><strong>A decorator is a function (<code>dec(…)</code>) called on a function (<code>fn(…)</code>) returning a function (<code>fn_decorated(…)</code>) which then replaces the original function:</strong></p>
+
+<pre><code class="python">@dec
+def fn(...):
+    ...
+
+# Is approximately equal to:
+fn = dec(fn)
+</code></pre>
+
+<p><img src="/images/decorators_flow_function.png" alt="Decorators are functions that modify functions" /></p>
+
+<h1>How Decorators are Applied</h1>
+
+<p>Say we&rsquo;ve got this function. It doesn&rsquo;t do much, but it&rsquo;s a nice little function:</p>
+
+<pre><code class="python">def times_two(x):
+    return 2*x
+</code></pre>
+
+<p>But say that we&rsquo;re so excited about that function that we want everyone to know when we call it, so we&rsquo;re gonna sound a klaxon every time we do:</p>
+
+<pre><code class="python">def times_two_with_alarm(x):
+    print("WOOP! WOOP! WOOP!")
+    return times_two(x)
+</code></pre>
+
+<p>Sure, that works. But what if we&rsquo;ve got a BUNCH of functions that we&rsquo;re really excited about, and we want to add this big &lsquo;ol alarm (by which I mean &ldquo;print statement&rdquo;) to all of them? It&rsquo;ll get repetitive to add that code everywhere; what if we just wrote a function to stick that print statement into our functions for us?</p>
+
+<pre><code class="python">def add_alarm(fn):
+    def fn_with_alarm(*args, **kwargs):
+        print("WOOP! WOOP! WOOP!")
+        return fn(*args, **kwargs)
+    return fn_with_alarm
+</code></pre>
+
+<p><code>add_alarm</code> is a function that takes an argument <code>fn</code>, the function we want to add an alarm to: it then returns us a NEW function which does the following:
+a) sound the alarm
+b) invoke the original function we passed to it</p>
+
+<p>In practice, then, we can achieve the same thing we achieved above like so:</p>
+
+<pre><code class="python">times_two_with_alarm = add_alarm(times_two)
+</code></pre>
+
+<p>Because, remember, in Python, functions are first class objects; they can be passed around, passed as arguments, assigned, etc. In this case, <code>add_alarm</code> takes a function as an argument, and it <em>returns</em> a function (one that does whatever the original func. does, but this time with an alarm). We can then assign the output of <code>add_alarm</code>; so now, <code>times_two_with_alarm</code> is that new, modified function:</p>
+
+<pre><code class="python">&gt; times_two_with_alarm(5)
+WOOP! WOOP! WOOP!
+&lt; 10
+</code></pre>
+
+<p>Heck, maybe we don&rsquo;t want to keep track of a whole different function name, we just want that alarm to be baked into our <code>times_two</code> function. Well, we can do that too:</p>
+
+<pre><code class="python"># In case you forgot, here's how we defined this function...
+def times_two(x):
+    return 2*x
+
+# Add the alarm to it!
+times_two = add_alarm(times_two)
+
+&gt; times_two(4)
+WOOP! WOOP! WOOP!
+&lt; 8
+</code></pre>
+
+<h2>Okay, But Like… You Haven’t Used a Decorator Yet…?</h2>
+
+<p>Geez, I’m getting there! In fact, THIS is where decorators come in! If the above seems a little tiresome, we can use this shortcut:</p>
+
+<pre><code class="python">@add_alarm
+def times_two(x):
+    return 2*x
+</code></pre>
+
+<p>The <code>@decorator</code> syntax means basically what we said above: &ldquo;define this function, but then run it through this other <code>decorator</code> function, and assign the result of that call (which, again, ought to be a function) back to the function I just defined.&rdquo; This way, you can easily modify multiple functions in predictable<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> ways, and moreover, modify them <em>in place</em>; no need to keep track of both <code>times_two</code> and <code>times_two_with_alarm</code>, just update <code>times_two</code> to do the new thing.</p>
+
+<h1>Back to “Callables”</h1>
+
+<p>So remember earlier when I waved a hand and said that we’d talk about decorators as “functions that manipulate functions”? Well it’s actually a bit gnarlier than that. Properly speaking, decorators are <strong>callables that manipulate callables</strong>, and as such, both decorators and the things they decorate <em>may</em> be functions, or they may be <em>random other stuff.</em></p>
+
+<h2>What&rsquo;s a &ldquo;Callable&rdquo;?</h2>
+
+<p>A <strong>callable</strong> is <strong>anything that you can</strong> <strong><em>call</em></strong>&mdash;i.e. anything that you can stick a <code>()</code> after (with maybe some arguments inside) and have something happen. A callable may be a <strong>function</strong> (<code>my_func(...)</code>) or a <strong>class</strong> (<code>MyClass(...)</code><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>), or (as helpful as this definition is) any <strong>object</strong>, as long as it can be… well, called. Some things that are NOT callable include strings, ints, lists, etc.:</p>
+
+<pre><code class="python">&gt; "hello"()
+&lt; TypeError: 'str' object is not callable
+</code></pre>
+
+<p>So then, to re-visit our original definition of a decorator, taking away our initial oversimplification: <strong>decorators are callables that manipulate callables (and then replace the original thing with the modified thing).</strong></p>
+
+<p><img src="/images/decorators_flow_callable.png" alt="Decorators are callables that modify callables" /></p>
+
+<p>We’ve already talked about decorators as functions being used to modify functions. But since callables can be either functions or classes (…or objects, but we’ll ignore that for now), let’s talk about some other cases.</p>
+
+<h2>Decorating a Class with a Function</h2>
+
+<p>What if we just got really excited about a bunch of classes, and wanted to announce to the world whenever we made a new instance of one? It might look something like this:</p>
+
+<pre><code class="python">def announce_new_instance(cls):
+    def make_new_instance_with_announcement(*args, **kwargs):
+        print("Making a thing!")
+        return cls(*args, **kwargs)
+    return make_new_instance_with_announcement
+
+@announce_new_instance
+class MyClass():
+    def __init__(self, foo):
+        self.foo = foo
+
+&gt; MyClass('bar')
+Making a thing!
+&lt; &lt;__main__.MyClass at 0x10fd84b70&gt;
+</code></pre>
+
+<p>Recall that <code>MyClass</code> is a <em>callable</em>&mdash;<code>MyClass()</code> means, &ldquo;make me a new MyClass instance!&rdquo;&mdash;and so we can treat it just like any other thing that can be called, and even treat it like the function from our first example. In this case, under the hood, we&rsquo;re replacing <code>MyClass</code> (the function-like thing that, when called, makes a new instance) with <code>make_new_instance_with_announcement</code>, which makes its announcement and <em>then</em> kicks off making a new instance. (In the context of the decorator above, <code>cls</code> represents the class you passed in, i.e. the class you&rsquo;re decorating; so here, it&rsquo;s <code>MyClass</code>, thus <code>cls()</code> is the same as <code>MyClass()</code>.<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup></p>
+
+<h2>Classes as Decorators</h2>
+
+<p>This one bends my brain, but you can totally use a class as a decorator! Because as we discusssed (say it with me), <em>classes are callables too</em>. A call to <code>MyClass(*args, **kwargs)</code> eventually calls out to <code>MyClass.__init__(self, *args, **kwargs)</code> (and does some other magic such that at the end of it all, an instance is returned back). There are probably other rad things you can do with classes-as-decorators, but the pattern I&rsquo;ve seen most often (in all three hours of looking into this) is this one:</p>
+
+<pre><code class="python">class DecoratorClass():
+    def __init__(self, fn):
+        self.fn = fn
+    def __call__(self, *args, **kwargs):
+        print("Look how decorated!")
+        return self.fn(*args, **kwargs)
+
+@DecoratorClass
+def times_two(x):
+    return 2*x
+
+&gt; times_two(41)
+Look how decorated!
+&lt; 82
+</code></pre>
+
+<p>Oh man, weird, right? <code>DecoratorClass</code> is a class that takes a function (<code>fn</code>) as an initialization argument and hangs onto it. And recall that we replace the function-to-be-decorated with the result of a call to <code>decorator</code>, thus the above is equivalent to:</p>
+
+<pre><code class="python">def times_two(x):
+    return 2*x
+
+times_two = DecoratorClass(times_two)
+</code></pre>
+
+<p>That is, the new <code>times_two</code> is an <em>instance</em> of <code>DecoratorClass</code>?! What?!</p>
+
+<pre><code class="python">&gt; times_two
+&lt; &lt;__main__.DecoratorClass at 0x109b867b8&gt;
+</code></pre>
+
+<p>But the point of decorators is that we don’t really <em>care</em> what <code>times_two</code> is, we just want it to do what we expect when we call it. Thus, we need an instance of <code>DecoratorClass</code> to actually DO stuff when you stick <code>(…)</code> at the end. That’s where the <code>__call__</code> method we defined earlier comes in.</p>
+
+<h3>Tangent: <code>__call__</code></h3>
+
+<p>We can make an object (i.e. an instance of a class) callable using the magic <code>__call__</code> method, like so:</p>
+
+<pre><code class="python">class Callable():
+    # defining the __call__ method on an INSTANCE of this class
+    def __call__(self):
+        return "you called me!"
+
+&gt; c = Callable()
+
+&gt; c()
+&lt; "you called me!"
+
+# Contrast with...
+class NotCallable():
+    pass
+
+&gt; nc = NotCallable()
+
+&gt; nc()
+&lt; TypeError: 'NotCallable' object is not callable
+</code></pre>
+
+<h3>Back to <code>DecoratorClass</code></h3>
+
+<p>So we&rsquo;ve got a <code>DecoratorClass</code> that takes in a function and hangs onto it, and when we define the magic method  <code>__call__</code>, we&rsquo;re defining what happens when we stick <code>(...)</code> on the end of an instance of this class&mdash;we call the function that we passed in in the first place:</p>
+
+<pre><code class="python">&gt; instance = DecoratorClass(times_two)
+&gt; instance(5) # i.e. DecoratorClass.__call__(5)
+Look how decorated!
+&lt; 10
+</code></pre>
+
+<p>So after all that decorator magic, we’ve replaced <code>times_two</code> with an instance of <code>DecoratorClass</code>, right? But as we just saw above, we can call that instance like we would call any other function; thus <code>times_two</code> can still be called like normal, and in all respects treated as a normal function—but now it has some shiny extra functionality added via our decorator.</p>
+
+<h2>Okay, But Why Would You WANT to Use a Class as a Decorator?</h2>
+
+<p>That&rsquo;s a great question. There are probably lots of fascinating answers. At this present moment, I only have two: &ldquo;to store state&rdquo; and &ldquo;because you can&rdquo;. Since I&rsquo;ve already covered the latter in quite a bit of detail, let&rsquo;s turn to the former, i.e., a halfway plausible case in which you might want to use a class as a decorator. (I’m sure there are other reasonable ways to store state on a function, as well as other compelling reasons to use classes as decorators, but let’s just go with this for now.)</p>
+
+<p>Unlike functions, which are (generally) one-and-done, classes allow you to store state. You can store state on an <em>instance</em> of a class, but in this case we&rsquo;re interested in something that&rsquo;s more widely accessible, i.e. <em>storing state on the class itself</em>.</p>
+
+<p>How might you use this in a decorator context? Consider something like this:</p>
+
+<pre><code class="python">class countcalls():
+    def __init__(self, fn):
+        self.fn = fn
+        self.CALLS = 0
+    def __call__(self, *args, **kwargs):
+        self.CALLS += 1
+        print("This func. has been called {} time(s)".
+            format(self.CALLS))
+        return self.fn(*args, **kwargs)
+
+@countcalls
+def foo():
+    return "hello world"
+
+&gt; foo()
+This func. has been called 1 time(s)
+&lt; "hello world"
+
+&gt; foo()
+This func. has been called 2 time(s)
+&lt; "hello world"
+</code></pre>
+
+<p>You can apply the above principle (storing state on the decorator class itself) in a wide and whacky variety of ways. Automatic memoization, perhaps?</p>
+
+<p>And heck, why not go for broke and use a class to decorate a class?!</p>
+
+<pre><code class="python">class countinits():
+    def __init__(self, cls):
+        self.cls = cls
+        self.INITS = 0
+    def __call__(self, *args, **kwargs):
+        self.INITS += 1
+        print("You've made {} of this class".format(self.INITS))
+        return self.cls(*args, **kwargs)
+
+@countinits
+class MyClass():
+    pass
+
+&gt; inst1 = MyClass()
+You've made 1 of this class
+
+&gt; inst2 = MyClass()
+You've made 2 of this class
+</code></pre>
+
+<p>The above example looks a little gnarly, but remember that <code>cls</code> here is <code>MyClass</code> which is a callable (that makes and returns a new <code>MyClass</code> instance), and remember how the <code>@decorator</code> syntax is applied, and you can piece together precisely what dark magic is happening here.</p>
+
+<h1>Awesome! …Wait, What?</h1>
+
+<p>Yeah, I know, a lot of things just went down. To summarize:</p>
+
+<ol>
+<li>you can <em>decorate</em> any callable—be it a function, a class, or any callable object.</li>
+<li>a <em>decorator</em>—the <code>@something</code> thing—is a callable (function, class, etc.) that takes as an argument the thing you’re decorating and returns another callable that preserves the original functionality but adding something new</li>
+<li>the type of callable is irrelevant. Functions can decorate functions, or classes, or objects. Classes can decorate functions, or classes, or objects. Basically, anything goes.</li>
+</ol>
+
+
+<p>There are lots of other resources on the interwebs about what sort of stuff you might want to use decorators for—and heck, I might write a blogpost about some of them in future—but I hope this is an illuminating overview of just what the heck decorators <em>are</em> and how they work. As always, feel free to reach out with any questions! A big thank you to all the excellent folks who beta-read/edited this post: <a href="http://happyspork.com/">Ben Anderman</a>, <a href="https://github.com/cappachu">Codanda Appachu</a>, <a href="http://antha.site/">Sam Auciello</a>, and <a href="https://alexburka.com/">Alex Burka</a>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>…except that decorators as described here can potentially do weird things to doc strings and other function attributes. This is one of the reasons that many folks use <a href="https://docs.python.org/3/library/functools.html#functools.wraps"><code>functools.wraps</code></a> when decorating things: it copies over most (though not all 😞) of the original functions&#8217;     hidden attributes to the new, wrapped function. Hat tip to <a href="https://github.com/cappachu">Codanda Appachu</a> for reminding me of this.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><code>MyClass(...)</code>, of course, being shorthand for <code>MyClass.__init__(...)</code>. (That&rsquo;s totally an oversimplification; <code>MyClass(...)</code> is <em>actually</em> shorthand for <code>MyClass.__new__(cls)</code>, which does a bunch of stuff, including call <code>__init__</code> on the newly made <code>MyClass</code> instance&hellip; but sufice it to say that when I call <code>MyClass(...)</code> I expect some stuff to happen, including a call to <code>MyClass.__init__</code>, and to eventually get back a new instance of that class.)<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p>Note that since <code>MyClass(...)</code> is baaasically shorthand for <code>MyClass.__init__(...)</code> (see above), and so you can achieve a pretty similar effect by decorating the <code>__init__</code>  method. The thing passed into <code>announce_new_instance</code> to be transformed will be different, but the new function will execute in just about the same way.<a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Truthiness]]></title>
+    <link href="http://maiamcc.github.io/blog/2015/04/16/truthiness/"/>
+    <updated>2015-04-16T21:13:19-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2015/04/16/truthiness</id>
+    <content type="html"><![CDATA[<p>Truthiness in Python is occasionally confusing. Obviously, <code>False</code> is false and <code>True</code> is true, but beyond that, what then?</p>
+
+<p><code>None</code> is always false&ndash;though this doesn&rsquo;t mean that <code>False == None</code>, which is a mistake I made early in my Python career. I was confused by how a nonexistant list and an empty list were both falsey, and somewhere in my mind I thought that they were both <code>None</code> as well. Not so much.<!--more--></p>
+
+<pre><code class="python">&gt;&gt;&gt; a = None
+&gt;&gt;&gt; bool(a)
+False
+&gt;&gt;&gt; b = []
+&gt;&gt;&gt; bool(b)
+False
+&gt;&gt;&gt; bool(a is None)
+True
+&gt;&gt;&gt; bool(b is None)
+False
+</code></pre>
+
+<p>A stylistic note here: since <code>None</code> is a singleton (i.e. there exists only one instance of it), the proper syntax is <code>foo is None</code>, rather than <code>foo == None</code>. But I digress.</p>
+
+<p>The empty values of data structures are always falsey. Hence:</p>
+
+<pre><code class="python">&gt;&gt;&gt; bool([])
+False
+&gt;&gt;&gt; bool("")
+False
+&gt;&gt;&gt; bool({})
+False
+</code></pre>
+
+<p>And perhaps most confusingly:</p>
+
+<pre><code class="python">&gt;&gt;&gt; bool(0)
+False
+&gt;&gt;&gt; bool(1)
+True
+&gt;&gt;&gt; bool(2)
+True
+&gt;&gt;&gt; bool(-31.4)
+True
+</code></pre>
+
+<p>I mean, this makes sense because we know that 0 is false and 1 is true&hellip; but if you think about it, this also means that <code>0</code> is the empty value of an <code>int</code> (which means that <code>0</code> is false, but every other value of <code>int</code> or <code>float</code> is true) This doesn&rsquo;t mean much in Python, of course, but I&rsquo;ve been playing with Go lately, in which you have to initialize your variables before you can do anything with them, and suddenly the idea of an empty value makes a lot more sense (and the empty value for an int is indeed zero).</p>
+
+<p>Conversely, every non-zero value of a data structure is true. That means that a string with stuff in it, a dict. with stuff in it, a list with stuff in it, etc. is true no matter what the stuff is. And so:</p>
+
+<pre><code class="python">&gt;&gt;&gt; hip = False
+&gt;&gt;&gt; bool(hip)
+False
+&gt;&gt;&gt; bool([hip, hip])
+True
+</code></pre>
+
+<p>Proving conclusively, as we all knew, that <em>hips don&rsquo;t lie</em>.</p>
+
+<p>(<a href="//instantrimshot.com/index.php?sound=rimshot&amp;play=true">Ba-bm-psh</a>.)</p>
+
+<p>Extra credit: do you know what <code>["hip", "hip"]</code> is?</p>
+
+<p>&hellip;(wait for it)&hellip;</p>
+
+<p>It&rsquo;s a <em>hip hip array</em>.</p>
+
+<p>(<a href="//wompwompwomp.com/">Womp womp</a>.)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Lessons in Default Function Arguments]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/09/29/lessons-in-default-function-arguments/"/>
+    <updated>2014-09-29T18:16:56-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/09/29/lessons-in-default-function-arguments</id>
+    <content type="html"><![CDATA[<p>Today on &ldquo;Bugs that everyone already knew about but Maia found out about for the first time so will write up anyway&rdquo;, we&rsquo;re going to talk about the perils and pitfalls of using mutable objects as default arguments for functions in Python. (This episode brought to you by Maia&rsquo;s contradance database and the letter Y.)</p>
+
+<p>No, nothing went wrong in my code that caused me to learn this lesson, but multiple code reviewers raised red flags about this line in my code: <code>def resolve_query_dict(d, moves_list=Move.objects.all())</code>. <code>Move.objects.all()</code>, by the way, is a fancy Django function that returns a list of all of the <code>Move</code> objects in your database, and since I would likely never be running this code over an extended period of time while things were added to the database, accidentally freezing the value of &ldquo;all of the moves in my database&rdquo; wouldn&rsquo;t have really been an issue, but the dangers of writing code like the above are still whacky and interesting. Basically, odd things happen when you use mutable objects or called functions as default variables in your functions.<!-- more --></p>
+
+<p>Let&rsquo;s define a helper function:</p>
+
+<pre><code class="python">&gt;&gt;&gt; def make_a_list():
+    ... print "Making a list..."
+    ... return [1,2,3]
+</code></pre>
+
+<p>and then some random function that takes a (called) function as a default value:</p>
+
+<pre><code class="python">&gt;&gt;&gt; def list_length(mylist = make_a_list()):
+...     return len(mylist)
+Making a list...
+</code></pre>
+
+<p>The thing that&rsquo;s odd about the code that we just ran is that it printed &ldquo;Making a list&hellip;&rdquo;, which implies that the <code>make_a_list</code> function got <em>called</em>, even though all we did was assign it as a default variable. Interesting. Now what happens if we run <code>list_length</code>?</p>
+
+<pre><code class="python">&gt;&gt;&gt; list_length([1,2,3,4,5])
+5
+&gt;&gt;&gt; list_length()
+3
+</code></pre>
+
+<p>If you pass it an argument, it runs just as you&rsquo;d expect it to. If you don&rsquo;t pass it arguments, it returns the value you&rsquo;d expect, but notice that it doesn&rsquo;t print &ldquo;Making a list&hellip;&rdquo;&mdash;which implies that it hasn&rsquo;t run the <code>make_a_list</code> function! The conclusion we draw here is that when you use a function as a default argument, that function is called (and the value bound) <em>at assignment</em>, <em>not</em> whenever you run its container function. So that means that if you want your default-value-function to run every time you call its container function&hellip; well, it won&rsquo;t! If you needed more convincing:</p>
+
+<pre><code class="python">&gt;&gt;&gt; from random import randint
+&gt;&gt;&gt; def plus_one(num=randint(1,1000)):
+...     return num+1
+&gt;&gt;&gt; plus_one(5)
+6
+&gt;&gt;&gt; # that worked as we expected it to
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+&gt;&gt;&gt; plus_one()
+42
+</code></pre>
+
+<p>Hmm. It would appear that we aren&rsquo;t getting a new random number every time we run this function.</p>
+
+<p>That&rsquo;s not the only weird thing about default arguments, though. Things can get messy even when you&rsquo;re not setting functions as default args&mdash;really, all it takes to break things is a mutable object.</p>
+
+<pre><code class="python">&gt;&gt;&gt; def append_one(mylist = []):
+...     mylist.append(1)
+...     return mylist
+&gt;&gt;&gt; append_one()
+[1]
+&gt;&gt;&gt; append_one()
+[1, 1]
+&gt;&gt;&gt; append_one()
+[1, 1, 1]
+&gt;&gt;&gt; append_one()
+[1, 1, 1, 1]
+&gt;&gt;&gt; append_one()
+[1, 1, 1, 1, 1]
+</code></pre>
+
+<p>As with the function-as-default-arg example, your default argument binds <em>at definition</em>&mdash;and what&rsquo;s more, it binds to a specific object in memory. So every time you call <code>append_one</code>, you&rsquo;re not appending one to a new empty list, you&rsquo;re appending one to <em>that exact empty list that you created in memory, which now has more and more things in it</em>. It&rsquo;s the same as if you passed in an existing, named list as your default:</p>
+
+<pre><code class="python">&gt;&gt;&gt; stuff = [1,3,5,7]
+&gt;&gt;&gt; def append_one(mylist = stuff):
+...     mylist.append(1)
+...     return mylist
+&gt;&gt;&gt; append_one()
+[1, 3, 5, 7, 1]
+&gt;&gt;&gt; append_one()
+[1, 3, 5, 7, 1, 1]
+&gt;&gt;&gt; append_one()
+[1, 3, 5, 7, 1, 1, 1]
+</code></pre>
+
+<p>Perhaps it&rsquo;s a bit more intuitive this way, but the exact same thing is happening in the previous example; the function is modifying a distinct object in memory, whether it was named before it got passed as a default argument or not.</p>
+
+<p>Whacky fun! And a valuable lesson learned: <em>don&rsquo;t use mutable objects or functions as default values in your functions</em> unless you want a whole lot of hilarious code hijinks. (Which, hey, maybe you do, no judgments here!)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Nested Functions]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/08/28/nested-functions/"/>
+    <updated>2014-08-28T11:20:16-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/08/28/nested-functions</id>
+    <content type="html"><![CDATA[<p>Know what&rsquo;s cool? Nested functions.</p>
+
+<p>The other day, as I was making this craaaazy dance parser (that&rsquo;s getting more and more convoluted by the minute), Alan suggested a really baller way of organizing it: using a bunch of little mini-parser functions that all look for something specific in your text, and smooshing related parsers together into one macro-parser that runs all of them in turn until one returns something. In Alan&rsquo;s lovely mock-up code that I&rsquo;m shamelessly copying over here, that might look like this:</p>
+
+<pre><code class="python">def contains_an_a(input):
+    return input.find("a") &gt; -1
+
+def contains_a_b(input):
+    return input.find("b") &gt; -1
+
+def one_of(parsers):
+    def parser(input):
+        for p in parsers:
+            result = p(input)
+            if result:
+                return result
+    return parser
+
+contains_an_a_or_a_b = one_of([contains_an_a, contains_a_b])
+</code></pre>
+
+<p>The handy thing about having all of these bite-size functions is that none of them gets too crazy bulky, and also, since they&rsquo;re functions (and not dicts like I was using earlier), I can use regexes in them! I&rsquo;m also jamming on the idea of passing functions to other functions, so I made an even bigger function called <code>use_parser</code> that takes a parser, a default value, and an &lsquo;ask&rsquo;, which it uses to ask the user (via raw_input) what the value should be. This way, I can take a single parser and customize it in a variety of ways. Say for example I have a distance parser: for do-si-dos and gypsies it should default to False (because those moves don&rsquo;t necessarily need to take a distance) and for allemandes it should ask the user, &ldquo;what&rsquo;s the value of &lsquo;dist&rsquo; here?&rdquo;<!-- more --></p>
+
+<p>But there&rsquo;s something odd going on here that initially threw me for a loop. (&hellip;No lie, it kind of still does.) And that&rsquo;s defining a function INSIDE of another function!</p>
+
+<p>I got tripped up the first time when I tried to check if the parser returned anything, with code that looked like this:</p>
+
+<pre><code class="python">def one_of(parsers):
+    def parser(input):
+        for p in parsers:
+            result = p(input)
+            if result:
+                return result
+    if parser:
+        return parser
+    else:
+        print "Your parser didn't return anything!"
+</code></pre>
+
+<p>But even when the parser returned None, my print statement didn&rsquo;t get tripped. What&rsquo;s happening here is that <code>return parser</code> isn&rsquo;t returning a value, <em>it&rsquo;s returning a function</em>, and that function, by virtue of existing, will always evaluate to <code>True</code>. That&rsquo;s the reason <code>contains_an_a_or_a_b = one_of([contains_an_a, contains_a_b])</code> makes a new function rather that returning a value: because <code>one_of</code> returns a function <em>without calling it</em>. That&rsquo;s why this works:</p>
+
+<pre><code class="python">&gt;&gt;&gt; def math(x):
+...     def add(y):
+...         return x+y
+...     return add
+
+&gt;&gt;&gt; add_to_5 = math(5)
+&gt;&gt;&gt; add_to_5
+&lt;function add at 0x104502f50&gt;
+&gt;&gt;&gt; # Look: Python recognizes this thing that I just defined as a function
+&gt;&gt;&gt; add_to_5(100)
+105
+&gt;&gt;&gt; # and it takes arguments just like a normal function.
+&gt;&gt;&gt; # since math(x) returns a function, we can do
+&gt;&gt;&gt; # weird-lookin' stuff like this:
+&gt;&gt;&gt; math(30)(40)
+70
+</code></pre>
+
+<p>In Python, functions are first-class objects, which means they can be passed as arguments and manipulated just like other data types. Which lets you do neat things like define functions inside other functions, and return functions from functions which you can then call later with the arguments that you choose, etc. etc. Cool stuff!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Slicing is Not Enough (or, Adventures in Deep Copy)]]></title>
+    <link href="http://maiamcc.github.io/blog/2014/08/26/slicing-is-not-enough/"/>
+    <updated>2014-08-26T11:56:57-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2014/08/26/slicing-is-not-enough</id>
+    <content type="html"><![CDATA[<p>The sudoku solver that I&rsquo;m working on with <a href="https://mlauter.github.io/">Miriam</a> was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written&mdash;</p>
+
+<pre><code class="python">def draw_board(board):
+    for i in range(0,9):
+        board[i].insert(6, "|")
+        board[i].insert(3, "|")
+        row_string = "  ".join(map(str, board[i]))
+        if i in [2, 5]:
+            print row_string
+            print "________________________________"
+        else:
+            print row_string
+
+def newboard():
+    return [[0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0]]
+</code></pre>
+
+<p>and the shiny output!</p>
+
+<pre><code class="python">&gt;&gt;&gt; myboard = newboard()
+&gt;&gt;&gt; draw_board(myboard)
+
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+________________________________
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+________________________________
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+</code></pre>
+
+<p>Everything was awesome! Or so I thought. But look what happened when I ran the code again.<!-- more --></p>
+
+<pre><code class="python">&gt;&gt;&gt; draw_board(myboard)
+
+0  0  0  |  |  0  0  |  0  |  0  0  0
+0  0  0  |  |  0  0  |  0  |  0  0  0
+0  0  0  |  |  0  0  |  0  |  0  0  0
+________________________________
+0  0  0  |  |  0  0  |  0  |  0  0  0
+0  0  0  |  |  0  0  |  0  |  0  0  0
+0  0  0  |  |  0  0  |  0  |  0  0  0
+________________________________
+0  0  0  |  |  0  0  |  0  |  0  0  0
+0  0  0  |  |  0  0  |  0  |  0  0  0
+0  0  0  |  |  0  0  |  0  |  0  0  0
+</code></pre>
+
+<p>And again.</p>
+
+<pre><code class="python">&gt;&gt;&gt; draw_board(myboard)
+
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+________________________________
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+________________________________
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+0  0  0  |  |  |  0  |  0  |  0  |  0  0  0
+</code></pre>
+
+<p>AAAAAHHHH!!! THE VERTICAL LINES ARE ATTACKING! RUN FOR YOUR LIVES!</p>
+
+<p>At this point, being a clever programmer, I realized that I was changing the myboard array every time, inserting more and more vertical lines every time at indeces 3 and 6 every time I called <code>draw_board</code>.</p>
+
+<pre><code class="python">&gt;&gt;&gt; myboard
+[[0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|',
+'|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|',
+0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0,
+ 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|',
+ 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '
+|', 0, 0, 0], [0, 0, 0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0], [0, 0,
+0, '|', '|', '|', 0, '|', 0, '|', 0, '|', 0, 0, 0]]
+</code></pre>
+
+<p>So I handily revised my code:</p>
+
+<pre><code class="python">def draw_board(board):
+    copyboard = board[:]
+    for i in range(0,9):
+        copyboard[i].insert(6, "|")
+        copyboard[i].insert(3, "|")
+        row_string = "  ".join(map(str, copyboard[i]))
+        if i in [2, 5]:
+            print row_string
+            print "________________________________"
+        else:
+            print row_string
+</code></pre>
+
+<p>Instead of modifying <code>board</code>, I was modifying <code>copyboard</code>, a <em>new</em> object made by slicing <code>board</code>. Since it wasn&rsquo;t point back to the original array passed into the function, I reasoned, the original array wouldn&rsquo;t be modified, and I could continue calling <code>draw_board(myboard)</code> to my heart&rsquo;s content.</p>
+
+<p>But, horror of horrors! The vertical lines kept attacking! I thought I knew how slicing worked! At this point I brought to code to Miriam, stumped. We did a sanity check:</p>
+
+<pre><code class="python">&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; b = a
+&gt;&gt;&gt; b
+[1, 2, 3]
+&gt;&gt;&gt; a is b
+True
+&gt;&gt;&gt; c = a[:]
+&gt;&gt;&gt; c
+[1, 2, 3]
+&gt;&gt;&gt; a is c
+False
+&gt;&gt;&gt; a.append(4)
+&gt;&gt;&gt; a
+[1, 2, 3, 4]
+&gt;&gt;&gt; b
+[1, 2, 3, 4]
+&gt;&gt;&gt; c
+[1, 2, 3]
+</code></pre>
+
+<p>If you point a new object back to an existing object, then they&rsquo;re identical and the new object always refers back to the old one, <em>but</em> you can create a new list (via slicing) that is identical to the old list but doesn&rsquo;t refer back to it, has a separate identity, can be called and modified separately, etc. What was going onnn???</p>
+
+<p>The problem, we eventually discovered, was with nested lists. Turns out that slicing is not enough: you get a <em>new</em> list of lists, but all the lists inside point back to the old lists.</p>
+
+<pre><code class="python">&gt;&gt;&gt; a = [[1,2,3],[1,2,3],[1,2,3]]
+&gt;&gt;&gt; c = a[:]
+&gt;&gt;&gt; a
+[[1, 2, 3], [1, 2, 3], [1, 2, 3]]
+&gt;&gt;&gt; c
+[[1, 2, 3], [1, 2, 3], [1, 2, 3]]
+&gt;&gt;&gt; a is c
+False
+&gt;&gt;&gt; a[0] is c[0]
+True
+</code></pre>
+
+<p>So even though we copied the board with slicing&mdash;<code>copyboard = board[:]</code>&mdash;all of the rows in <code>copyboard</code> still pointed at the rows in <code>board</code>: copyboard[i]<code>and</code>board[i] were the same thing, so modifying <code>copyboard</code> changed <code>board</code> as well, leading to the endless insertion of vertical lines observed above.</p>
+
+<p>Miriam hit upon this really excellent thing called <em>deep copy</em>; as opposed to regular &lsquo;ol shallow copying like that above, deep copy would make a <em>new list</em> populated by <em>new lists</em>. And hallelujah, the problem was solved! The vertical line monsters were vanquished, and the people of Sudoku-Land could live in peace once more!</p>
+
+<pre><code class="python">&gt;&gt;&gt; import copy
+
+&gt;&gt;&gt; def draw_board(board):
+...     copyboard = copy.deepcopy(board)
+...     for i in range(0,9):
+...         copyboard[i].insert(6, "|")
+...         ...etc.
+
+&gt;&gt;&gt; myboard = newboard()
+&gt;&gt;&gt; draw_board(myboard)
+
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+________________________________
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+________________________________
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+
+&gt;&gt;&gt; draw_board(myboard)
+
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+________________________________
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+________________________________
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+
+&gt;&gt;&gt; draw_board(myboard)
+
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+________________________________
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+________________________________
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+0  0  0  |  0  0  0  |  0  0  0
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

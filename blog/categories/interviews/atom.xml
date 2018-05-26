@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: interviews | Maia McCormick]]></title>
+  <link href="http://maiamcc.github.io/blog/categories/interviews/atom.xml" rel="self"/>
+  <link href="http://maiamcc.github.io/"/>
+  <updated>2018-05-26T16:13:02-04:00</updated>
+  <id>http://maiamcc.github.io/</id>
+  <author>
+    <name><![CDATA[Maia Remez McCormick]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Preparing for Technical Interviews]]></title>
+    <link href="http://maiamcc.github.io/blog/2018/03/25/interview-prep/"/>
+    <updated>2018-03-25T15:17:41-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2018/03/25/interview-prep</id>
+    <content type="html"><![CDATA[<p>Life update time! After three great years at <a href="https://engineering.shopspring.com/">Spring</a>, I&rsquo;m moving on to my next adventure; in April, I&rsquo;ll be joining <a href="https://windmill.engineering/">Windmill</a> as their fifth engineer, where I&rsquo;ll be building cloud-based developer tools, as well as company culture.</p>
+
+<p>The most frequent question I&rsquo;ve got from people upon telling them this news (after &ldquo;what the heck is Windmill?!&rdquo;) is, &ldquo;How did you prepare for your interviews?&rdquo; (And all the related questions: &ldquo;How long did you prep for?&rdquo;, &ldquo;What were your on-sites like?&rdquo;, etc.)</p>
+
+<p>This post aims to answer those questions. Here&rsquo;s some detail on my own personal interview prep and interview process. Of course, everything here should be taken with a grain of salt, as all of this will vary widely based on you and your skills, the sorts of companies you&rsquo;re interviewing for, etc.</p>
+
+<!-- more -->
+
+
+<h1>How did you prep?</h1>
+
+<h2>Resume/Soft Skills</h2>
+
+<p>The first thing I did (because it felt like the least intimidating way to ease into the job search process) was to update my resume. I made a big list of all the things I&rsquo;d done at work since I last updated my resume, then went back over that list, pulled out the most compelling and impressive items, and wrote bullets for them. I also got several rounds of feedback from friends and collegues in the tech industry. You can never have too many eyes on your resume.</p>
+
+<p>I also practiced talking about my work and my projects, and answering so-called &ldquo;soft skills&rdquo; questions. Cracking the Coding Interview has a handy grid to help you organize your thoughts about your projects:</p>
+
+<p><img src="/images/ctci-interview-prep-matrix.png" alt="From Cracking the Coding Interview (4th ed.), p. 23" /></p>
+
+<p>I <em>didn&rsquo;t</em> physically fill this out, because I&rsquo;m lazy&mdash;but I <em>did</em> go over all of this in my head, making sure I had an idea of the interesting, challenging, and conversation-worthy bits of the major bullet points on my resume.</p>
+
+<p>I&rsquo;ve been interviewing candidates at work for 2ish years now, so I have some idea of the questions that get asked in interviews and could think ahead about my answers to those<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>: but by far the most useful prep I did here was to have people mock-interview me. Having to answer these questions <em>out loud</em> forced me to think about them more concretely, and I could also get feedback on the things that I was saying that were more or less impressive, red-flag-y, etc. (&ldquo;If they ask you about conflicts with coworkers, tell story A, not story B, cuz in story A you resolved your disagreement, and in story B you were right and your coworker wrong and the system broke because of it, but even though you were right, it still resulted in the system breaking.&rdquo;)</p>
+
+<h3>Preparing YOUR Interview Qs</h3>
+
+<p>Another thing worth doing is preparing a list of questions that <em>you</em> want to ask <em>of your interviewers</em> to get a better idea about the company you may possibly work for. The better your questions for them, the more insight you can get into their workplace&mdash;and the more prepared you are with these questions, the less dumb you look in front of your interviewer.</p>
+
+<p>I read a bunch of &ldquo;questions to ask in job interviews&rdquo; articles, grilled my friends, and put together a big doc of the questions I thought were the most informative. Some useful blog posts on the topic:
+* <a href="https://jvns.ca/blog/2013/12/30/questions-im-asking-in-interviews/">https://jvns.ca/blog/2013/12/30/questions-im-asking-in-interviews/</a>
+* <a href="http://juliepagano.com/blog/2015/08/15/job-search-retrospective/#interview-questions">http://juliepagano.com/blog/2015/08/15/job-search-retrospective/#interview-questions</a>
+* <a href="http://lizabinante.com/blog/getting-hired-without-getting-burned/">http://lizabinante.com/blog/getting-hired-without-getting-burned/</a></p>
+
+<h2>Algorithms</h2>
+
+<p>To brush up on my algos, I worked through <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Problem Solving with Algorithms and Data Structures using Python</a>, making sure to ask questions about/dig deeper into anything I didn&rsquo;t understand. Most of this I skimmed b/c I was already familiar with it, but I made sure to note the architypal problems for each data type (&ldquo;oh, it&rsquo;s an X problem? You should use data structure Y!&rdquo;), and paid special attention to trees and graphs cuz they&rsquo;re my weak spot.</p>
+
+<p>And then it was just looots of practice problems. Some from Cracking the Coding Interview, some from <a href="https://leetcode.com/">LeetCode</a>, and as much practicing with friends as I could get. The best is to get friends who actually interview developers, because they know the ins and outs of their questions better, but even just having a friend mock-interview you with CtCI or LeetCode questions will do.</p>
+
+<p>Practicing algos Qs on your own just thinking through the solution, or writing the solution on a computer, is good. Writing it out on paper/a whiteboard is better. Practicing with a person (in a mock interview sort of capacity, where you&rsquo;re timed, they&rsquo;re giving you hints where necessary but pushing you to explain yourself) is best.</p>
+
+<h2>System Design</h2>
+
+<p>Like with algos, mostly this was a matter of practice&mdash;getting friends to mock interview me with system design quesitons. I also went over some of the systems I built at work and made sure that I understood the technical choices and trade-offs there, so I could talk intelligently about it in interviews.</p>
+
+<p>A piece of advice I got here (which I didn&rsquo;t end up taking, and it all turned out okay, but I probably should have done this anyway) was to talk to folks at other companies about their system architecture. My Achilles&#8217; heel in system design interviews has always been that I&rsquo;m only really familiar with the one or two paradigms I&rsquo;ve worked in&mdash;talking to others&#8217; about <em>their</em> paradigms would have been super useful, and given me a lot more ideas to draw on.</p>
+
+<h1>How long did you prep for?</h1>
+
+<p>I took two weeks off of work around Christmas/New Years, and was doing a bit of prep work every day&mdash;sometimes several hours of reading or practice interviews, sometimes 15 minutes researching a company or brushing up my resume, but I tried to do <em>something</em> every day. After that, I went back to my day job and I did a bit whenever I could&mdash;some problems on LeetCode in the evening, or a practice problem coffee date with a friend over the weekend. After a few weeks of occasional practice interviews, I felt pretty prepped. My process was pretty drawn out cuz I took my time to find companies I wanted to interview for, set up those interviews, etc., so I would keep doing the occasional practice problem during that to keep in shape, but mostly I felt pretty well prepared.</p>
+
+<h1>What was your interview schedule like?</h1>
+
+<p>Like I said, I took a while at the beginning of this process to get my resume in order, do some research on companies and write up a big list, brush up on algos, etc.</p>
+
+<p>I lined up a couple of phone screens early to get them out of the way (staggering them so that I wasn&rsquo;t too absent at work), and punted on the on-sites so I could cluster those around the same time.</p>
+
+<p>I highly recommend having your first on-site (or two) be a &ldquo;warm-up&rdquo;: <em>not</em> your dream job, but either one you don&rsquo;t feel too strongly about, or one that is a real long shot and you&rsquo;re not really banking on. The idea is to have your first interview or two be a little lower stress and lower stakes. Best case scenario, you get an offer and have more leverage or a fab opportunity you didn&rsquo;t count on; worst case, you get to ease yourself back into the sometimes-grueling world of on-site technical interviews.</p>
+
+<h1>How did you decide where to interview?</h1>
+
+<p>The way I decide many other things: I made a big ol&#8217; doc where I kept track of recommendations from friends, collegues, the Internet, etc. I brainstormed products I&rsquo;d be interested to work on, and places friends had worked or places I&rsquo;d seen on the internet with cultures that I liked. I looked up the companies of people I enjoy on Twitter and elsewhere on the interwebs. I took suggestions from the amaaazing jobs team at <a href="https://www.recurse.com/">RC</a>.</p>
+
+<p>And then I dug into those companies. Looked for articles on company culture, their approach to tech problems, their thoughts on diversity and whether they had women and PoC on their engineering team/in management, how many blog posts they had by women/PoC, etc. I looked on Glassdoor. If I had friends there, or friends of friends, I reached out to them to ask them if they liked it there. I hit up people in my network (esp. women) for word-on-the-street. And from all that, sortakinda got a picture of these companies and which I was or wasn&rsquo;t interested in moving forward with.</p>
+
+<p>(I should note that an important part of this process was being clear on what I wanted out of my next company. Having a concrete idea of my own values helped me know what things to look for, which questions to ask, and which things were dealbreakers. It&rsquo;s worth spending a good chunk of time on this step, as it will inform the rest of your search. In particular, I found Key Values&#8217; <a href="https://www.keyvalues.com/culture-queries/">Culture Queries</a> a useful place to start.)</p>
+
+<h1>Then what?</h1>
+
+<p>Well hopefully, the offers start rolling in! Be transparent with everyone in your interview process about where you&rsquo;re at (esp. with other companies), what your concerns are, and what you need from them. Stating your needs going in sets a good precedent!</p>
+
+<p>When you start thinking about switching jobs, be prepared for lots of last minute insurance submissions and affair-getting-in-order, and remember to take any relevant documents off your computer/email/google drive, any relevant passwords off your password manager, etc. (Pro tip: if you know you&rsquo;ll be leaving early-ish in the year, max out your Flex Spending Account and you&rsquo;ll end up with free money! It&rsquo;s a good time to buy those prescription sunglasses you don&rsquo;t reaaally need, but heck, they&rsquo;re free!)</p>
+
+<p>As for me, I&rsquo;m taking a month off and chilling, and so very excited about it. And thennnnn&hellip; I start my new job!</p>
+
+<p>I&rsquo;m pretty psyched about this next chapter in my life, and I hope that some of the thoughts above are of use to someone. Best of luck, y&#8217;all!</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>Things like: &ldquo;How do you learn a new language or framework?&rdquo;; &ldquo;Tell me about a time that you failed&rdquo;; etc.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

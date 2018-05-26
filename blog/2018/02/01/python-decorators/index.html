@@ -1,0 +1,731 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>F***in&#8217; Decorators, How Do THEY Work?! - Maia McCormick</title>
+  <meta name="author" content="Maia Remez McCormick">
+
+  
+  <meta name="description" content="If you&rsquo;ve been in Python-land for long, you&rsquo;ve probably seen some @-sign thingies hovering (often mysteriously) above functions and class &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://maiamcc.github.io/blog/2018/02/01/python-decorators">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Maia McCormick" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Overlock+SC|Overlock:400,700|Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Add fancyBox -->
+<link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fancybox").fancybox();
+        $(".fancybox").fancybox({
+    width  : 600,
+    height : 300,
+    type   :'iframe'
+    });
+
+});
+</script>
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Maia McCormick</a></h1>
+  
+  <div class="subtitle">
+    <h2>Programmer, writer, nerd</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div class="selected"> 
+  <li><a href="/">blog</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/projects">projects</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div id="thepost">
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">F***in&#8217; Decorators, How Do THEY Work?!</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-02-01T13:16:46-05:00" pubdate data-updated="true">01 Feb 2018</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>If you&rsquo;ve been in Python-land for long, you&rsquo;ve probably seen some <code>@</code>-sign thingies hovering (often mysteriously) above functions and class definitions, saying things like <code>@patch</code> or <code>@classmethod</code> or perhaps something even more obscure. Maybe you already know that these are called &ldquo;decorators&rdquo;. Maybe you&rsquo;ve even used them, or written your own!</p>
+
+<p>Even if you&rsquo;ve done all that and still don&rsquo;t quiiiite get what&rsquo;s going on under the hood with decorators&hellip; don&rsquo;t worry, my friend, you are not alone. Heck, <em>I&rsquo;m</em> still not quite sure what goes on under the hood with decorators, but after a very productive afternoon of fiddling, I have a much better idea, and I&rsquo;m here to share the fruits of that fiddling with you. Ready? Here we go:</p>
+
+<p><strong>Decorators are callables called on callables that return a callable which then replaces the original callable.</strong></p>
+
+<p>Got it?</p>
+
+<p>&hellip;No?</p>
+
+<p>&hellip;Yeah, okay, that&rsquo;s fair. Let me try that again.</p>
+
+<!--more-->
+
+
+<h1>A Temporary Oversimplification</h1>
+
+<p>I know I said “callable” up there before, but just for now, I’m going to simplify and instead of talking about “callables”, I’ll talk about “functions”. All functions are callables&mdash;i.e. “functions” are a subset of “callables”&mdash;and they tend to be the easiest case for people to wrap their heads around.</p>
+
+<p><img src="/images/callables_venn_diagram.png" alt="Functions are a subset of callables" /></p>
+
+<p>“Callables” can also be classes, or heck, most any object, if it’s got the appropriate set of behaviors. We’ll dig into that in a bit, but for now, let’s talk about decorators in terms of “functions”. With this simplification in mind, let me amend my definition above to make it maaarginally less confusing:</p>
+
+<p><strong>A decorator is a function (<code>dec(…)</code>) called on a function (<code>fn(…)</code>) returning a function (<code>fn_decorated(…)</code>) which then replaces the original function:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@dec</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">fn</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Is approximately equal to:</span>
+</span><span class='line'><span class="n">fn</span> <span class="o">=</span> <span class="n">dec</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/images/decorators_flow_function.png" alt="Decorators are functions that modify functions" /></p>
+
+<h1>How Decorators are Applied</h1>
+
+<p>Say we&rsquo;ve got this function. It doesn&rsquo;t do much, but it&rsquo;s a nice little function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But say that we&rsquo;re so excited about that function that we want everyone to know when we call it, so we&rsquo;re gonna sound a klaxon every time we do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">times_two_with_alarm</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;WOOP! WOOP! WOOP!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sure, that works. But what if we&rsquo;ve got a BUNCH of functions that we&rsquo;re really excited about, and we want to add this big &lsquo;ol alarm (by which I mean &ldquo;print statement&rdquo;) to all of them? It&rsquo;ll get repetitive to add that code everywhere; what if we just wrote a function to stick that print statement into our functions for us?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">add_alarm</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">fn_with_alarm</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;WOOP! WOOP! WOOP!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">fn_with_alarm</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>add_alarm</code> is a function that takes an argument <code>fn</code>, the function we want to add an alarm to: it then returns us a NEW function which does the following:
+a) sound the alarm
+b) invoke the original function we passed to it</p>
+
+<p>In practice, then, we can achieve the same thing we achieved above like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">times_two_with_alarm</span> <span class="o">=</span> <span class="n">add_alarm</span><span class="p">(</span><span class="n">times_two</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because, remember, in Python, functions are first class objects; they can be passed around, passed as arguments, assigned, etc. In this case, <code>add_alarm</code> takes a function as an argument, and it <em>returns</em> a function (one that does whatever the original func. does, but this time with an alarm). We can then assign the output of <code>add_alarm</code>; so now, <code>times_two_with_alarm</code> is that new, modified function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;</span> <span class="n">times_two_with_alarm</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="n">WOOP</span><span class="err">!</span> <span class="n">WOOP</span><span class="err">!</span> <span class="n">WOOP</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="mi">10</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Heck, maybe we don&rsquo;t want to keep track of a whole different function name, we just want that alarm to be baked into our <code>times_two</code> function. Well, we can do that too:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># In case you forgot, here&#39;s how we defined this function...</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Add the alarm to it!</span>
+</span><span class='line'><span class="n">times_two</span> <span class="o">=</span> <span class="n">add_alarm</span><span class="p">(</span><span class="n">times_two</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">times_two</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'><span class="n">WOOP</span><span class="err">!</span> <span class="n">WOOP</span><span class="err">!</span> <span class="n">WOOP</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="mi">8</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Okay, But Like… You Haven’t Used a Decorator Yet…?</h2>
+
+<p>Geez, I’m getting there! In fact, THIS is where decorators come in! If the above seems a little tiresome, we can use this shortcut:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@add_alarm</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>@decorator</code> syntax means basically what we said above: &ldquo;define this function, but then run it through this other <code>decorator</code> function, and assign the result of that call (which, again, ought to be a function) back to the function I just defined.&rdquo; This way, you can easily modify multiple functions in predictable<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> ways, and moreover, modify them <em>in place</em>; no need to keep track of both <code>times_two</code> and <code>times_two_with_alarm</code>, just update <code>times_two</code> to do the new thing.</p>
+
+<h1>Back to “Callables”</h1>
+
+<p>So remember earlier when I waved a hand and said that we’d talk about decorators as “functions that manipulate functions”? Well it’s actually a bit gnarlier than that. Properly speaking, decorators are <strong>callables that manipulate callables</strong>, and as such, both decorators and the things they decorate <em>may</em> be functions, or they may be <em>random other stuff.</em></p>
+
+<h2>What&rsquo;s a &ldquo;Callable&rdquo;?</h2>
+
+<p>A <strong>callable</strong> is <strong>anything that you can</strong> <strong><em>call</em></strong>&mdash;i.e. anything that you can stick a <code>()</code> after (with maybe some arguments inside) and have something happen. A callable may be a <strong>function</strong> (<code>my_func(...)</code>) or a <strong>class</strong> (<code>MyClass(...)</code><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>), or (as helpful as this definition is) any <strong>object</strong>, as long as it can be… well, called. Some things that are NOT callable include strings, ints, lists, etc.:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;</span> <span class="s">&quot;hello&quot;</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="ne">TypeError</span><span class="p">:</span> <span class="s">&#39;str&#39;</span> <span class="nb">object</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">callable</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So then, to re-visit our original definition of a decorator, taking away our initial oversimplification: <strong>decorators are callables that manipulate callables (and then replace the original thing with the modified thing).</strong></p>
+
+<p><img src="/images/decorators_flow_callable.png" alt="Decorators are callables that modify callables" /></p>
+
+<p>We’ve already talked about decorators as functions being used to modify functions. But since callables can be either functions or classes (…or objects, but we’ll ignore that for now), let’s talk about some other cases.</p>
+
+<h2>Decorating a Class with a Function</h2>
+
+<p>What if we just got really excited about a bunch of classes, and wanted to announce to the world whenever we made a new instance of one? It might look something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">announce_new_instance</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">make_new_instance_with_announcement</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Making a thing!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">make_new_instance_with_announcement</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@announce_new_instance</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">MyClass</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">foo</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="n">foo</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">MyClass</span><span class="p">(</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">Making</span> <span class="n">a</span> <span class="n">thing</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">MyClass</span> <span class="n">at</span> <span class="mh">0x10fd84b70</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Recall that <code>MyClass</code> is a <em>callable</em>&mdash;<code>MyClass()</code> means, &ldquo;make me a new MyClass instance!&rdquo;&mdash;and so we can treat it just like any other thing that can be called, and even treat it like the function from our first example. In this case, under the hood, we&rsquo;re replacing <code>MyClass</code> (the function-like thing that, when called, makes a new instance) with <code>make_new_instance_with_announcement</code>, which makes its announcement and <em>then</em> kicks off making a new instance. (In the context of the decorator above, <code>cls</code> represents the class you passed in, i.e. the class you&rsquo;re decorating; so here, it&rsquo;s <code>MyClass</code>, thus <code>cls()</code> is the same as <code>MyClass()</code>.<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup></p>
+
+<h2>Classes as Decorators</h2>
+
+<p>This one bends my brain, but you can totally use a class as a decorator! Because as we discusssed (say it with me), <em>classes are callables too</em>. A call to <code>MyClass(*args, **kwargs)</code> eventually calls out to <code>MyClass.__init__(self, *args, **kwargs)</code> (and does some other magic such that at the end of it all, an instance is returned back). There are probably other rad things you can do with classes-as-decorators, but the pattern I&rsquo;ve seen most often (in all three hours of looking into this) is this one:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">DecoratorClass</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Look how decorated!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@DecoratorClass</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">times_two</span><span class="p">(</span><span class="mi">41</span><span class="p">)</span>
+</span><span class='line'><span class="n">Look</span> <span class="n">how</span> <span class="n">decorated</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="mi">82</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Oh man, weird, right? <code>DecoratorClass</code> is a class that takes a function (<code>fn</code>) as an initialization argument and hangs onto it. And recall that we replace the function-to-be-decorated with the result of a call to <code>decorator</code>, thus the above is equivalent to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">times_two</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">times_two</span> <span class="o">=</span> <span class="n">DecoratorClass</span><span class="p">(</span><span class="n">times_two</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That is, the new <code>times_two</code> is an <em>instance</em> of <code>DecoratorClass</code>?! What?!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;</span> <span class="n">times_two</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">DecoratorClass</span> <span class="n">at</span> <span class="mh">0x109b867b8</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But the point of decorators is that we don’t really <em>care</em> what <code>times_two</code> is, we just want it to do what we expect when we call it. Thus, we need an instance of <code>DecoratorClass</code> to actually DO stuff when you stick <code>(…)</code> at the end. That’s where the <code>__call__</code> method we defined earlier comes in.</p>
+
+<h3>Tangent: <code>__call__</code></h3>
+
+<p>We can make an object (i.e. an instance of a class) callable using the magic <code>__call__</code> method, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">Callable</span><span class="p">():</span>
+</span><span class='line'>    <span class="c"># defining the __call__ method on an INSTANCE of this class</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;you called me!&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">c</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="s">&quot;you called me!&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Contrast with...</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">NotCallable</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">pass</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">NotCallable</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">nc</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="ne">TypeError</span><span class="p">:</span> <span class="s">&#39;NotCallable&#39;</span> <span class="nb">object</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">callable</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Back to <code>DecoratorClass</code></h3>
+
+<p>So we&rsquo;ve got a <code>DecoratorClass</code> that takes in a function and hangs onto it, and when we define the magic method  <code>__call__</code>, we&rsquo;re defining what happens when we stick <code>(...)</code> on the end of an instance of this class&mdash;we call the function that we passed in in the first place:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">DecoratorClass</span><span class="p">(</span><span class="n">times_two</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">instance</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># i.e. DecoratorClass.__call__(5)</span>
+</span><span class='line'><span class="n">Look</span> <span class="n">how</span> <span class="n">decorated</span><span class="err">!</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="mi">10</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So after all that decorator magic, we’ve replaced <code>times_two</code> with an instance of <code>DecoratorClass</code>, right? But as we just saw above, we can call that instance like we would call any other function; thus <code>times_two</code> can still be called like normal, and in all respects treated as a normal function—but now it has some shiny extra functionality added via our decorator.</p>
+
+<h2>Okay, But Why Would You WANT to Use a Class as a Decorator?</h2>
+
+<p>That&rsquo;s a great question. There are probably lots of fascinating answers. At this present moment, I only have two: &ldquo;to store state&rdquo; and &ldquo;because you can&rdquo;. Since I&rsquo;ve already covered the latter in quite a bit of detail, let&rsquo;s turn to the former, i.e., a halfway plausible case in which you might want to use a class as a decorator. (I’m sure there are other reasonable ways to store state on a function, as well as other compelling reasons to use classes as decorators, but let’s just go with this for now.)</p>
+
+<p>Unlike functions, which are (generally) one-and-done, classes allow you to store state. You can store state on an <em>instance</em> of a class, but in this case we&rsquo;re interested in something that&rsquo;s more widely accessible, i.e. <em>storing state on the class itself</em>.</p>
+
+<p>How might you use this in a decorator context? Consider something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">countcalls</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">CALLS</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">CALLS</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;This func. has been called {} time(s)&quot;</span><span class="o">.</span>
+</span><span class='line'>            <span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CALLS</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@countcalls</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;hello world&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">foo</span><span class="p">()</span>
+</span><span class='line'><span class="n">This</span> <span class="n">func</span><span class="o">.</span> <span class="n">has</span> <span class="n">been</span> <span class="n">called</span> <span class="mi">1</span> <span class="n">time</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="s">&quot;hello world&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">foo</span><span class="p">()</span>
+</span><span class='line'><span class="n">This</span> <span class="n">func</span><span class="o">.</span> <span class="n">has</span> <span class="n">been</span> <span class="n">called</span> <span class="mi">2</span> <span class="n">time</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="s">&quot;hello world&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can apply the above principle (storing state on the decorator class itself) in a wide and whacky variety of ways. Automatic memoization, perhaps?</p>
+
+<p>And heck, why not go for broke and use a class to decorate a class?!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">countinits</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">cls</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">INITS</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">INITS</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;You&#39;ve made {} of this class&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">INITS</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@countinits</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">MyClass</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">pass</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">inst1</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+</span><span class='line'><span class="n">You</span><span class="s">&#39;ve made 1 of this class</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">inst2</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+</span><span class='line'><span class="n">You</span><span class="s">&#39;ve made 2 of this class</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above example looks a little gnarly, but remember that <code>cls</code> here is <code>MyClass</code> which is a callable (that makes and returns a new <code>MyClass</code> instance), and remember how the <code>@decorator</code> syntax is applied, and you can piece together precisely what dark magic is happening here.</p>
+
+<h1>Awesome! …Wait, What?</h1>
+
+<p>Yeah, I know, a lot of things just went down. To summarize:</p>
+
+<ol>
+<li>you can <em>decorate</em> any callable—be it a function, a class, or any callable object.</li>
+<li>a <em>decorator</em>—the <code>@something</code> thing—is a callable (function, class, etc.) that takes as an argument the thing you’re decorating and returns another callable that preserves the original functionality but adding something new</li>
+<li>the type of callable is irrelevant. Functions can decorate functions, or classes, or objects. Classes can decorate functions, or classes, or objects. Basically, anything goes.</li>
+</ol>
+
+
+<p>There are lots of other resources on the interwebs about what sort of stuff you might want to use decorators for—and heck, I might write a blogpost about some of them in future—but I hope this is an illuminating overview of just what the heck decorators <em>are</em> and how they work. As always, feel free to reach out with any questions! A big thank you to all the excellent folks who beta-read/edited this post: <a href="http://happyspork.com/">Ben Anderman</a>, <a href="https://github.com/cappachu">Codanda Appachu</a>, <a href="http://antha.site/">Sam Auciello</a>, and <a href="https://alexburka.com/">Alex Burka</a>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>…except that decorators as described here can potentially do weird things to doc strings and other function attributes. This is one of the reasons that many folks use <a href="https://docs.python.org/3/library/functools.html#functools.wraps"><code>functools.wraps</code></a> when decorating things: it copies over most (though not all 😞) of the original functions&#8217;     hidden attributes to the new, wrapped function. Hat tip to <a href="https://github.com/cappachu">Codanda Appachu</a> for reminding me of this.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><code>MyClass(...)</code>, of course, being shorthand for <code>MyClass.__init__(...)</code>. (That&rsquo;s totally an oversimplification; <code>MyClass(...)</code> is <em>actually</em> shorthand for <code>MyClass.__new__(cls)</code>, which does a bunch of stuff, including call <code>__init__</code> on the newly made <code>MyClass</code> instance&hellip; but sufice it to say that when I call <code>MyClass(...)</code> I expect some stuff to happen, including a call to <code>MyClass.__init__</code>, and to eventually get back a new instance of that class.)<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p>Note that since <code>MyClass(...)</code> is baaasically shorthand for <code>MyClass.__init__(...)</code> (see above), and so you can achieve a pretty similar effect by decorating the <code>__init__</code>  method. The thing passed into <code>announce_new_instance</code> to be transformed will be different, but the new function will execute in just about the same way.<a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Maia Remez McCormick</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-02-01T13:16:46-05:00" pubdate data-updated="true">01 Feb 2018</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>python</a>, <a class='category' href='/blog/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/06/17/what-are-interfaces/" title="Previous Post: What Are Interfaces?">&laquo; What Are Interfaces?</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2018/03/25/interview-prep/" title="Next Post: Preparing for Technical Interviews">Preparing for Technical Interviews &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  </section>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" title="subscribe via RSS"><img src="/images/rss.png"></a></li>
+  </ul>
+    
+  <form action="https://www.google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:maiamcc.github.io" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+    
+</section>
+
+<img src = "/images/headshot.jpg">
+<section>
+  <a href="/blog/archives/"><h1>Posts</h1></a>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2018/03/25/interview-prep/">Preparing for Technical Interviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2018/02/01/python-decorators/">F***in&#8217; Decorators, How Do THEY Work?!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/">Dig Yourself Out of a &#8216;Git Commit Amend&#8217; Hole With Reflog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/06/11/28-days-later/">28 Days Later: My First Four Weeks as a Junior Engineer at Spring</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/maiamcc">@maiamcc</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'maiamcc',
+            count: 10,
+            skip_forks: false,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+	<div class="rc-scout"></div>
+</p>
+<p>
+  Copyright &copy; 2018 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+</p>
+
+<p>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'maia-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://maiamcc.github.io/blog/2018/02/01/python-decorators/';
+        var disqus_url = 'http://maiamcc.github.io/blog/2018/02/01/python-decorators/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+<script async defer src="https://www.recurse-scout.com/loader.js?t=909b1e858cb2f5a7df2312d2f522aabf"></script>
+
+</body>
+</html>
