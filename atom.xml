@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2018-05-07T19:54:04-04:00</updated>
+  <updated>2018-05-29T21:04:44-04:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,6 +12,118 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How Windmill Prepped for GothamGo]]></title>
+    <link href="http://maiamcc.github.io/blog/2018/05/29/how-windmill-prepped-for-gothamgo/"/>
+    <updated>2018-05-29T20:29:12-04:00</updated>
+    <id>http://maiamcc.github.io/blog/2018/05/29/how-windmill-prepped-for-gothamgo</id>
+    <content type="html"><![CDATA[<p>(Cross-posted from <a href="//medium.com/windmill-engineering/how-windmill-prepped-for-gothamgo-3308020d70b">Windmill&rsquo;s blog</a>.)</p>
+
+<p>At the end of April, Windmill (all five of us) trekked down to GothamGo to learn things, meet people, and pitch our product. As Silver Level sponsors, we had our very own little table on the first floor; it was the perfect chance to pitch our fledgling product, make connections, and figure out what developers might want from us. The only question was: how?</p>
+
+<p>We’re a brand-new team, and GothamGo was a great excuse to do some important work. In preparation for the conference, we talked, we brainstormed, we aligned on our values and objectives and product goals; and then took the results of those conversations and ran with them, building our booth and our pitch from the bottom up.</p>
+
+<h2>The Booth (Objectives and Values)</h2>
+
+<p>The first order of business was: <em>what was our booth going to look like</em>? We asked this question of the team, and immediately realized that we first had to tackle our zeroth order of business: <em>what were our <strong>objectives</strong> for the conference</em>? In other words, what did we as a company hope to get out of GothamGo? Our answers would shape how we interacted with attendees, and how we decked out our booth to encourage those interactions.</p>
+
+<!-- more -->
+
+
+<p>We decided that the primary things we were looking to get out of this conference were:</p>
+
+<ul>
+<li><strong>A pulse on developer needs.</strong> (What are the pain points of people’s current dev tools? What do they want their magic dev tools solution to do for them?)</li>
+<li><strong>Product feedback</strong>. (Is our current incarnation of Windmill the right product to be building?)</li>
+<li><strong>Design partners.</strong> (These are larger organizations interested in adopting Windmill for their codebase, who will work with us to refine our product for them — and by extension, for other users.)</li>
+</ul>
+
+
+<p>Additionally, though not our primary focus, nice-to-have conference benefits included:</p>
+
+<ul>
+<li>Buzz around our product</li>
+<li>Alpha users who would play with Windmill and give us feedback</li>
+<li>Rad developers interested in joining our team</li>
+</ul>
+
+
+<p>With a framework in mind, we then turned to booth design.</p>
+
+<p>Last year at GothamGo, our founders went full science fair, with great success.</p>
+
+<div>
+    <img src="https://cdn-images-1.medium.com/max/4000/0*M074ur4hu5eHFvxJ.jpg" alt="Nick and Dan at GothamGo ‘17">
+    <p class="caption">Nick and Dan at GothamGo ‘17</p>
+</div>
+
+
+<p>This year we wanted something with a similar vibe — not a big fancy banner with our company name on it, but something more personal and more interesting.</p>
+
+<p>Instead of throwing ideas out into the void, though, we decided to focus our thinking. What did we like about last year’s booth that we were trying to replicate? What did we want this year’s booth to communicate? We brainstormed, and came up with some <strong>values</strong> that we wanted our booth to reflect:</p>
+
+<ul>
+<li>DIY (&ldquo;we got our hands dirty making this booth instead of just buying a pretty banner&rdquo;)</li>
+<li>Authentic (&ldquo;we’re being our excitable, nerdy selves and we’re <em>really psyched about dev tools, y’all!&rdquo;</em>)</li>
+<li>Approachable</li>
+<li>Sparks conversation</li>
+<li>Communicates the stage of our startup (i.e. early. Very early.)</li>
+<li>Empathetic</li>
+</ul>
+
+
+<p>We started tossing out ideas for booth themes in keeping with these values, but the breakthrough actually came when we took a slightly different tack: rather than &ldquo;what do we want our booth to <em>be</em>,&rdquo; we considered, &ldquo;how do we want our booth to hook passersby?&rdquo; The very first idea that got proposed was: &ldquo;let’s let people complain about their dev tools. People <em>love</em> complaining about their dev tools.&rdquo; The team loved it, and from there, it was jut a hop, skip, and a jump to Lucy’s &ldquo;Psychiatric Help 5¢&rdquo; stall from Peanuts.</p>
+
+<div>
+    <img src="https://cdn-images-1.medium.com/max/4000/0*Yq9VvVfMsajAS2z8.jpg" alt="The final product!">
+    <p class="caption">The final product!</p>
+</div>
+
+
+<p>We spent some time spitballing ideas, and declared a sub-committee to come up with a more concrete proposal. (It turned out that this was a key move — brainstorming is great for generating high-level ideas, but trying to make specific decisions in a committee of 5+ is a recipe for disaster.) With the fruits of this meeting in mind, our sub-committee set out to decide exactly what the booth would look like, and what swag/shiny things/interactive bits we would have to spark conversation and move towards our objectives.</p>
+
+<p><strong>Keeping It Lean</strong></p>
+
+<p>Our sub-committee brought back a booth proposal with a bunch of neat stuff, including:</p>
+
+<ul>
+<li>a &ldquo;tip jar&rdquo; where people could optionally put their 5¢ for donation to Women Who Go</li>
+<li>a monitor with a screencast of our alpha product in use</li>
+<li>a &ldquo;make your own T-shirt&rdquo; station</li>
+<li>an iPad and keyboard for folks to fill out a contact form (okay, maybe this one is par for the course)</li>
+</ul>
+
+
+<p>…and more! In the end though, we decided to strike almost all of their proposals.</p>
+
+<div>
+    <img src="https://cdn-images-1.medium.com/max/4000/0*hWp3mx7TMlqSWcug.jpg" alt="The initial booth proposal. Note a handful of things already crossed out.">
+    <p class="caption">The initial booth proposal. Note a handful of things already crossed out.</p>
+</div>
+
+
+<p>Any of the things suggested would be great booth components and conversation starters in their own right; but all together, it was just too much! If someone came up to our booth, we <em>didn’t</em> want to overwhelm them with choice; instead, we wanted a booth that funneled visitors into our desired modes of interaction. In the end, we opted to keep our booth lean, with only three major components: the psychiatry booth sign itself (&ldquo;Dev Tools Help 5¢&rdquo;); the screencast of Windmill Alpha in action; and a handout asking people for dev tools horror stories and directing them to our contact form.</p>
+
+<h2>The Pitch</h2>
+
+<p>The product we’re trying to build is a little new and a little amorphous. Given that, and the fact that 40% of our team had joined within the previous months, we took GothamGo as an opportunity to align on our vision of Windmill and to practice pitching our product.</p>
+
+<p>To kick off our practice session, our co-founders (by far our most experienced pitches) shared some of their one-sentence product hooks. (We don’t have a clean-cut &ldquo;<a href="//itsthisforthat.com/">Windmill is like {Uber} for {cats}</a>&rdquo;, but there are a handful of pithy phrases that work well to explain our product and spur further conversation.) Armed with these one-liners, we all role-played pitching Windmill to a conference attendee, with the rest of the team giving feedback. Here are some useful guideposts that emerged from this exercise:</p>
+
+<ul>
+<li><p><strong>Your opening line can be brief.</strong> I had previously bent over backwards trying to explain Windmill in one sentence, but to my surprise, the best pitch-starters were the shortest: say, &ldquo;Windmill makes development tools that give you faster answers to better questions.&rdquo; The purpose of the opening line was <em>not</em> to explain our entire product in one go; it was to catch interest and spark discussion.</p></li>
+<li><p><strong>Let the pitch-ee steer the pitch.</strong> If you’re talking to a real containers nerd, of <em>course</em> you want to seize the opportunity to brag about your container magic. And conversely, if you’re talking to someone whose biggest pain point is iOS integration testing, if you spend 5 minutes talking to them about deploying to Kubernetes, you’re wasting their time. However, if you take their signals and talk about the things they seem most interested in, you hold their interest better and have a greater chance of getting their buy-in. And in order to customize your pitch, you probably want to…</p></li>
+<li><p><strong>Ask your pitch-ee questions about their situation/use case</strong>. This is by far the best way to make sure you’re pitching <em>to</em> someone and holding their interest, instead of rambling about generic stuff that’s not of interest to them.</p></li>
+<li><p>Corollary point: <strong>probe to get at their concerns and reservations, and address them directly</strong>. If you’re feeling resistance to your pitch, figure out <em>why — </em>either you can address your pitch-ee’s concerns and explain how your product is in fact right for them, or you come away with a new growth area for your product.</p></li>
+</ul>
+
+
+<p>We came away from our practice session more comfortable in our pitch, and more unified in our product vision. And because of our thorough prep work — for pitch, booth, and conference objectives alike — we were able to go into GothamGo prepared, aligned, and ready to make some new friends on behalf of Windmill.</p>
+
+<p>Want to see the fruits of our pitch-practicing? Luckily, it’s easy to get a first-hand demonstration: hit us up at <a href="//twitter.com/windmill_eng">@windmill_eng</a> or <a href="mailto:hi@windmill.engineering">drop us an email</a>!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Preparing for Technical Interviews]]></title>
@@ -431,9 +543,7 @@ b) invoke the original function we passed to it</p>
 
 <p>That&rsquo;s a great question. There are probably lots of fascinating answers. At this present moment, I only have two: &ldquo;to store state&rdquo; and &ldquo;because you can&rdquo;. Since I&rsquo;ve already covered the latter in quite a bit of detail, let&rsquo;s turn to the former, i.e., a halfway plausible case in which you might want to use a class as a decorator. (I’m sure there are other reasonable ways to store state on a function, as well as other compelling reasons to use classes as decorators, but let’s just go with this for now.)</p>
 
-<p>Unlike functions, which are (generally) one-and-done, classes allow you to store state. You can store state on an <em>instance</em> of a class, but in this case we&rsquo;re interested in something that&rsquo;s more widely accessible, i.e. <em>storing state on the class itself</em>.</p>
-
-<p>How might you use this in a decorator context? Consider something like this:</p>
+<p>Unlike functions, which are (generally) one-and-done, classes allow you to store state.<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> How might you use this in a decorator context? Consider something like this:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -479,8 +589,6 @@ b) invoke the original function we passed to it</p>
 </span><span class='line'><span class="o">&lt;</span> <span class="s">&quot;hello world&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p>You can apply the above principle (storing state on the decorator class itself) in a wide and whacky variety of ways. Automatic memoization, perhaps?</p>
 
 <p>And heck, why not go for broke and use a class to decorate a class?!</p>
 
@@ -546,6 +654,8 @@ b) invoke the original function we passed to it</p>
 <p><code>MyClass(...)</code>, of course, being shorthand for <code>MyClass.__init__(...)</code>. (That&rsquo;s totally an oversimplification; <code>MyClass(...)</code> is <em>actually</em> shorthand for <code>MyClass.__new__(cls)</code>, which does a bunch of stuff, including call <code>__init__</code> on the newly made <code>MyClass</code> instance&hellip; but sufice it to say that when I call <code>MyClass(...)</code> I expect some stuff to happen, including a call to <code>MyClass.__init__</code>, and to eventually get back a new instance of that class.)<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
 <li id="fn:3">
 <p>Note that since <code>MyClass(...)</code> is baaasically shorthand for <code>MyClass.__init__(...)</code> (see above), and so you can achieve a pretty similar effect by decorating the <code>__init__</code>  method. The thing passed into <code>announce_new_instance</code> to be transformed will be different, but the new function will execute in just about the same way.<a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p>Hat tip to <a href="http://jayantj.github.io/">Jayant Jain</a>, who pointed out an error I made in the original version of this blogpost. (Yes, if you really wanted to, you could store state on a function as well, cuz it&rsquo;s Python and everything is an object, including functions. For instance, I could totally set <code>my_func.some_value = "hello"</code>. However, it&rsquo;s awkward and unidiomatic. So like, go ahead and do that if you want, but it&rsquo;s kinda weird, and really it just makes more sense to use classes.)<a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
 </ol>
 </div>
 
@@ -1529,23 +1639,6 @@ Graphic found in PAPress’s <a href="//www.papress.com/thinkingwithtype/index.h
 <p>I got pretty adept at these things at Hacker School, but the OSS/OPW world is an entirely different environment, and I need to relearn these skills, as well as the self-confidence and trust that I need to apply them. Some of this will be learning the skills of this new world so I feel less like an impostor and more like I can hold my own, even if I don&rsquo;t know x and y. Some of this will be asking &ldquo;dumb&rdquo; questions and realizing that nothing bad happens when I do. Some of this will be talking to other people in this community, growing to trust them, and hearing their experiences with the same thing. And some of this&hellip; will just be time and practice and getting used to it. And when I land in another new environment&mdash;say, my first tech job&mdash;I will likely need to learn all of these skills over again.</p>
 
 <p>Whelp. Time to get to work.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Choice Paralysis]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/10/06/choice-paralysis/"/>
-    <updated>2014-10-06T13:59:28-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/10/06/choice-paralysis</id>
-    <content type="html"><![CDATA[<p>Doing one thing at a time is very difficult.</p>
-
-<p>Here I am, first Monday without returning to Hacker School, sitting down to say &ldquo;Okay world, I spent the last three months <em>writing code</em> and it was awesome but I should know something about theory, algorithms, etc.; time to do some studying.&rdquo; I intended to sit down with <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Interactive Python</a> and blaze through a section or two before turning away to work on my other projects, job applications, etc.</p>
-
-<p>INSTEAD, I was filled with a sudden anxiety&mdash;what if Interactive Python isn&rsquo;t the right course for me? What if it&rsquo;s an okay course but there are better ones out there? What if by doing Interactive Python I&rsquo;m missing <em>the perfect algos course for me and this perfect course and I will be like ships passing in the night, never knowing what we might have had together, and all because I chose to work on Interactive Python</em>.<!-- more --> I looked at a Coursera course, I looked at the SICP study group that some HSers are setting up, I debated whether I wanted to get involved with said study group remotely even though it&rsquo;s based on daily in-person meetings, all worrying that I would miss my soul-mate algos course if I made the wrong move.</p>
-
-<p>Then I realized that I was being silly.</p>
-
-<p>I&rsquo;m off to spend an hour on Interactive Python, and if it isn&rsquo;t working for me, I&rsquo;ll reevaluate. At worst, I&rsquo;ll work through it in a few weeks, learn some stuff, and try another course!</p>
 ]]></content>
   </entry>
   
