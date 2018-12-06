@@ -4,7 +4,7 @@
   <title><![CDATA[Category: interviews | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/interviews/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2018-11-05T11:20:17-05:00</updated>
+  <updated>2018-12-06T14:42:20-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -41,28 +41,32 @@
 
 <p>I&rsquo;ve been interviewing candidates at work for 2ish years now, so I have some idea of the questions that get asked in interviews and could think ahead about my answers to those<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>: but by far the most useful prep I did here was to have people mock-interview me. Having to answer these questions <em>out loud</em> forced me to think about them more concretely, and I could also get feedback on the things that I was saying that were more or less impressive, red-flag-y, etc. (&ldquo;If they ask you about conflicts with coworkers, tell story A, not story B, cuz in story A you resolved your disagreement, and in story B you were right and your coworker wrong and the system broke because of it, but even though you were right, it still resulted in the system breaking.&rdquo;)</p>
 
-<h3>Preparing YOUR Interview Qs</h3>
+<h3>Preparing YOUR Interview Qs For THEM</h3>
 
 <p>Another thing worth doing is preparing a list of questions that <em>you</em> want to ask <em>of your interviewers</em> to get a better idea about the company you may possibly work for. The better your questions for them, the more insight you can get into their workplace&mdash;and the more prepared you are with these questions, the less dumb you look in front of your interviewer.</p>
 
-<p>I read a bunch of &ldquo;questions to ask in job interviews&rdquo; articles, grilled my friends, and put together a big doc of the questions I thought were the most informative. Some useful blog posts on the topic:
-* <a href="https://jvns.ca/blog/2013/12/30/questions-im-asking-in-interviews/">https://jvns.ca/blog/2013/12/30/questions-im-asking-in-interviews/</a>
-* <a href="http://juliepagano.com/blog/2015/08/15/job-search-retrospective/#interview-questions">http://juliepagano.com/blog/2015/08/15/job-search-retrospective/#interview-questions</a>
-* <a href="http://lizabinante.com/blog/getting-hired-without-getting-burned/">http://lizabinante.com/blog/getting-hired-without-getting-burned/</a></p>
+<p>I read a bunch of &ldquo;questions to ask in job interviews&rdquo; articles, grilled my friends, and put together a big doc of the questions I thought were the most informative. Some useful blog posts on the topic:</p>
+
+<ul>
+<li><a href="https://jvns.ca/blog/2013/12/30/questions-im-asking-in-interviews/">https://jvns.ca/blog/2013/12/30/questions-im-asking-in-interviews/</a></li>
+<li><a href="http://juliepagano.com/blog/2015/08/15/job-search-retrospective/#interview-questions">http://juliepagano.com/blog/2015/08/15/job-search-retrospective/#interview-questions</a></li>
+<li><a href="http://lizabinante.com/blog/getting-hired-without-getting-burned/">http://lizabinante.com/blog/getting-hired-without-getting-burned/</a></li>
+</ul>
+
 
 <h2>Algorithms</h2>
 
-<p>To brush up on my algos, I worked through <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Problem Solving with Algorithms and Data Structures using Python</a>, making sure to ask questions about/dig deeper into anything I didn&rsquo;t understand. Most of this I skimmed b/c I was already familiar with it, but I made sure to note the architypal problems for each data type (&ldquo;oh, it&rsquo;s an X problem? You should use data structure Y!&rdquo;), and paid special attention to trees and graphs cuz they&rsquo;re my weak spot.</p>
+<p>To brush up on my algos, I worked through <a href="http://interactivepython.org/runestone/static/pythonds/index.html">Problem Solving with Algorithms and Data Structures using Python</a>, making sure to ask questions about/dig deeper into anything I didn&rsquo;t understand. Most of this I skimmed because I was already familiar with it, but I made sure to note the architypal problems for each data type (&ldquo;oh, it&rsquo;s an X problem? You should use data structure Y!&rdquo;), and paid special attention to trees and graphs cuz they&rsquo;re my weak spot.</p>
 
-<p>And then it was just looots of practice problems. Some from Cracking the Coding Interview, some from <a href="https://leetcode.com/">LeetCode</a>, and as much practicing with friends as I could get. The best is to get friends who actually interview developers, because they know the ins and outs of their questions better, but even just having a friend mock-interview you with CtCI or LeetCode questions will do.</p>
+<p>And then it was just looots of practice problems. Some from <em>Cracking the Coding Interview</em>, some from <a href="https://leetcode.com/">LeetCode</a>, and as much practicing with friends as I could get. The best is to get friends who actually interview developers, because they know the ins and outs of their questions better, but even just having a friend mock-interview you with CtCI or LeetCode questions is better than nothing.</p>
 
-<p>Practicing algos Qs on your own just thinking through the solution, or writing the solution on a computer, is good. Writing it out on paper/a whiteboard is better. Practicing with a person (in a mock interview sort of capacity, where you&rsquo;re timed, they&rsquo;re giving you hints where necessary but pushing you to explain yourself) is best.</p>
+<p>Practicing algos Qs on your own just thinking through the solution, or writing the solution on a computer, is good. Writing it out on paper/a whiteboard is better. Practicing with a person (in a mock interview sort of capacity, where you&rsquo;re timed, they&rsquo;re giving you hints where necessary but pushing you to explain yourself) is best. Especially if technical interviews make you nervous: the more you do it, even with friends, the more used to that anxiety you&rsquo;ll be, and the better you&rsquo;ll be able to perform in the real thing.</p>
 
 <h2>System Design</h2>
 
 <p>Like with algos, mostly this was a matter of practice&mdash;getting friends to mock interview me with system design quesitons. I also went over some of the systems I built at work and made sure that I understood the technical choices and trade-offs there, so I could talk intelligently about it in interviews.</p>
 
-<p>A piece of advice I got here (which I didn&rsquo;t end up taking, and it all turned out okay, but I probably should have done this anyway) was to talk to folks at other companies about their system architecture. My Achilles&#8217; heel in system design interviews has always been that I&rsquo;m only really familiar with the one or two paradigms I&rsquo;ve worked in&mdash;talking to others&#8217; about <em>their</em> paradigms would have been super useful, and given me a lot more ideas to draw on.</p>
+<p>A piece of advice I got here (which I didn&rsquo;t end up taking, and it all turned out okay, but I probably should have done this anyway) was to talk to folks at other companies about their system architecture. My Achilles&#8217; heel in system design interviews has always been that I&rsquo;m only really familiar with the one or two paradigms I&rsquo;ve worked in&mdash;talking to others about <em>their</em> paradigms would have been super useful, and given me a lot more ideas to draw on.</p>
 
 <h1>How long did you prep for?</h1>
 
@@ -86,7 +90,7 @@
 
 <h1>Then what?</h1>
 
-<p>Well hopefully, the offers start rolling in! Be transparent with everyone in your interview process about where you&rsquo;re at (esp. with other companies), what your concerns are, and what you need from them. Stating your needs going in sets a good precedent!</p>
+<p>Well hopefully, the offers start rolling in! Be transparent with everyone in your interview process about where you&rsquo;re at, what your concerns are, and what you need from them. Stating your needs going in sets a good precedent!</p>
 
 <p>When you start thinking about switching jobs, be prepared for lots of last minute insurance submissions and affair-getting-in-order, and remember to take any relevant documents off your computer/email/google drive, any relevant passwords off your password manager, etc. (Pro tip: if you know you&rsquo;ll be leaving early-ish in the year, max out your Flex Spending Account and you&rsquo;ll end up with free money! It&rsquo;s a good time to buy those prescription sunglasses you don&rsquo;t reaaally need, but heck, they&rsquo;re free!)</p>
 
