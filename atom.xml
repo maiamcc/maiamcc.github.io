@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2019-01-02T16:53:39-05:00</updated>
+  <updated>2019-03-05T11:21:08-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -770,7 +770,7 @@ b) invoke the original function we passed to it</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>If an object has all of the methods required for an interface, we say that that object <em>implements</em> (or satisfies) that interface. In this case, both <code>octopus</code> and <code>slug</code> implement <code>oozer</code> because they both have <code>ooze()</code> methods. The compiler can check this for us, so we know that anything we pass into <code>oozeAttack</code> has an <code>ooze()</code> method and won’t break out code—in stark contrast to the example above, where we could pass in <em>literally anything</em> and just had to pray that it wouldn’t cause a panic.</p>
+<p>If an object has all of the methods required for an interface, we say that that object <em>implements</em> (or satisfies) that interface. In this case, both <code>octopus</code> and <code>slug</code> implement <code>oozer</code> because they both have <code>ooze()</code> methods. The compiler can check this for us, so we know that anything we pass into <code>oozeAttack</code> has an <code>ooze()</code> method and won’t break our code—in stark contrast to the example above, where we could pass in <em>literally anything</em> and just had to pray that it wouldn’t cause a panic at runtime.</p>
 
 <h3>Okay, But What Is an <code>interface{}</code>?</h3>
 
@@ -780,7 +780,7 @@ b) invoke the original function we passed to it</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">printMysteryObject</span><span class="p">(</span><span class="nx">thing</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Your mystery thing is: %v&quot;</span><span class="p">,</span> <span class="nx">thing</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Your mystery thing is: %v (of type %T)&quot;</span><span class="p">,</span> <span class="nx">thing</span><span class="p">,</span> <span class="nx">thing</span><span class="p">)</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 

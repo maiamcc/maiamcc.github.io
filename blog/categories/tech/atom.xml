@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tech | Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/blog/categories/tech/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2019-01-02T16:53:39-05:00</updated>
+  <updated>2019-03-05T11:21:08-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -467,14 +467,14 @@ func oozeAttack(o oozer) string {
 }
 </code></pre>
 
-<p>If an object has all of the methods required for an interface, we say that that object <em>implements</em> (or satisfies) that interface. In this case, both <code>octopus</code> and <code>slug</code> implement <code>oozer</code> because they both have <code>ooze()</code> methods. The compiler can check this for us, so we know that anything we pass into <code>oozeAttack</code> has an <code>ooze()</code> method and won’t break out code—in stark contrast to the example above, where we could pass in <em>literally anything</em> and just had to pray that it wouldn’t cause a panic.</p>
+<p>If an object has all of the methods required for an interface, we say that that object <em>implements</em> (or satisfies) that interface. In this case, both <code>octopus</code> and <code>slug</code> implement <code>oozer</code> because they both have <code>ooze()</code> methods. The compiler can check this for us, so we know that anything we pass into <code>oozeAttack</code> has an <code>ooze()</code> method and won’t break our code—in stark contrast to the example above, where we could pass in <em>literally anything</em> and just had to pray that it wouldn’t cause a panic at runtime.</p>
 
 <h3>Okay, But What Is an <code>interface{}</code>?</h3>
 
 <p>If you’ve been using Go for more than a couple of days, you’ve probably stumbled across <code>interface{}</code>, the mythical and mysterious empty interface (<a href="https://www.youtube.com/watch?v=bW7Op86ox9g">click here for dramatic effect</a>). (I even used it in the example above.) The empty interface baffled me for a long time. I understood that practically, it was a type wildcard—you used it anywhere you weren’t sure of the type of a thing. If I have a function that’s going to get passed <em>some thing</em> but I don’t know what the type of that thing is, I’ll use <code>interface{}</code> so nothing breaks:</p>
 
 <pre><code class="go">func printMysteryObject(thing interface{}) {
-        fmt.Printf("Your mystery thing is: %v", thing)
+        fmt.Printf("Your mystery thing is: %v (of type %T)", thing, thing)
 }
 </code></pre>
 
