@@ -1,0 +1,39 @@
+/* https://codepen.io/fannietaeyang/pen/xOQzvq */
+
+body {
+    background-color: #FFFFFF;
+    color: black;
+    font-size: 16px;
+    font-family: "Lucida Grande", Verdana,Arial, Helvetica, sans-serif;
+}
+
+h1, th {
+    font-family: Georgia, "Times New Roman",Times, serif;
+}
+
+h1 {
+    font-size: 22px;
+}
+
+table {
+    margin: 1em;
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+}
+
+th, td {
+    padding: 10px;
+    border: 2px #666 solid;
+    text-align: center;
+    height: 7em;
+    width: 7em;
+    overflow: hidden;
+}
+
+th {
+    height: 1em;
+}
+
+#free, .pickedBG {
+    background-color: #FF6666;
+}
