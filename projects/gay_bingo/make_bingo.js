@@ -35,6 +35,9 @@ var elems = [
     'softball and/or rugby',
     'bikes',
     'can\'t drive',
+    'can use a sword, do a martial art, real strong, in some other way deadly',
+    'don\'t make your own bed but make your ladyfriend\'s bed when you stay over',
+    'moving in after dating for under a year',
  ]
 
 function initAll() {
