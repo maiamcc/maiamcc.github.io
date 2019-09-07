@@ -9,7 +9,7 @@ Array.prototype.popRand = function () {
 
 var elems = [
     'brightly colored hair',
-    'undercut',
+    'undercut/side shave',
     'pixie cut',
     'funky lipstick',
     'non-earlobe piercing(s)',
@@ -38,6 +38,7 @@ var elems = [
     'can use a sword, do a martial art, real strong, in some other way deadly',
     'don\'t make your own bed but make your ladyfriend\'s bed when you stay over',
     'moving in after dating for under a year',
+    'Indigo Girls',
  ]
 
 function initAll() {
