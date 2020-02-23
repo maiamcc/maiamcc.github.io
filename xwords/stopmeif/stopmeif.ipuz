@@ -1,0 +1,854 @@
+{
+  "copyright": "© Maia McCormick, 2020",
+  "solution": [
+    [
+      "F",
+      "A",
+      "L",
+      "S",
+      "E",
+      "#",
+      "D",
+      "A",
+      "T",
+      "A",
+      "#",
+      "U",
+      "N",
+      "I",
+      "T"
+    ],
+    [
+      "A",
+      "N",
+      "O",
+      "N",
+      "S",
+      "#",
+      "A",
+      "G",
+      "E",
+      "D",
+      "#",
+      "N",
+      "E",
+      "R",
+      "O"
+    ],
+    [
+      "R",
+      "E",
+      "L",
+      "I",
+      "C",
+      "#",
+      "L",
+      "E",
+      "N",
+      "S",
+      "#",
+      "G",
+      "A",
+      "I",
+      "N"
+    ],
+    [
+      "O",
+      "W",
+      "L",
+      "P",
+      "A",
+      "C",
+      "I",
+      "N",
+      "O",
+      "#",
+      "C",
+      "U",
+      "R",
+      "S",
+      "E"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "S",
+      "P",
+      "A",
+      "#",
+      "T",
+      "R",
+      "I",
+      "A",
+      "L",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "M",
+      "A",
+      "Y",
+      "#",
+      "E",
+      "S",
+      "L",
+      "#",
+      "#",
+      "C",
+      "R",
+      "A",
+      "S",
+      "S",
+      "#"
+    ],
+    [
+      "I",
+      "R",
+      "E",
+      "#",
+      "#",
+      "H",
+      "A",
+      "R",
+      "R",
+      "Y",
+      "O",
+      "T",
+      "T",
+      "E",
+      "R"
+    ],
+    [
+      "L",
+      "E",
+      "A",
+      "S",
+      "T",
+      "#",
+      "L",
+      "O",
+      "O",
+      "#",
+      "L",
+      "E",
+      "A",
+      "V",
+      "E"
+    ],
+    [
+      "D",
+      "A",
+      "R",
+      "T",
+      "H",
+      "G",
+      "A",
+      "T",
+      "O",
+      "R",
+      "#",
+      "#",
+      "T",
+      "E",
+      "A"
+    ],
+    [
+      "#",
+      "S",
+      "N",
+      "A",
+      "R",
+      "E",
+      "#",
+      "#",
+      "M",
+      "U",
+      "M",
+      "#",
+      "E",
+      "R",
+      "R"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "M",
+      "E",
+      "M",
+      "E",
+      "S",
+      "#",
+      "M",
+      "O",
+      "S",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "D",
+      "R",
+      "A",
+      "P",
+      "E",
+      "#",
+      "B",
+      "A",
+      "D",
+      "P",
+      "U",
+      "N",
+      "D",
+      "O",
+      "G"
+    ],
+    [
+      "R",
+      "A",
+      "K",
+      "E",
+      "#",
+      "M",
+      "O",
+      "U",
+      "E",
+      "#",
+      "T",
+      "O",
+      "A",
+      "D",
+      "Y"
+    ],
+    [
+      "A",
+      "C",
+      "I",
+      "D",
+      "#",
+      "A",
+      "N",
+      "N",
+      "E",
+      "#",
+      "H",
+      "O",
+      "N",
+      "O",
+      "R"
+    ],
+    [
+      "G",
+      "E",
+      "N",
+      "E",
+      "#",
+      "D",
+      "Y",
+      "A",
+      "D",
+      "#",
+      "S",
+      "P",
+      "A",
+      "R",
+      "E"
+    ]
+  ],
+  "kind": ["http://ipuz.org/crossword#1"],
+  "author": "Maia McCormick",
+  "puzzle": [
+    [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "#",
+      6,
+      7,
+      8,
+      9,
+      "#",
+      10,
+      11,
+      12,
+      13
+    ],
+    [
+      14,
+      0,
+      0,
+      0,
+      0,
+      "#",
+      15,
+      0,
+      0,
+      0,
+      "#",
+      16,
+      0,
+      0,
+      0
+    ],
+    [
+      17,
+      0,
+      0,
+      0,
+      0,
+      "#",
+      18,
+      0,
+      0,
+      0,
+      "#",
+      19,
+      0,
+      0,
+      0
+    ],
+    [
+      20,
+      0,
+      0,
+      0,
+      0,
+      21,
+      0,
+      0,
+      0,
+      "#",
+      22,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      23,
+      0,
+      0,
+      "#",
+      24,
+      0,
+      25,
+      0,
+      0,
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      26,
+      27,
+      28,
+      "#",
+      29,
+      0,
+      30,
+      "#",
+      "#",
+      31,
+      0,
+      0,
+      32,
+      33,
+      "#"
+    ],
+    [
+      34,
+      0,
+      0,
+      "#",
+      "#",
+      35,
+      0,
+      36,
+      37,
+      0,
+      0,
+      0,
+      0,
+      0,
+      38
+    ],
+    [
+      39,
+      0,
+      0,
+      40,
+      41,
+      "#",
+      42,
+      0,
+      0,
+      "#",
+      43,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      44,
+      0,
+      0,
+      0,
+      0,
+      45,
+      0,
+      0,
+      0,
+      46,
+      "#",
+      "#",
+      47,
+      0,
+      0
+    ],
+    [
+      "#",
+      48,
+      0,
+      0,
+      0,
+      0,
+      "#",
+      "#",
+      49,
+      0,
+      50,
+      "#",
+      51,
+      0,
+      0
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      52,
+      0,
+      0,
+      53,
+      54,
+      "#",
+      55,
+      0,
+      56,
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      57,
+      58,
+      59,
+      0,
+      0,
+      "#",
+      60,
+      0,
+      61,
+      0,
+      0,
+      0,
+      62,
+      63,
+      64
+    ],
+    [
+      65,
+      0,
+      0,
+      0,
+      "#",
+      66,
+      0,
+      0,
+      0,
+      "#",
+      67,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      68,
+      0,
+      0,
+      0,
+      "#",
+      69,
+      0,
+      0,
+      0,
+      "#",
+      70,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      71,
+      0,
+      0,
+      0,
+      "#",
+      72,
+      0,
+      0,
+      0,
+      "#",
+      73,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "origin": "CrossFire encoder v1",
+  "block": "#",
+  "title": "Stop Me If You've Heard This One",
+  "version": "http://ipuz.org/v2",
+  "empty": "0",
+  "dimensions": {
+    "width": 15,
+    "height": 15
+  },
+  "clues": {
+    "Down": [
+      [
+        1,
+        "Poker predecessor"
+      ],
+      [
+        2,
+        "Again"
+      ],
+      [
+        3,
+        "Thing to do on a lazy Sunday"
+      ],
+      [
+        4,
+        "Makes a tiny cut"
+      ],
+      [
+        5,
+        "Fly the coop"
+      ],
+      [
+        6,
+        "Face-melting painter?"
+      ],
+      [
+        7,
+        "One who arranges auditions"
+      ],
+      [
+        8,
+        "Pears or Domingo, for instance"
+      ],
+      [
+        9,
+        "Video interrupters"
+      ],
+      [
+        10,
+        "Hippopotamus, e.g."
+      ],
+      [
+        11,
+        "Approach"
+      ],
+      [
+        12,
+        "Greek goddess of the rainbow"
+      ],
+      [
+        13,
+        "Define, as abs"
+      ],
+      [
+        21,
+        "Greenbacks"
+      ],
+      [
+        22,
+        "\"Adam Lay Ybounden\" or \"In the Bleak Midwinter\""
+      ],
+      [
+        25,
+        "Like some perilous roads"
+      ],
+      [
+        26,
+        "1 or 2 on the Scoville Scale"
+      ],
+      [
+        27,
+        "51 and pi-r-squared, e.g."
+      ],
+      [
+        28,
+        "Long"
+      ],
+      [
+        30,
+        "Land inhabited by Ryan Gosling?"
+      ],
+      [
+        32,
+        "Not Guam, notably"
+      ],
+      [
+        33,
+        "Remove, as a head"
+      ],
+      [
+        36,
+        "Not keep"
+      ],
+      [
+        37,
+        "Share accomodations, with \"with\""
+      ],
+      [
+        38,
+        "Dorsal"
+      ],
+      [
+        40,
+        "Cause of death of Mufasa"
+      ],
+      [
+        41,
+        "Rule of ____"
+      ],
+      [
+        45,
+        "Any of Steven Universe's moms"
+      ],
+      [
+        46,
+        "Caboose"
+      ],
+      [
+        50,
+        "Tries to feed an actor lines, say"
+      ],
+      [
+        53,
+        "Material for flats, traditionally"
+      ],
+      [
+        54,
+        "Amenity at a 23-across"
+      ],
+      [
+        56,
+        "Make like Harriet"
+      ],
+      [
+        57,
+        "With 58-down, long-running LOGO reality show"
+      ],
+      [
+        58,
+        "See 57-down"
+      ],
+      [
+        59,
+        "Like"
+      ],
+      [
+        61,
+        "Transfer, as property"
+      ],
+      [
+        62,
+        "Carvey of Wayne's World"
+      ],
+      [
+        63,
+        "Febreeze foe"
+      ],
+      [
+        64,
+        "Whirl"
+      ],
+      [
+        66,
+        "\"What, me worry?\" magazine"
+      ]
+    ],
+    "Across": [
+      [
+        1,
+        "0, to a machine"
+      ],
+      [
+        6,
+        "TNG android"
+      ],
+      [
+        10,
+        "Meter or erg, e.g."
+      ],
+      [
+        14,
+        "Ones posting without signing in"
+      ],
+      [
+        15,
+        "Left adolescence"
+      ],
+      [
+        16,
+        "Firey fiddler"
+      ],
+      [
+        17,
+        "Teotihuacán find, perhaps"
+      ],
+      [
+        18,
+        "Word after \"critical\" or \"contact\""
+      ],
+      [
+        19,
+        "Input volume setting"
+      ],
+      [
+        20,
+        "A movie star, in a tree?"
+      ],
+      [
+        22,
+        "Red Sox affliction until 2004, according to some"
+      ],
+      [
+        23,
+        "Lead-in to \"day\" or \"water\""
+      ],
+      [
+        24,
+        "First month free, say"
+      ],
+      [
+        26,
+        "Time for Star Wars Day"
+      ],
+      [
+        29,
+        "ESOL, once"
+      ],
+      [
+        31,
+        "Uncouth"
+      ],
+      [
+        34,
+        "Oscar Wilde's land, briefly"
+      ],
+      [
+        35,
+        "A wizard, in a river?"
+      ],
+      [
+        39,
+        "Lowest in standing"
+      ],
+      [
+        42,
+        "A place to go in Britain"
+      ],
+      [
+        43,
+        "Permission"
+      ],
+      [
+        44,
+        "A Dark Lord, in the bayou?"
+      ],
+      [
+        47,
+        "It may be spilled by a gossip"
+      ],
+      [
+        48,
+        "Neighbor to a tom"
+      ],
+      [
+        49,
+        "The word, according to some"
+      ],
+      [
+        51,
+        "Mess up"
+      ],
+      [
+        52,
+        "Images of 60 across, for example"
+      ],
+      [
+        55,
+        "Apr. and Sept., e.g."
+      ],
+      [
+        57,
+        "Curtain"
+      ],
+      [
+        60,
+        "A certain open-mouth husky, according to the internet, who might tell you about 20-, 35-, or 44-across"
+      ],
+      [
+        65,
+        "Playboy, once"
+      ],
+      [
+        66,
+        "Pout"
+      ],
+      [
+        67,
+        "Yes-man"
+      ],
+      [
+        68,
+        "Oblique Beatles song referent, by another name"
+      ],
+      [
+        69,
+        "Wife of William in Stratford-upon-Avon"
+      ],
+      [
+        70,
+        "Start of the fourth commandment"
+      ],
+      [
+        71,
+        "Conveyor of eye color"
+      ],
+      [
+        72,
+        "Pair"
+      ],
+      [
+        73,
+        "Decline to execute"
+      ]
+    ]
+  }
+}
