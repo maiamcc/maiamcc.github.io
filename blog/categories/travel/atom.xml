@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: travel, | Maia McCormick]]></title>
+  <link href="http://maiamcc.github.io/blog/categories/travel/atom.xml" rel="self"/>
+  <link href="http://maiamcc.github.io/"/>
+  <updated>2020-02-27T17:31:38-05:00</updated>
+  <id>http://maiamcc.github.io/</id>
+  <author>
+    <name><![CDATA[Maia Remez McCormick]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Amsterdam Recommendations]]></title>
+    <link href="http://maiamcc.github.io/blog/2020/02/27/amsterdam-recommendations/"/>
+    <updated>2020-02-27T16:19:24-05:00</updated>
+    <id>http://maiamcc.github.io/blog/2020/02/27/amsterdam-recommendations</id>
+    <content type="html"><![CDATA[<p>Huh, I guess I still have a blog!</p>
+
+<p>How many of you folks out there are going to <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/">Kubecon EU 2020 in Amsterdam</a>? Well, <a href="https://tilt.dev/">Team Tilt</a> will be there with bells on! &hellip;But I myself, unfortunately, will not. Which is a particular shame, because I studied in Amsterdam for a semester in undergrad, and would love to go back! In lieu of that, I&rsquo;ve written up a bunch of stuff I&rsquo;d do if I went, and that I want my coworkers to do in my stead. Thought I&rsquo;d post it here for the whole internet to see&mdash;if you want to have some fun in Amsterdam on my behalf, then please please do so! (And if anyone wants to bring me back some cheese or hagelslag, well, I wouldn&rsquo;t complain 😋 ).</p>
+
+<p>To all of y&#8217;all going to Kubecon (or just touristing around Amsterdam): <em>veilige reizen, en veel plezier</em>!</p>
+
+<p><img src="/images/amsterdam_2_canalhouses.jpg" alt="Canal houses in the sun" />
+<em>Canal houses in the sun (Maia McCormick, 2013)</em></p>
+
+<h2>Some Amsterdam Recommendations Based on a Semester Abroad</h2>
+
+<h3>General Advice</h3>
+
+<ul>
+<li>Honestly just wander around a lot&mdash;city center, old churches, canals, any of the delightful parks&hellip;</li>
+<li>If you want to see/navigate the city properly, rent a bike while you&rsquo;re there.</li>
+<li>Pack your rain gear.</li>
+<li>For the love of glob don&rsquo;t walk on the bike paths.<!-- more --></li>
+<li>FYI, cafes or coffee houses are for coffee; coffee shops are for pot.</li>
+<li>In general: wander, get lost, don&rsquo;t be stuck in your phone, drop into any place that looks interesting, and go pursue some <a href="https://stuffdutchpeoplelike.com/2015/09/23/gezelligheid-gezellig/">gezelligheid</a> (basically &ldquo;coziness&rdquo;, similar to the Danisy <em>hygge</em>): pop into a random cafe in the city center, drink a beer and eat a toastie while gazing out at some canals, and <em>enjoy</em>.</li>
+</ul>
+
+
+<h3>Museums etc.:</h3>
+
+<ul>
+<li>Rijksmuseum (classic art museum, GORGEOUS, will be mobbed)</li>
+<li>Stedelijk (right by Rijskmuseum, probably less mobbed, contemporary art, looks like a giant bathtub)</li>
+<li>Anne Frank House</li>
+<li>Artis (the zoo, which is actually surprisingly really awesome&ndash;and iirc not far from the botanic gardens)</li>
+<li>Jewish Historical Museum/old Portuguese synagogue (not far from Artis) and Holocaust Museum (also nearby)</li>
+<li>My favorite hidden gem was Our Lord In the Attic near the center of town, which is a few old canalhouses with a secret catholic church in the attic.</li>
+<li>Second-place hidden gem: the Begijnhof&ndash;not really a musuem or anything, but a lil secret courtyard near the center of town.</li>
+<li>There are some canal houses-turned-museums (Grachtenhuis, Van Loon) that are also neat.</li>
+<li>Nemo (the science museum, technically for kids but pretty delightful).</li>
+<li>FYI the Sex Museum is not worth it imho.</li>
+</ul>
+
+
+<h3>Music</h3>
+
+<p>Miziekgebouw and Concertgebouw are their two big concert halls, you can probably get rush tickets to something neat. There are probably clubs or something that have other kinds of music, idk.</p>
+
+<h3>Markets</h3>
+
+<p>There are lots of outdoor fleamarkets that are delightful to wander through, as well as great places to buy souveniers/tchotchkes, as well as delicious foodstuffs. Check out:</p>
+
+<ul>
+<li>Dappermarkt</li>
+<li>Albert Cuypmart</li>
+<li>Niewemarkt</li>
+<li>Waterlooplein</li>
+</ul>
+
+
+<h3>Food</h3>
+
+<p>(Because the most important part of any trip is the food, right??)</p>
+
+<ul>
+<li>pancakes (Pannekoeken) if you can find a place that&rsquo;s not super touristy (I suggest Pancakes!)</li>
+<li>Stroopwafles, fresh if possible</li>
+<li>Idonesian food. Colonialism sucks but is sometimes delicious</li>
+<li>Bitterballen are prime drunk food: deep fried meatballs mmm. (I&rsquo;m not sure how many I could eat sober, but with a beer or two they are 👌)</li>
+<li>Fries, especially with satay sauce or curry</li>
+<li>Not necessarily <em>good</em>, but certainly <em>an experience</em>: get a burger from a vending machine at Febo. Not as bad as you might imagine!</li>
+<li>CHEESE. (Bring me some back?)</li>
+<li>Other uniquely Dutch stuff to try if you end up in a supermarket: hagelslag (chocolate sprinkles but actually good), speculoos (cookie butter), probably loads more that I&rsquo;m forgetting. Go explore!</li>
+<li>There are some fabulous Belgian beers to be had, and even some Dutch ones; drink one for me! (In particular, try Brouwerij &rsquo;t IJ, a cozy l&#8217;il brewery by a windmill. I lived right by here!)</li>
+</ul>
+
+
+<p><img src="/images/amsterdam_1_windmill.jpg" alt="De Gooyer windmill at sunset" />
+<em>De Gooyer windmill (next to the Brouwerij &rsquo;t IJ) at sunset (Maia McCormick, 2013)</em></p>
+
+<h4>(Like this list? Have any reports, or anything to add? Leave a comment below 👇🏻)</h4>
+]]></content>
+  </entry>
+  
+</feed>

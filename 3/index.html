@@ -4,12 +4,23 @@
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149411100-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149411100-2');
+  </script>
+
+
   <meta charset="utf-8">
   <title>Maia McCormick</title>
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="Doing one thing at a time is very difficult. Here I am, first Monday without returning to Hacker School, sitting down to say &ldquo;Okay world, I &hellip;">
+  <meta name="description" content="I spent a ton of my time at Hacker School learning how to ask questions (or, to put a finer point on it, learning how to not know things and admit to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,20 +41,10 @@
 <link href='http://fonts.googleapis.com/css?family=Overlock+SC|Overlock:400,700|Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
 <!-- Add fancyBox -->
-<link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-<script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".fancybox").fancybox();
-        $(".fancybox").fancybox({
-    width  : 600,
-    height : 300,
-    type   :'iframe'
-    });
-
-});
-</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   
 
 </head>
@@ -84,6 +85,49 @@
     My name is Maia. I&#8217;m a programmer based in New York City, currently building <a href="//www.tilt.dev/">Tilt</a>, a dev tool for iterating on microservices in Kubernetes. This website is where I (somewhat infrequently) chronicle my journeys through code, as well as other vaguely related adventures.
   </article>
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Re-Learning How to Ask Questions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-13T13:36:32-04:00" pubdate data-updated="true">13 Oct 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I spent a ton of my time at Hacker School learning how to ask questions (or, to put a finer point on it, learning how to <em>not know things</em> and admit to others that I don&rsquo;t know things). The main reason that HS was so hard at first was that I wasn&rsquo;t good at asking questions, at admitting when I didn&rsquo;t know things, at letting myself (I feared) appear &ldquo;stupid&rdquo; in front of others. I was still better than some folks at pushing through this, but I wasn&rsquo;t as good as I would have liked. (This is all tied into impostor syndrome, of course.)</p>
+
+<p>I got vastly better at this skill as I spent more time at Hacker School. I grew more comfortable in the environment, I gained trust in the folks around me and in my own abilities, and I came to believe that my asking questions, even ones about really basic (quote-unquote-&ldquo;basic&rdquo;) things, was a display of intelligence rather than a display of ignorance.</p>
+
+<p>What I didn&rsquo;t realize about my shiny new skill of &ldquo;Admitting When I Don&rsquo;t Know Something and Asking Questions&rdquo; was how context-dependent it is. At Hacker School, in person or on Zulip, I feel totally comfortable asking questions about &ldquo;simple&rdquo; things, and admitting that I&rsquo;m totally in over my head with, say, troubleshooting my Virtual Machine installation and would someone please help me, and what is actually the difference between GET and POST because I never really learned it&hellip; that sort of thing. But as I prepare my application for the coming round of <a href="https://opw.gnome.org">OPW</a> and dive head-first into IRC chats about programs and programming styles I&rsquo;ve never used before, that all seem to require strange dependencies or have to be run on X virtual machine with Y stuff built on it, I recognize a feeling from my early days of Hacker School.</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/10/13/re-learning-how-to-ask-questions/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -510,125 +554,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/26/slicing-is-not-enough/">Slicing Is Not Enough (or, Adventures in Deep Copy)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-26T11:56:57-04:00" pubdate data-updated="true">26 Aug 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The sudoku solver that I&rsquo;m working on with <a href="https://mlauter.github.io/">Miriam</a> was nearly finished before it started when we were playing around with ways to draw a board to terminal. I came to the table with some initial code I had written&mdash;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">draw_board</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">row_string</span> <span class="o">=</span> <span class="s">&quot;  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
-</span><span class='line'>            <span class="k">print</span> <span class="n">row_string</span>
-</span><span class='line'>            <span class="k">print</span> <span class="s">&quot;________________________________&quot;</span>
-</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>            <span class="k">print</span> <span class="n">row_string</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">newboard</span><span class="p">():</span>
-</span><span class='line'>    <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and the shiny output!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">myboard</span> <span class="o">=</span> <span class="n">newboard</span><span class="p">()</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">draw_board</span><span class="p">(</span><span class="n">myboard</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span><span class='line'><span class="n">________________________________</span>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span><span class='line'><span class="n">________________________________</span>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span><span class='line'><span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Everything was awesome! Or so I thought. But look what happened when I ran the code again.</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/08/26/slicing-is-not-enough/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/4">&larr; Older</a>
@@ -660,6 +585,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2020/02/27/amsterdam-recommendations/">Amsterdam Recommendations</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2018/05/29/how-windmill-prepped-for-gothamgo/">How Windmill Prepped for GothamGo</a>
       </li>
     
@@ -673,10 +602,6 @@
     
       <li class="post">
         <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/04/29/dig-yourself-out-of-a-git-commit-amend-hole/">Dig Yourself Out of a &#8216;Git Commit Amend&#8217; Hole With Reflog</a>
       </li>
     
   </ul>
@@ -722,7 +647,7 @@
 	<div class="rc-scout"></div>
 </p>
 <p>
-  Copyright &copy; 2019 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
+  Copyright &copy; 2020 - Maia Remez McCormick - maia [dot] mcc [at] gmail [dot] com
 </p>
 
 <p>
