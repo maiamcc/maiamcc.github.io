@@ -4,7 +4,7 @@
   <title><![CDATA[Maia McCormick]]></title>
   <link href="http://maiamcc.github.io/atom.xml" rel="self"/>
   <link href="http://maiamcc.github.io/"/>
-  <updated>2020-02-25T09:51:13-05:00</updated>
+  <updated>2020-02-27T19:12:59-05:00</updated>
   <id>http://maiamcc.github.io/</id>
   <author>
     <name><![CDATA[Maia Remez McCormick]]></name>
@@ -12,6 +12,90 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Amsterdam Recommendations]]></title>
+    <link href="http://maiamcc.github.io/blog/2020/02/27/amsterdam-recommendations/"/>
+    <updated>2020-02-27T16:19:24-05:00</updated>
+    <id>http://maiamcc.github.io/blog/2020/02/27/amsterdam-recommendations</id>
+    <content type="html"><![CDATA[<p>Huh, I guess I still have a blog!</p>
+
+<p>How many of you folks out there are going to <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/">Kubecon EU 2020 in Amsterdam</a>? Well, <a href="https://tilt.dev/">Team Tilt</a> will be there with bells on! &hellip;But I myself, unfortunately, will not. Which is a particular shame, because I studied in Amsterdam for a semester in undergrad, and would love to go back! In lieu of that, I&rsquo;ve written up a bunch of stuff I&rsquo;d do if I went, and that I want my coworkers to do in my stead. Thought I&rsquo;d post it here for the whole internet to see&mdash;if you want to have some fun in Amsterdam on my behalf, then please please do so! (And if anyone wants to bring me back some cheese or hagelslag, well, I wouldn&rsquo;t complain 😋 ).</p>
+
+<p>To all of y&#8217;all going to Kubecon (or just touristing around Amsterdam): <em>veilige reizen, en veel plezier</em>!</p>
+
+<p><img src="http://maiamcc.github.io/images/amsterdam_2_canalhouses.jpg" alt="Canal houses in the sun" />
+<em>Canal houses in the sun (Maia McCormick, 2013)</em></p>
+
+<h2>Some Amsterdam Recommendations Based on a Semester Abroad</h2>
+
+<h3>General Advice</h3>
+
+<ul>
+<li>Honestly just wander around a lot&mdash;city center, old churches, canals, any of the delightful parks&hellip;</li>
+<li>If you want to see/navigate the city properly, rent a bike while you&rsquo;re there.</li>
+<li>Pack your rain gear.</li>
+<li>For the love of glob don&rsquo;t walk on the bike paths.<!-- more --></li>
+<li>FYI, cafes or coffee houses are for coffee; coffee shops are for pot.</li>
+<li>In general: wander, get lost, don&rsquo;t be stuck in your phone, drop into any place that looks interesting, and go pursue some <a href="https://stuffdutchpeoplelike.com/2015/09/23/gezelligheid-gezellig/">gezelligheid</a> (basically &ldquo;coziness&rdquo;, similar to the Danisy <em>hygge</em>): pop into a random cafe in the city center, drink a beer and eat a toastie while gazing out at some canals, and <em>enjoy</em>.</li>
+</ul>
+
+
+<h3>Museums etc.:</h3>
+
+<ul>
+<li>Rijksmuseum (classic art museum, GORGEOUS, will be mobbed)</li>
+<li>Stedelijk (right by Rijskmuseum, probably less mobbed, contemporary art, looks like a giant bathtub)</li>
+<li>Anne Frank House</li>
+<li>Artis (the zoo, which is actually surprisingly really awesome&ndash;and iirc not far from the botanic gardens)</li>
+<li>Jewish Historical Museum/old Portuguese synagogue (not far from Artis) and Holocaust Museum (also nearby)</li>
+<li>My favorite hidden gem was Our Lord In the Attic near the center of town, which is a few old canalhouses with a secret catholic church in the attic.</li>
+<li>Second-place hidden gem: the Begijnhof&ndash;not really a musuem or anything, but a lil secret courtyard near the center of town.</li>
+<li>There are some canal houses-turned-museums (Grachtenhuis, Van Loon) that are also neat.</li>
+<li>Nemo (the science museum, technically for kids but pretty delightful).</li>
+<li>FYI the Sex Museum is not worth it imho.</li>
+</ul>
+
+
+<h3>Music</h3>
+
+<p>Miziekgebouw and Concertgebouw are their two big concert halls, you can probably get rush tickets to something neat. There are probably clubs or something that have other kinds of music, idk.</p>
+
+<h3>Markets</h3>
+
+<p>There are lots of outdoor fleamarkets that are delightful to wander through, as well as great places to buy souveniers/tchotchkes, as well as delicious foodstuffs. Check out:</p>
+
+<ul>
+<li>Dappermarkt</li>
+<li>Albert Cuypmart</li>
+<li>Niewemarkt</li>
+<li>Waterlooplein</li>
+</ul>
+
+
+<h3>Food</h3>
+
+<p>(Because the most important part of any trip is the food, right??)</p>
+
+<ul>
+<li>pancakes (Pannekoeken) if you can find a place that&rsquo;s not super touristy (I suggest Pancakes!)</li>
+<li>Stroopwafles, fresh if possible</li>
+<li>Indonesian and Surinamese food. Colonialism sucks but is sometimes delicious.</li>
+<li>Bitterballen are prime drunk food: deep fried meatballs mmm. (I&rsquo;m not sure how many I could eat sober, but with a beer or two they are 👌)</li>
+<li>Fries, especially with satay sauce or curry</li>
+<li>Not necessarily <em>good</em>, but certainly <em>an experience</em>: get a burger from a vending machine at Febo. Not as bad as you might imagine!</li>
+<li>CHEESE. (Bring me some back?)</li>
+<li>Other uniquely Dutch stuff to try if you end up in a supermarket: hagelslag (chocolate sprinkles but actually good), speculoos (cookie butter), probably loads more that I&rsquo;m forgetting. Go explore!</li>
+<li>There are some fabulous Belgian beers to be had, and even some Dutch ones; drink one for me! (In particular, try Brouwerij &rsquo;t IJ, a cozy l&#8217;il brewery by a windmill. I lived right by here!)</li>
+</ul>
+
+
+<p><img src="http://maiamcc.github.io/images/amsterdam_1_windmill.jpg" alt="De Gooyer windmill at sunset" />
+<em>De Gooyer windmill (next to the Brouwerij &rsquo;t IJ) at sunset (Maia McCormick, 2013)</em></p>
+
+<h4>(Like this list? Have any reports, or anything to add? Leave a comment below 👇🏻)</h4>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How Windmill Prepped for GothamGo]]></title>
@@ -1626,25 +1710,6 @@ Graphic found in PAPress’s <a href="//www.papress.com/thinkingwithtype/index.h
 
 
 <p>What about writing the actual code, you say? That is, I believe, a post for another day!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Re-Learning How to Ask Questions]]></title>
-    <link href="http://maiamcc.github.io/blog/2014/10/13/re-learning-how-to-ask-questions/"/>
-    <updated>2014-10-13T13:36:32-04:00</updated>
-    <id>http://maiamcc.github.io/blog/2014/10/13/re-learning-how-to-ask-questions</id>
-    <content type="html"><![CDATA[<p>I spent a ton of my time at Hacker School learning how to ask questions (or, to put a finer point on it, learning how to <em>not know things</em> and admit to others that I don&rsquo;t know things). The main reason that HS was so hard at first was that I wasn&rsquo;t good at asking questions, at admitting when I didn&rsquo;t know things, at letting myself (I feared) appear &ldquo;stupid&rdquo; in front of others. I was still better than some folks at pushing through this, but I wasn&rsquo;t as good as I would have liked. (This is all tied into impostor syndrome, of course.)</p>
-
-<p>I got vastly better at this skill as I spent more time at Hacker School. I grew more comfortable in the environment, I gained trust in the folks around me and in my own abilities, and I came to believe that my asking questions, even ones about really basic (quote-unquote-&ldquo;basic&rdquo;) things, was a display of intelligence rather than a display of ignorance.</p>
-
-<p>What I didn&rsquo;t realize about my shiny new skill of &ldquo;Admitting When I Don&rsquo;t Know Something and Asking Questions&rdquo; was how context-dependent it is. At Hacker School, in person or on Zulip, I feel totally comfortable asking questions about &ldquo;simple&rdquo; things, and admitting that I&rsquo;m totally in over my head with, say, troubleshooting my Virtual Machine installation and would someone please help me, and what is actually the difference between GET and POST because I never really learned it&hellip; that sort of thing. But as I prepare my application for the coming round of <a href="https://opw.gnome.org">OPW</a> and dive head-first into IRC chats about programs and programming styles I&rsquo;ve never used before, that all seem to require strange dependencies or have to be run on X virtual machine with Y stuff built on it, I recognize a feeling from my early days of Hacker School.<!--more--></p>
-
-<p>I&rsquo;m scared. I&rsquo;m intimidated. I feel like I don&rsquo;t belong here, like I don&rsquo;t know enough. Like I&rsquo;m an impostor, and any second I will be found out. And as I force myself through these feelings to ask clarifying questions about whether x and y do in fact need to be run off a Linux VM, or go back to Zulip to ask a question about IRC that I&rsquo;m too embarrassed to ask IN the IRC room I&rsquo;m in, or keep silent with a question about how the hell I&rsquo;m going to get started on this project because I figure everyone else knows the answer to that question and admitting that I don&rsquo;t will automatically disqualify me from OPW, I realize that I&rsquo;m not done practicing the skills of Asking Questions and Admitting Ignorance.</p>
-
-<p>I got pretty adept at these things at Hacker School, but the OSS/OPW world is an entirely different environment, and I need to relearn these skills, as well as the self-confidence and trust that I need to apply them. Some of this will be learning the skills of this new world so I feel less like an impostor and more like I can hold my own, even if I don&rsquo;t know x and y. Some of this will be asking &ldquo;dumb&rdquo; questions and realizing that nothing bad happens when I do. Some of this will be talking to other people in this community, growing to trust them, and hearing their experiences with the same thing. And some of this&hellip; will just be time and practice and getting used to it. And when I land in another new environment&mdash;say, my first tech job&mdash;I will likely need to learn all of these skills over again.</p>
-
-<p>Whelp. Time to get to work.</p>
 ]]></content>
   </entry>
   
