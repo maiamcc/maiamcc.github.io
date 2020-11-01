@@ -1,0 +1,72 @@
+/* https://codepen.io/fannietaeyang/pen/xOQzvq */
+
+body {
+    background-color: #FFFFFF;
+    color: black;
+    font-size: 14px;
+    font-family: "Lucida Grande", Verdana,Arial, Helvetica, sans-serif;
+}
+
+h1, h2, th {
+    font-family: Georgia, "Times New Roman",Times, serif;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+.bingo-title {
+    text-align: center;
+    letter-spacing: 4px;
+}
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+}
+
+#bingo-card {
+    width: 700px;
+}
+
+.wrapper {
+    margin: auto;
+    padding: 1em;
+    background-color: #FFFFFF;
+}
+
+th, td {
+    padding: 10px;
+    border: 2px #666 solid;
+    text-align: center;
+    height: 7.5em;
+    width: 7.5em;
+    overflow: hidden;
+}
+
+th {
+    height: 1em;
+}
+
+#free, .pickedBG {
+    background-color: #FF6666;
+}
+
+#save-btn {
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: none;
+
+    background-color: #e7e7e7;
+    border-radius: 12px;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+#save-btn:hover {
+    background-color: #E0FFFF;
+}
