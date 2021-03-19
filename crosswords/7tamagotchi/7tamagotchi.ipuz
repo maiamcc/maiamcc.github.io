@@ -142,36 +142,6 @@
     "height": 7
   },
   "clues": {
-    "Down": [
-      [
-        1,
-        "Ickier"
-      ],
-      [
-        2,
-        "Tamagotchi: The Next Generation"
-      ],
-      [
-        3,
-        "Lassie and others"
-      ],
-      [
-        4,
-        "Thing conspiracy theorists always claim to have, but somehow never quite do"
-      ],
-      [
-        5,
-        "Some whiskey flavors"
-      ],
-      [
-        6,
-        "Franchise that put Micky Mouse out to sea? (Abbr.)"
-      ],
-      [
-        7,
-        "Prefix for two out of three long words in the refrain of a Schoolhouse Rock song about \"and\", \"but\", \"or\", and their ilk."
-      ]
-    ],
     "Across": [
       [
         1,
@@ -200,6 +170,36 @@
       [
         11,
         "Format for Google Reader (RIP)"
+      ]
+    ],
+    "Down": [
+      [
+        1,
+        "Ickier"
+      ],
+      [
+        2,
+        "Tamagotchi: The Next Generation"
+      ],
+      [
+        3,
+        "Lassie and others"
+      ],
+      [
+        4,
+        "Thing conspiracy theorists always claim to have, but somehow never quite do"
+      ],
+      [
+        5,
+        "Some whiskey flavors"
+      ],
+      [
+        6,
+        "Franchise that put Mickey Mouse out to sea? (Abbr.)"
+      ],
+      [
+        7,
+        "Prefix for \"function\""
       ]
     ]
   }
