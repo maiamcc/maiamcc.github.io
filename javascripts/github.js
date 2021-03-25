@@ -2,11 +2,23 @@ var github = (function(){
   function escapeHtml(str) {
     return $('<div/>').text(str).html();
   }
-  function render(target, repos){
+  function render(target, repos, count, skip) {
+    var added_to_page = 0;
+    if (count === undefined) {
+      count = repos.length;
+    }
+
     var i = 0, fragment = '', t = $(target)[0];
 
     for(i = 0; i < repos.length; i++) {
+      if (skip.has(repos[i].name)) {
+        continue;
+      }
       fragment += '<li><a href="'+repos[i].html_url+'">'+repos[i].name+'</a><p>'+escapeHtml(repos[i].description||'')+'</p></li>';
+      added_to_page += 1;
+      if (added_to_page >= count) {
+        break;
+      }
     }
     t.innerHTML = fragment;
   }
@@ -23,8 +35,7 @@ var github = (function(){
             if (options.skip_forks && data.data[i].fork) { continue; }
             repos.push(data.data[i]);
           }
-          if (options.count) { repos.splice(options.count); }
-          render(options.target, repos);
+          render(options.target, repos, options.count, options.repos_to_skip);
         }
       });
     }

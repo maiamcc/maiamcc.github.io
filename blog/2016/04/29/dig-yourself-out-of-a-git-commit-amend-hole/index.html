@@ -291,10 +291,23 @@
             s.parentNode.insertBefore(jxhr, s);
         }
 
+        // HACK: repos to skip, i.e. not show in sidebar (ideally would pull in this
+        //   list from config.yml but it's not worth it to figure out right now #yolo)
+        var repos_to_skip = new Set([
+          'ghsite_source',
+          'maiamcc.github.io',
+          'contrasite_source',
+          'testsite',
+          'bigchaos',
+          'musica-vera'
+        ]);
+
+
         github.showRepos({
             user: 'maiamcc',
             count: 10,
             skip_forks: false,
+            repos_to_skip: repos_to_skip,
             target: '#gh_repos'
         });
     });
