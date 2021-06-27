@@ -20,7 +20,7 @@
   <meta name="author" content="Maia Remez McCormick">
 
   
-  <meta name="description" content="The sudoku solver that I&rsquo;m working on with Miriam was nearly finished before it started when we were playing around with ways to draw a board &hellip;">
+  <meta name="description" content="Know what&rsquo;s cool? Nested functions. The other day, as I was making this craaaazy dance parser (that&rsquo;s getting more and more convoluted by &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -89,6 +89,82 @@
     My name is Maia. I&#8217;m a programmer based in New York City, currently building <a href="//www.tilt.dev/">Tilt</a>, a dev tool for iterating on microservices in Kubernetes. This website is where I (somewhat infrequently) chronicle my journeys through code, as well as other vaguely related adventures.
   </article>
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/28/nested-functions/">Nested Functions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-28T11:20:16-04:00" pubdate data-updated="true">28 Aug 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Know what&rsquo;s cool? Nested functions.</p>
+
+<p>The other day, as I was making this craaaazy dance parser (that&rsquo;s getting more and more convoluted by the minute), Alan suggested a really baller way of organizing it: using a bunch of little mini-parser functions that all look for something specific in your text, and smooshing related parsers together into one macro-parser that runs all of them in turn until one returns something. In Alan&rsquo;s lovely mock-up code that I&rsquo;m shamelessly copying over here, that might look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">contains_an_a</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">contains_a_b</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">input</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">one_of</span><span class="p">(</span><span class="n">parsers</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parsers</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">result</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">parser</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">contains_an_a_or_a_b</span> <span class="o">=</span> <span class="n">one_of</span><span class="p">([</span><span class="n">contains_an_a</span><span class="p">,</span> <span class="n">contains_a_b</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The handy thing about having all of these bite-size functions is that none of them gets too crazy bulky, and also, since they&rsquo;re functions (and not dicts like I was using earlier), I can use regexes in them! I&rsquo;m also jamming on the idea of passing functions to other functions, so I made an even bigger function called <code>use_parser</code> that takes a parser, a default value, and an &lsquo;ask&rsquo;, which it uses to ask the user (via raw_input) what the value should be. This way, I can take a single parser and customize it in a variety of ways. Say for example I have a distance parser: for do-si-dos and gypsies it should default to False (because those moves don&rsquo;t necessarily need to take a distance) and for allemandes it should ask the user, &ldquo;what&rsquo;s the value of &lsquo;dist&rsquo; here?&rdquo;</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/08/28/nested-functions/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -586,6 +662,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2021/06/27/job-hunting/">Job Hunting While Day-Jobbing</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2020/02/27/amsterdam-recommendations/">Amsterdam Recommendations</a>
       </li>
     
@@ -599,10 +679,6 @@
     
       <li class="post">
         <a href="/blog/2018/02/01/python-decorators/">F***in&#8217; Decorators, How Do THEY Work?!</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2017/06/17/what-are-interfaces/">What Are Interfaces?</a>
       </li>
     
   </ul>

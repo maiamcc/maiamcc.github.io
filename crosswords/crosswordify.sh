@@ -12,21 +12,14 @@ set -ex
 # - puz_to_pdf script in path
 #   - https://github.com/maiamcc/puz_to_pdf and symlink main.js -> puz_to_pdf
 
+# 1. convert .ipuz -> .puz
 IPUZ=$1
-
-# 1. make sure that the clues are in the correct order in the .ipuz file
-#    (first Across, then Down), or else squares.io shows them backwards
-#    (Crossfire exports them in the reverse order :-/)
-jq '.clues={"Across": .clues.Across, "Down": .clues.Down}' $IPUZ > tmp
-mv tmp $IPUZ
-
-# 2. convert .ipuz -> .puz
 PUZ="$(basename $IPUZ .ipuz).puz"
 kpuz $IPUZ $PUZ
 
-# 3. create puzzle and solution pdfs
+# 2. create puzzle and solution pdfs
 puz_to_pdf $PUZ
 puz_to_pdf $PUZ --solution
 
-# 4. upload puzzle to squares.io and get ID
-curl -H "x-squares-api-key: $SQUARES_IO_API_KEY" -F v=2 -F dai='{"reusepid":true}' -F puz=@$IPUZ https://squares.io/api/1/puzzle
+# 3. upload puzzle to squares.io and get ID
+curl -H "x-squares-api-key: $SQUARES_IO_API_KEY" -F v=2 -F data='{"reusepid":true}' -F puz=@$IPUZ https://squares.io/api/1/puzzle

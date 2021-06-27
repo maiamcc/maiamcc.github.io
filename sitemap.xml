@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://maiamcc.github.io/blog/2021/06/27/job-hunting/</loc>
+<lastmod>2021-06-27T12:22:24-04:00</lastmod>
+</url>
+<url>
 <loc>http://maiamcc.github.io/blog/2020/02/27/amsterdam-recommendations/</loc>
 <lastmod>2020-02-27T16:19:24-05:00</lastmod>
 </url>
@@ -254,6 +258,15 @@
 </url>
 <url>
 <loc>http://maiamcc.github.io/blog/categories/non-technical/</loc>
+</url>
+<url>
+<loc>http://maiamcc.github.io/2/</loc>
+</url>
+<url>
+<loc>http://maiamcc.github.io/3/</loc>
+</url>
+<url>
+<loc>http://maiamcc.github.io/4/</loc>
 </url>
 <url>
 <loc>http://maiamcc.github.io/crosswords/findapartner/findapartner-solution.pdf</loc>
