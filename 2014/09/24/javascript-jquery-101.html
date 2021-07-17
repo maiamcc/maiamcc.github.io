@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149411100-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149411100-2');
+  </script>
+
+
+  <meta charset="utf-8">
+  <title>Javascript/JQuery 101 - Maia McCormick</title>
+  <meta name="author" content="Maia McCormick">
+
+  
+  <meta name="description" content="Funnily enough, when you’re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="https://code.maiamccormick.com/2014/09/24/javascript-jquery-101.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/assets/css/style.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Maia McCormick" type="application/atom+xml">
+  <script src="/assets/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./assets/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/assets/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Overlock+SC|Overlock:400,700|Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Add fancyBox -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Maia McCormick</a></h1>
+  
+  <div class="subtitle">
+    <h2>Programmer, writer, nerd</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/projects">projects</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/crosswords">crosswords</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div id="thepost">
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Javascript/JQuery 101</h1>
+    
+    
+      <p class="meta">
+        <span>
+
+
+
+
+
+
+
+
+
+
+<span class="date"><time datetime="2014-09-24T16:28:38-04:00" pubdate data-updated="true">24 Sep 2014</time></span></span>
+        <span>
+<span class="categories">
+  
+    
+    
+      
+      <span>
+        <a class="category" href="/blog/categories/recuse-center">Recuse Center</a>
+      </span>
+    
+      
+      <span>
+        <a class="category" href="/blog/categories/javascript">javascript</a>
+      </span>
+    
+      
+      <span>
+        <a class="category" href="/blog/categories/tech">tech</a>
+      </span>
+    
+  
+  </ul>
+</span>
+
+</span>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Funnily enough, when you’re teaching yourself how to do stuff pretty much from scratch, sans tutorials or guidance, you miss a few crucial points. Weird, right? Here (mostly for my own records, but you can read it if you want!) are the things I learned this afternoon from some code review of my Javascript/JQuery/Datatables code for my contra database:</p>
+
+<p>JS != JQuery!!! They’re different things! They each have different sets of methods, and you need to keep track of whether any given thing you’re dealing with in web scripting is a JQuery or DOM (and therefore JS) object. <!-- more -->If it’s avoidable, don’t mix JS and JQuery—be consistent within one document. Usually, JQuery is more precise and prettier. Consider using dollar signs at the beginning of your variable names to indicate that they point to JQuery objects, so you don’t get confused. Most if not all JS functions have (generally shorter, prettier) JQuery equivalents. Here are some that I replaced in my code today:</p>
+
+<table><tr><td>
+    <strong>JS</strong>
+</td><td>
+    <strong>JQuery</strong>
+</td></tr>
+<tr><td>
+<code>
+    getElementByID("foo")
+</code>
+</td><td>
+<code>
+    $('#foo')
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    getElementsByClassName("bar")
+</code>
+</td><td>
+<code>
+    $('.bar')
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    this
+</code>
+</td><td>
+<code>
+    $(this)
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    .setAttribute("foo","bar")
+</code>
+</td><td>
+<code>
+    .attr("foo", "bar")
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    .getAttribute("foo")
+</code>
+</td><td>
+<code>
+    .attr("foo")
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    .value
+</code>
+</td><td>
+<code>
+    .val()
+</code>
+</td></tr>
+
+<tr><td>
+<code>
+    .parentNode
+</code>
+</td><td>
+<code>
+    .parent()
+</code>
+</td></tr>
+</table>
+<p>
+JQuery functions like `$(".bar")` or `$(".mytag")` (which gets all elements matching class "bar" and html tag "mytag", respectively) return arrays of DOM elements. If you want to get something from this array, it can be tempting to pluck it from its index, a la `$(".bar")[2]`. *Be warned*: this returns a DOM element, and therefore you can't do shiny JQuery stuff to it. Instead, get that same element as a JQuery object with `$(".bar").eq(2)` (where the `eq` function takes as an argument the index of the thing you want to get out of the array). I can't tell you how much pain this would have saved me if I had known this at the beginning of my project.
+
+On the "pesky formatting details" front, JS indents with only two spaces, and puts semicolons after every line that doesn't end in a curly brace. I swear, this will take me another three years to do properly and consistently. And when I master it, it will ruin my Python. Yeargh. Also, Javascript pitches possibly the least helpful errors ever. Okay, complaining over.
+
+Anyway, I have a working (if ugly) search page that magically sprouts new search fields everywhere, and a working (if ugly) datatable that displays the dances in my database with collapsible child rows for additional information, and a understand a little bit more about Javascript/JQuery for web work! Huzzah!
+</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+<span class="byline author vcard">Posted by <span class="fn">Maia McCormick</span></span>
+
+      
+
+
+
+
+
+
+
+
+
+
+<span class="date"><time datetime="2014-09-24T16:28:38-04:00" pubdate data-updated="true">24 Sep 2014</time></span>
+      
+<span class="categories">
+  
+    
+    
+      
+      <span>
+        <a class="category" href="/blog/categories/recuse-center">Recuse Center</a>
+      </span>
+    
+      
+      <span>
+        <a class="category" href="/blog/categories/javascript">javascript</a>
+      </span>
+    
+      
+      <span>
+        <a class="category" href="/blog/categories/tech">tech</a>
+      </span>
+    
+  
+  </ul>
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2014/09/17/so-much-for-that-project.html" title="Previous Post: So Much for That Project">&laquo; So Much for That Project</a>
+      
+      
+        <a class="basic-alignment right" href="/2014/09/29/lessons-in-default-function-arguments.html" title="Next Post: Lessons in Default Function Arguments">Lessons in Default Function Arguments &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  </section>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" title="subscribe via RSS"><img src="/images/rss.png"></a></li>
+  </ul>
+    
+</section>
+
+<img src = "/images/headshot.jpg">
+<section>
+  <a href="/blog/archives/"><h1>Recent Posts</h1></a>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2021/06/27/job-hunting.html">Job Hunting While Day-Jobbing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2020/02/27/amsterdam-recommendations.html">Amsterdam Recommendations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2018/05/29/how-windmill-prepped-for-gothamgo.html">How Windmill Prepped for GothamGo</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2018/03/25/interview-prep.html">Preparing for Technical Interviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2018/02/01/python-decorators.html">F***in' Decorators, How Do THEY Work?!</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Recent Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <div class="center">
+    <a href="https://github.com/maiamcc">@maiamcc</a> on GitHub
+  </div>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/assets/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        // HACK: repos to skip, i.e. not show in sidebar (ideally would pull in this
+        //   list from config.yml but it's not worth it to figure out right now #yolo)
+        var repos_to_skip = new Set([
+          'ghsite_source',
+          'maiamcc.github.io',
+          'contrasite_source',
+          'testsite',
+          'bigchaos',
+          'musica-vera'
+        ]);
+
+
+        github.showRepos({
+            user: 'maiamcc',
+            count: 10,
+            skip_forks: false,
+            repos_to_skip: repos_to_skip,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/assets/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+	<div class="rc-scout"></div>
+</p>
+<p>
+  Copyright &copy; 2021 - Maia McCormick - maia [dot] mcc [at] gmail [dot] com
+</p>
+
+<p>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'maia-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://code.maiamccormick.com/2014/09/24/javascript-jquery-101.html';
+        var disqus_url = 'https://code.maiamccormick.com/2014/09/24/javascript-jquery-101.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+<script async defer src="https://www.recurse-scout.com/loader.js?t=909b1e858cb2f5a7df2312d2f522aabf"></script>
+
+</body>
+</html>

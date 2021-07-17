@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149411100-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149411100-2');
+  </script>
+
+
+  <meta charset="utf-8">
+  <title>Markov Madness, Part 2 - Maia McCormick</title>
+  <meta name="author" content="Maia McCormick">
+
+  
+  <meta name="description" content="(If you’re confused, see my previous post on my Markov generator adventures.) The other thing I got up to today was implementing some sort of ( &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="https://code.maiamccormick.com/2014/10/23/markov-madness-2.html">
+  <link href="/favicon.png" rel="icon">
+  <link href="/assets/css/style.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Maia McCormick" type="application/atom+xml">
+  <script src="/assets/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./assets/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/assets/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Overlock+SC|Overlock:400,700|Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Add fancyBox -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  
+
+</head>
+
+<body   >
+  <header role="banner"><div class="header-left">
+  <hgroup>
+  <h1><a href="/">Maia McCormick</a></h1>
+  
+  <div class="subtitle">
+    <h2>Programmer, writer, nerd</h2>
+  </div>
+  
+  </hgroup>
+  
+</div>
+
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/projects">projects</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/crosswords">crosswords</a></li></div>
+  <div class="spacer"></div>
+
+ <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+
+</div>
+</header>
+  <div id="main">
+    <div id="content">
+      <div id="thepost">
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Markov Madness, Part 2</h1>
+    
+    
+      <p class="meta">
+        <span>
+
+
+
+
+
+
+
+
+
+
+<span class="date"><time datetime="2014-10-23T16:13:34-04:00" pubdate data-updated="true">23 Oct 2014</time></span></span>
+        <span>
+<span class="categories">
+  
+    
+    
+      
+      <span>
+        <a class="category" href="/blog/categories/recurse-center">recurse center</a>
+      </span>
+    
+  
+  </ul>
+</span>
+
+</span>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>(If you’re confused, see <a href="/blog/2014/10/23/markov-madness/">my previous post on my Markov generator adventures</a>.)</p>
+
+<p>The other thing I got up to today was implementing some sort of (questionable) part-of-speech-based intelligence. The idea was to have a dictionary for parts of speech, in addition to a dictionary of words. Then the work flow would go something like this:</p>
+
+<ol>
+  <li>start with a random seed</li>
+  <li>what part of speech should come next? Given the POS’s we already have, pick at random one that might follow it.</li>
+  <li>given the words we have, pick a word that might follow <em>of the correct part of speech</em>. If none exists, repeat from step 2.</li>
+</ol>
+
+<p>Now, using word trigrams and POS trigrams, the above process doesn’t really add much beyond what using plain ‘ol word trigrams gets you. Could I make something better, though, by using, say, 4-grams or 5-grams of parts of speech?<!--more--></p>
+
+<p>Well… I’ll leave that to you to decide. Here are a bunch of different sample texts from Pride and Prejudice. All are word-gram-3. Some have no POS support, some are POS-gram-3, and some are POS-gram-4. (POS-gram-5, incidentally, doesn’t really work—the requirements on what word you need to come next get so specific that there generally isn’t one and the program crashes.) Which of these seem the most sensical? Can you guess which are no-POS, POS-gram-3, and POS-gram-4? (There are three of each.) Make your guesses—and then, if you want to check yourself, look at the HTML source for answers.</p>
+
+<blockquote>
+  <p>1) ‘into a marriage with Miss Bennet. Miss Bingley’s pretended regard.” “Would you believe it, Lizzy, that is the most uncomfortable in her favour. Bingley was then disclosed in the same house with the length of his going away when I tell you, Miss Bennet. I send no compliments to Mr. Darcy:—but let me shift for myself; and, perhaps, if I were agreeing that we should all be there by Mrs. Hurst and Miss Bingley in a prudential light it places Mr. Darcy, by the awkwardness of the letter nor its writer were at the gate in the discharge of his’<!--POS-gram = 4--></p>
+</blockquote>
+
+<blockquote>
+  <p>2) ‘difference of situation and temper. Consider Mr. Collins’s picture of a sort of man; and of late it has not time to reply, but hurrying instantly to her so expressively, and shook hands with great enjoyment; and the mere ceremonious salutation attending his entrance. Anxious and uneasy, the period to which you have pleasure,” said Bingley; “and I am in earnest. I speak plainer? Do not wish me such an assurance of it, that the match with a bow of superior society; but I know very well able to do it, she turned suddenly towards him and Mr. Darcy, “There’<!--POS-gram = 3--></p>
+</blockquote>
+
+<blockquote>
+  <p>3) ‘from my thoughts.” “When they all are.” “All young ladies were ready enough to determine her feelings in the time. Good gracious! when I have always seen a great deal more than I might have sufficient charms; and though the probability of error, and seek to recommend them,” replied he; “they are married!” Elizabeth read on: “I have no wish of seeing him almost for the felicity which a pair of fine eyes in amazement, but was too happy, however, and if he sees enough of Bingley’s being withheld from seeing Jane, she seriously hoped he might change his mind’ <!--no POS support--></p>
+</blockquote>
+
+<blockquote>
+  <p>4) ‘ever have courage to shew Mrs. Gardiner’s former residence, and where she had listened to her eyes, envied everyone to whom they would have been impossible for us to Miss Darcy, who had only set that down as soon as they used to be privileged to whisper to Elizabeth, “I hope not so. Painful recollections will not have forgotten where she was ready enough to make her resigned. As for my impertinence?” “For the liveliness of your own. But we are better acquainted—” He was resolutely silent, however, and, from a circulating, he started back, and begging pardon, protested’ <!--no POS support--></p>
+</blockquote>
+
+<blockquote>
+  <p>5) ‘months. Of having another daughter married to Mr. Bingley. It was at length return home; and she was to bring it in my own doing, and I thought only of the peace of the world, must make Hunsford extremely dull to a real, strong attachment. Pray, how violent was Mr. Bingley’s chaise to go with him; and unwilling, for her sister’s sake, to provoke him. Elizabeth was the son of old Wickham, the late perverse occurrences had thrown on many of the largest folios in the neighbourhood.” “Oh! no—it is not so handsome as Wickham; or, rather, he has not’<!--POS-gram = 4--></p>
+</blockquote>
+
+<blockquote>
+  <p>6) ‘Darcy’s praise occupied the chief of it. Can I speak plainer? Do not let your fancy run away with you. You will be an object of it, but Colonel Fitzwilliam was no more than she knew it myself, as it had not yet been able to enter the —shire. She had no other reply to this effect: “I have been to persuade him against returning into Hertfordshire, anxiously renewing them at any time, etc. etc.; and if not, it would be gone in five minutes, you meant it to another, not to an end by exclamations and inquiries about the’<!--POS-gram = 3--></p>
+</blockquote>
+
+<blockquote>
+  <p>7) ‘but tell Lydia she shall have as much a debt of gratitude cannot enough acknowledge. By this time have been too pleasantly engaged to my fair cousins, though my brother left us yesterday, he imagined that we have found some resemblance of character to love each other in large mixed parties, it is the man! Now, Lizzy, I hardly know myself what it is no occasion for such a man would satisfy me. We will settle so quietly, and live in my power, I am very far from suspecting that she was discontented, she fancied that praise of himself, of’ <!--no POS support--></p>
+</blockquote>
+
+<blockquote>
+  <p>8) ‘the opportunity of saying: “Is your sister make such an evil. Human nature is particularly prone to it, and sometimes with playful gaiety, replied to her housekeeping, her parish and her uncle had been her firmest opinion. Her keenest attention was suddenly roused by the middle of June, Kitty was too much sense to recommend myself to hope the best, in accepting a man on the subject. This will never be in want of money. Younger sons cannot marry where they were grieved, how shocking it was to distribute her presents and describe the newest fashions. When this information was’<!--POS-gram = 3--></p>
+</blockquote>
+
+<blockquote>
+  <p>9) ‘the pleasantness of the park,” he replied, “it has been my profession—I was brought up by him alone, was such as did think, than such a way.” “I can readily believe,” answered he gravely, “that reports may vary greatly with respect to me; and as she had not by any particular person, for though the uncomfortable feelings arising from all restraint, his life that, instead of a man of five-and-twenty. His air was grave and stately, and his relation of my nephew! Unfeeling, selfish girl! Do you think of themselves before anybody and everybody! If my vanity had taken on’<!--POS-gram = 4--></p>
+</blockquote>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+<span class="byline author vcard">Posted by <span class="fn">Maia McCormick</span></span>
+
+      
+
+
+
+
+
+
+
+
+
+
+<span class="date"><time datetime="2014-10-23T16:13:34-04:00" pubdate data-updated="true">23 Oct 2014</time></span>
+      
+<span class="categories">
+  
+    
+    
+      
+      <span>
+        <a class="category" href="/blog/categories/recurse-center">recurse center</a>
+      </span>
+    
+  
+  </ul>
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2014/10/23/markov-madness.html" title="Previous Post: Markov Madness, part 1">&laquo; Markov Madness, part 1</a>
+      
+      
+        <a class="basic-alignment right" href="/2014/11/20/revisiting-my-first-python-program.html" title="Next Post: Revisiting My First Python Program">Revisiting My First Python Program &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  </section>
+  <ul class="subscription" data-subscription="rss">
+    <li><a href="/atom.xml" title="subscribe via RSS"><img src="/images/rss.png"></a></li>
+  </ul>
+    
+</section>
+
+<img src = "/images/headshot.jpg">
+<section>
+  <a href="/blog/archives/"><h1>Recent Posts</h1></a>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2021/06/27/job-hunting.html">Job Hunting While Day-Jobbing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2020/02/27/amsterdam-recommendations.html">Amsterdam Recommendations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2018/05/29/how-windmill-prepped-for-gothamgo.html">How Windmill Prepped for GothamGo</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2018/03/25/interview-prep.html">Preparing for Technical Interviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2018/02/01/python-decorators.html">F***in' Decorators, How Do THEY Work?!</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Recent Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <div class="center">
+    <a href="https://github.com/maiamcc">@maiamcc</a> on GitHub
+  </div>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/assets/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        // HACK: repos to skip, i.e. not show in sidebar (ideally would pull in this
+        //   list from config.yml but it's not worth it to figure out right now #yolo)
+        var repos_to_skip = new Set([
+          'ghsite_source',
+          'maiamcc.github.io',
+          'contrasite_source',
+          'testsite',
+          'bigchaos',
+          'musica-vera'
+        ]);
+
+
+        github.showRepos({
+            user: 'maiamcc',
+            count: 10,
+            skip_forks: false,
+            repos_to_skip: repos_to_skip,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/assets/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+	<div class="rc-scout"></div>
+</p>
+<p>
+  Copyright &copy; 2021 - Maia McCormick - maia [dot] mcc [at] gmail [dot] com
+</p>
+
+<p>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'maia-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://code.maiamccormick.com/2014/10/23/markov-madness-2.html';
+        var disqus_url = 'https://code.maiamccormick.com/2014/10/23/markov-madness-2.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+<script async defer src="https://www.recurse-scout.com/loader.js?t=909b1e858cb2f5a7df2312d2f522aabf"></script>
+
+</body>
+</html>
