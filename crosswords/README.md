@@ -1,0 +1,1 @@
+My crosswords now live at https://crosswords.maiamccormick.com/ (see [website source](https://github.com/maiamcc/xwordsite)). This directory is now just redirects to that site, in case anyone has a permalink to one of my puzzles.
